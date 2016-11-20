@@ -3,7 +3,17 @@
 type State = Array<string>;
 type Action = { type: string; list: Array<any>; };
 
-function project(state: State = {selectedProject: {data:[]}}, action: Action): State {
+var initState = {
+  selectedProject: {
+    data: [],
+  },
+  dailyProject: {
+    data: null,
+  }
+
+}
+
+function project(state: State = initState, action: Action): State {
   if (action.type === 'loaded_selected_projects') {
     return Object.assign({}, state, {
               selectedProject: {
@@ -15,8 +25,25 @@ function project(state: State = {selectedProject: {data:[]}}, action: Action): S
   if (action.type === 'loading_selected_projects') {
     return Object.assign({}, state, {
               selectedProject: {
-              	loading: true,
-              	data: [],
+                loading: true,
+                data: [],
+              }
+            });
+  }
+
+  if (action.type === 'loading_daily_project') {
+    return Object.assign({}, state, {
+              dailyProject: {
+                loading: true,
+                data: null,
+              }
+            });
+  }
+  if (action.type === 'loaded_daily_project') {
+    return Object.assign({}, state, {
+              dailyProject: {
+              	loading: false,
+              	data: action.data,
               }
             });
   }

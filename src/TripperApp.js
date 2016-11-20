@@ -9,7 +9,7 @@ import {
   View,
   StatusBar,
   Modal,
-  Text
+  Text,
 } from 'react-native';
 
 var { connect } = require('react-redux');
@@ -17,11 +17,16 @@ var { connect } = require('react-redux');
 import Style from './constants/Style';
 import TripperNavigator from './TripperNavigator'
 
+import DailyContainer from './containers/DailyContainer'
+
 class TripperApp extends Component {
 
   constructor(props) {
     super(props);
 
+    this.state = {
+      showDaily: true
+    }
   }
 
   render() {
@@ -32,7 +37,14 @@ class TripperApp extends Component {
           backgroundColor={Style.STATUSBAR_COLOR}
           barStyle="light-content"
           />
-        <TripperNavigator />
+        <TripperNavigator/>
+        <Modal
+          animationType={"slide"}
+          transparent={true}
+          visible={this.state.showDaily}
+          onRequestClose={()=>{this.setState({showDaily: false});}}>
+          <DailyContainer close={()=>{this.setState({showDaily: false});}}/>
+        </Modal>
       </View>
     )
   }

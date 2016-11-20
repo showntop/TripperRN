@@ -31,5 +31,32 @@ function loadedSelectedProjects (projects) {
     isLoading: false
   }
 }
+//#######################################################//
+function loadingDailyProject(){
+  return{
+    type: "loading_daily_project",
+    data:{
+      isLoading: true,
+      data: null
+    }
+  }
+}
+
+export function fetchDailyProject () {
+  return dispatch => {
+    dispatch(loadingSelectedProjects());
+    return Api.project.daily().then(response => {
+      dispatch(loadedDailyProject(response));
+    })
+  }
+}
+
+function loadedDailyProject (project) {
+  return {
+    type: "loaded_daily_project",
+    data: project,
+    isLoading: false
+  }
+}
 
 

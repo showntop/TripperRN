@@ -59,4 +59,32 @@ function loadedDailyProject (project) {
   }
 }
 
+//#######################################################//
+function creatingProject(){
+  return{
+    type: "creating_project",
+    data:{
+      isLoading: true,
+      data: null
+    }
+  }
+}
+
+export function createProject (project) {
+  return dispatch => {
+    dispatch(creatingProject());
+    return Api.project.create(project).then(response => {
+      dispatch(createdProject(response));
+    })
+  }
+}
+
+function createdProject (project) {
+  return {
+    type: "created_project",
+    data: project,
+    isLoading: false
+  }
+}
+
 

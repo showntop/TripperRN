@@ -9,8 +9,10 @@ var initState = {
   },
   dailyProject: {
     data: null,
+  },
+  createdProject: {
+    data: null
   }
-
 }
 
 function project(state: State = initState, action: Action): State {
@@ -42,6 +44,14 @@ function project(state: State = initState, action: Action): State {
   if (action.type === 'loaded_daily_project') {
     return Object.assign({}, state, {
               dailyProject: {
+                loading: false,
+                data: action.data,
+              }
+            });
+  }
+  if (action.type === 'created_project') {
+    return Object.assign({}, state, {
+              createdProject: {
               	loading: false,
               	data: action.data,
               }

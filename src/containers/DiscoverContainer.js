@@ -17,19 +17,33 @@ import TripperHeader from '../components/TripperHeader'
 import {Text} from '../components/TripperText'
 
 import ProjectCard from '../components/ProjectCard'
+import EditorContainer from '../containers/EditorContainer'
 
 class DiscoverContainer extends BaseContainer {
 
+  constructor(props) {
+    super(props);
+  
+    this.state = {};
+
+    this.openEditor = this.openEditor.bind(this)
+  }
+
+  openEditor() {
+  	const {navigator} = this.props
+
+  	navigator.push({
+  		component: EditorContainer,
+  		name: 'EditorContainer'
+  	})
+  }
 
   render() {
-  	var rightItem;
-  	if (Platform.OS === 'android') {
-  		rightItem = {
+  	let	rightItem = {
   		  title: 'Share',
   		  icon: require('../images/menu.png'),
-  		  onPress: this.shareCurrentSession,
+  		  onPress: this.openEditor,
   		};
-  	}
 
     return (
       <View style={styles.container}>
@@ -44,9 +58,9 @@ class DiscoverContainer extends BaseContainer {
 	        rightItem={rightItem}>
 	        <View style={styles.headerContent}>
 	          <Text style={styles.title}>
-	            <Text style={styles.day}>DAY {this.state.day}</Text>
+	            <Text style={styles.day}>11月 {this.state.day}</Text>
 	            {'\n'}
-	            <Text style={styles.time}>{'sectionTitle'}</Text>
+	            <Text style={styles.time}>{'路上'}</Text>
 	          </Text>
 	        </View>
 	      </TripperHeader>

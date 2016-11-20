@@ -68,16 +68,25 @@ class TripperNavigator extends Component {
         configureScene={(route) => {
           if (Platform.OS === 'android') {
             return Navigator.SceneConfigs.FloatFromBottomAndroid;
+          }else {
+            return Navigator.SceneConfigs.FloatFromBottom;
           }
         }}
-        initialRoute={{}}
+        initialRoute={{
+          component: MainContainer,
+          name: 'Main'
+        }}             
         renderScene={this.renderScene}
       />
     );
   }
 
-  renderScene(route, scene) {
-    return <MainContainer navigator={navigator} />;
+  renderScene(route, navigator) {
+    let Component = route.component;
+
+    return (
+      <Component navigator={navigator} route={route}/>
+    );
   }
 
 }

@@ -34,13 +34,13 @@ const TAB_BAR_RESOURCES = [
 
 class MainContainer extends BaseContainer {
 
-	constructor(props) {
-	  super(props);
+  constructor(props) {
+	super(props);
 	
-	  this.state = {};
+	this.state = {};
 
     this.openDrawer = this.openDrawer.bind(this);
-	}
+  }
 
   getChildContext() {
     return {
@@ -68,10 +68,10 @@ class MainContainer extends BaseContainer {
 	           /*使用自定义tabbar*/
 	           return <TripperTabItem tabBarResources={TAB_BAR_RESOURCES}/>
 	         }}>
-	         <DiscoverContainer style={styles.subView}/>
-	         <ChannelContainer style={styles.subView}/>
-	         <CommunityContainer style={styles.subView}/>
-	         <ShopContainer style={styles.subView}/>
+	         <DiscoverContainer style={styles.subView} {...this.props}/>
+	         <ChannelContainer style={styles.subView} {...this.props}/>
+	         <CommunityContainer style={styles.subView} {...this.props}/>
+	         <ShopContainer style={styles.subView} {...this.props}/>
 
 	       </ScrollableTabView>
 	    </Drawer>

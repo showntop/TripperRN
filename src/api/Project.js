@@ -12,4 +12,7 @@ export default class ProjectApi extends Base {
         return this.apiClient.get(this.baseUrl + '/projects?daily=true', {}, params);
     }
 
+    create(params) {
+    	return this.apiClient.post(this.baseUrl + '/projects', {}, params)
+    }
 }

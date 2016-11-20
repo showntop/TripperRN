@@ -8,15 +8,31 @@ import {
     TouchableOpacity,
     ScrollView,
     Dimensions,
-    Alert
+    Alert,
+    Platform
 } from 'react-native'
 
 import Icon from 'react-native-vector-icons/EvilIcons';
 
-import EditorHeader from '../components/EditorHeader'
-import * as StyleSheet from '../utility/StyleSheet'
+import EditorHeader from '../components/EditorHeader';
+import * as StyleSheet from '../utility/StyleSheet';
+import ImagePicker from 'react-native-image-picker';
 
-import {createProject} from '../actions/projects'
+import {createProject} from '../actions/projects';
+
+
+// More info on all the options is below in the README...just some common use cases shown here
+var options = {
+  title: '选择图片',
+  customButtons: [
+    {name: 'fb', title: 'Choose Photo from Facebook'},
+  ],
+  storageOptions: {
+    skipBackup: true,
+    path: 'images'
+  }
+};
+
 
 class TripperEditor extends Component {
   static propTypes = {
@@ -26,7 +42,7 @@ class TripperEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {  
-        asset: null,
+        asset: require('../images/default_cover.jpg'),
         title: null,
         content: null
     }
@@ -46,6 +62,41 @@ class TripperEditor extends Component {
     }
   }
 
+  selectAsset() {
+    /**
+     * The first arg is the options object for customization (it can also be null or omitted for default options),
+     * The second arg is the callback which sends object: response (more info below in README)
+     */
+    ImagePicker.showImagePicker(options, (response) => {
+      console.log('Response = ', response);
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      }
+      else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      }
+      else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      }
+      else {
+        // You can display the image using either data...
+        const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
+
+        // or a reference to the platform specific asset location
+        if (Platform.OS === 'ios') {
+          const source = {uri: response.uri.replace('file://', ''), isStatic: true};
+        } else {
+          const source = {uri: response.uri, isStatic: true};
+        }
+
+        this.setState({
+          asset: source
+        });
+      }
+    });
+
+  }
+
   saveSpot(){
     const {dispatch} = this.props;
 
@@ -62,9 +113,7 @@ class TripperEditor extends Component {
                   ref="spotCover"
                   resizeMode="stretch"
                   style={{width: Dimensions.get('window').width, flex: 1}}
-                  source={this.state.coverFile == null ? require('../images/default_cover.jpg') : {uri: this.state.coverFile.uri.replace('file://', ''), isStatic: true}}
-                >
-
+                  source={this.state.asset}>
                   <View style={{paddingHorizontal: 10, flex: 1}} >
                       <View style={{ height: 40, borderBottomColor: '#8B7E66', borderBottomWidth: 1, paddingBottom: 6}}>
                           <TextInput ref="title" style={{fontSize: 20, fontWeight: 'bold', textAlign: 'center',  height: 40, paddingBottom: 0, justifyContent: 'center', alignItems: 'center'}} placeholder="写个标题吧" underlineColorAndroid= "transparent"
@@ -87,7 +136,7 @@ class TripperEditor extends Component {
                           <Icon name='user' size={25} style={{color: 'black'}} />
                           <Text style={{color: 'black'}} >亲人</Text>
                       </TouchableOpacity>
-                      <TouchableOpacity onPress ={() => this.selectCover(2)}  style={{flexDirection: 'row',  alignItems: 'center'}}>
+                      <TouchableOpacity onPress ={() => this.selectAsset(2)}  style={{flexDirection: 'row',  alignItems: 'center'}}>
                           <Icon name='image' size={25}  style={{color: 'black'}} />
                       </TouchableOpacity>
                   </View>

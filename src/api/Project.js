@@ -1,6 +1,8 @@
-import Base from './Base';
+'use strict';
 
-var FileUploader = require('NativeModules').FileUpload;
+import Base from './Base';
+import Qiniu from './Qiniu'
+// import {Conf,Rpc} from 'react-native-qiniu';
 
 export default class ProjectApi extends Base {
 
@@ -19,4 +21,13 @@ export default class ProjectApi extends Base {
     show(id) {
     	return this.apiClient.get(this.baseUrl + '/projects/'+ id, {}, {})
     }
+
+    createUptoken() {
+        return this.apiClient.post(this.baseUrl + '/qntokens', {}, {});
+    }
+
+    uploadAsset(furi, token){
+        return Qiniu.uploadFile(furi, token, {})
+    }
+
 }

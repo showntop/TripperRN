@@ -1,3 +1,5 @@
+'use strict';
+
 import ApiClient            from './ApiClient';
 // import UsersAPI             from './Users';
 import ProjectApi             from './Project';

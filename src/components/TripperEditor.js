@@ -20,6 +20,8 @@ import ImagePicker from 'react-native-image-picker';
 
 import {createProject} from '../actions/projects';
 
+import * as Apix from '../api';
+const Api = Apix.default()
 
 // More info on all the options is below in the README...just some common use cases shown here
 var options = {
@@ -68,7 +70,7 @@ class TripperEditor extends Component {
      * The second arg is the callback which sends object: response (more info below in README)
      */
     ImagePicker.showImagePicker(options, (response) => {
-      console.log('Response = ', response);
+
       if (response.didCancel) {
         console.log('User cancelled image picker');
       }
@@ -79,6 +81,7 @@ class TripperEditor extends Component {
         console.log('User tapped custom button: ', response.customButton);
       }
       else {
+
         // You can display the image using either data...
         const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
 
@@ -88,9 +91,14 @@ class TripperEditor extends Component {
         } else {
           const source = {uri: response.uri, isStatic: true};
         }
-
-        this.setState({
-          asset: source
+        let result = Api.project.createUptoken(response.uri).then(result => {
+          return Api.project.uploadAsset(response.uri,result.uptoken)
+        }).then(resp =>{
+          return resp.json()
+        }).then(result => {
+          this.setState({
+            asset: {uri: "http://og7lh5z5q.bkt.clouddn.com/"+result.key}
+          });  
         });
       }
     });
@@ -99,8 +107,12 @@ class TripperEditor extends Component {
 
   saveSpot(){
     const {dispatch} = this.props;
-
-    dispatch(createProject(this.state))
+    let project = {
+      asset: this.state.asset.uri,
+      title: this.state.title,
+      content: this.state.content
+    }
+    dispatch(createProject(project))
   }
 
   render() {

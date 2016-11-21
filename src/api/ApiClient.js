@@ -29,7 +29,6 @@ export default class ApiClient {
             // if (res.status >= 400) {
             //     throw new Error('Bad response from server');
             // }
-
             return res.json();
         }).then(data => {
             return data;

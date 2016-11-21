@@ -87,4 +87,32 @@ function createdProject (project) {
   }
 }
 
+//#######################################################//
+function loadingCurrentProject(){
+  return{
+    type: "loading_current_project",
+    data:{
+      isLoading: true,
+      data: null
+    }
+  }
+}
+
+export function fetchProject (id) {
+  return dispatch => {
+    dispatch(creatingProject());
+    return Api.project.show(id).then(response => {
+      dispatch(loadedProject(response));
+    })
+  }
+}
+
+function loadedProject (project) {
+  return {
+    type: "loaded_current_project",
+    data: project,
+    isLoading: false
+  }
+}
+
 

@@ -6,11 +6,14 @@ import {
   StyleSheet,
   View,
   Image,
+  TouchableWithoutFeedback,
 } from 'react-native';
 
 import SwipeCards from 'react-native-swipe-cards';
 import {Text, Heading1} from '../components/TripperText'
 import {fetchSelectedProjects} from '../actions/projects';
+
+import ProjectContainer from '../containers/ProjectContainer'
 
 const Cards = [
   {title: '生命之于我', content: "不知道从什么时候开始\n应是我走的那一年\n那天晚上\n还有什么来？", image: 'http://imglf2.nosdn.127.net/img/aVFjTjU3a2NtVHdyeVZEaUFOV0doVWJPYjAyazFPZS96WFJMMTF3TUlJZi9NSmFobUd6aG9BPT0.jpg?imageView&thumbnail=500x0&quality=96&stripmeta=0&type=jpg%7Cwatermark&type=2&text=wqkgTUFHSUMgWUFOR-adqOaipuaZtiAvIGxpdHRsZW1hZ2ljeWFuZy5sb2Z0ZXIuY29t&font=bXN5aA==&gravity=southwest&dissolve=30&fontsize=240&dx=8&dy=10&stripmeta=0'},
@@ -23,9 +26,16 @@ const Cards = [
 
 
 class MediaCard extends Component {
+
+  constructor(props) {
+    super(props);
+  
+    this.state = {};
+  }
+
   render() {
     return (
-		  <View onPress={this._onPressButton} style={styles.card}>
+		  <View style={styles.card}>
       {
         this.props.asset && this.props.asset != "" ?       <Image 
           resizeMode='cover'
@@ -72,6 +82,8 @@ class ProjectCard extends Component {
       cards: Cards,
       outOfCards: false
     };
+
+    this.handleYup = this.handleYup.bind(this)
   }
 
   componentDidMount() {
@@ -83,8 +95,13 @@ class ProjectCard extends Component {
     console.log('handleNope');
   }
 
-  handleYup(){
-
+  handleYup(project){
+    let {navigator} =  this.props
+    navigator.push({
+      component: ProjectContainer,
+      name: 'ProjectContainer',
+      project: project,
+    })  
   }
 
   render() {

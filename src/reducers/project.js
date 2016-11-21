@@ -12,6 +12,9 @@ var initState = {
   },
   createdProject: {
     data: null
+  },
+  currentProject: {
+    data: null
   }
 }
 
@@ -52,6 +55,14 @@ function project(state: State = initState, action: Action): State {
   if (action.type === 'created_project') {
     return Object.assign({}, state, {
               createdProject: {
+                loading: false,
+                data: action.data,
+              }
+            });
+  }
+  if (action.type === 'loaded_current_project') {
+    return Object.assign({}, state, {
+              currentProject: {
               	loading: false,
               	data: action.data,
               }

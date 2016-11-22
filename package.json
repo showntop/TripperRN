@@ -13,7 +13,6 @@
     "react-native-drawer": "^2.3.0",
     "react-native-image-picker": "^0.23.0",
     "react-native-navbar": "^1.5.4",
-    "react-native-qiniu": "^0.2.2",
     "react-native-scrollable-tab-view": "^0.6.0",
     "react-native-swipe-cards": "0.0.9",
     "react-native-vector-icons": "^3.0.0",

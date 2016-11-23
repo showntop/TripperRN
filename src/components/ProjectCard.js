@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   },
   thumbnail: {
     width: 300,
-    height: 160,
+    height: 360,
   },
   title: {
     fontSize: 20,

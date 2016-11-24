@@ -56,12 +56,14 @@ class DrawerSider extends Component {
     return (
       <View style={{flex: 1}}>
           <TouchableOpacity onPress={this.openUser.bind(this)} style={{flexDirection: 'row', alignItems: 'center', backgroundColor: '#2B2B2B', padding: 10,  paddingTop: 20}}>
-            <Image
-              style={{width: Dimensions.get('window').width / 5, height: 80, borderRadius: 30,justifyContent: 'flex-end', paddingBottom: 10}}
-              source={{uri: 'http://imgsize.ph.126.net/?imgurl=http://img0.ph.126.net/eXVVWml-VJ-MO_-ee_5ykA==/6598063725228256755.jpg_64x64x0.jpg'}}/>
-              <Text style={{fontSize: 20, textAlign: 'left', color: '#ffffff', marginLeft: 10}}>
-                诗一样的春天
-              </Text>
+	    {user.avatar ?
+		<Image style={styles.headIcon} source={{uri:user.avatar}}/> :
+		<Image style={styles.headIcon} source={require('../images/img_default_head.png')}/>
+	    }
+	    {user.id ?
+		<Text style={styles.login}>{user.name}</Text> :
+		<Text style={styles.login}>点击登录</Text>
+	    }
           </TouchableOpacity>
         <View style={{flex: 1, backgroundColor: '#ffffff'}}>
           <TouchableOpacity

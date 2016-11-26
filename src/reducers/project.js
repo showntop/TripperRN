@@ -11,6 +11,9 @@ var initState = {
     data: null,
   },
   createdProject: {
+    loading: false,
+    status: 200,
+    message: "",
     data: null
   },
   currentProject: {

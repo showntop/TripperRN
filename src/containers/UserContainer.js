@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 import UserView from '../components/UserView';
 
 function mapStateToProps(state) {
-
+  const {user} = state
+  const {currentUser} = user
   return {
-
+    currentUser
   };
 }
 

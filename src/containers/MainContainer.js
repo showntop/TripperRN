@@ -89,9 +89,10 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps (state) {
-  const {reddit} = state;
+  const {user, error} = state;
+  const {currentUser} = user
   return {
-    reddit
+    currentUser, error
   }
 }
 

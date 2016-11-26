@@ -70,12 +70,20 @@ function creatingProject(){
   }
 }
 
-export function createProject (project) {
+export function createProject (user, project) {
   return dispatch => {
     dispatch(creatingProject());
-    return Api.project.create(project).then(response => {
-      dispatch(createdProject(response));
-    })
+    return Api.project.create(user.token,project).then(result => {
+      dispatch(createdProject(result));
+    }).catch( response => {
+      return response.json()
+    }).then((error) =>{
+      if (error.status == 403){
+        dispatch({type: "auth error", error: error});
+      }else{
+        dispatch({type: "request error", error: error});
+      }
+    });
   }
 }
 

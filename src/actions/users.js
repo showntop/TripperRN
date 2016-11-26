@@ -1,34 +1,40 @@
 'use strict';
-
-import * as Apix from '../api';
 import TripperHeader from '../components/TripperHeader';
 
+import * as Apix from '../api';
 const Api = Apix.default()
-
 //#######################################################//
 function signuping(){
   return{
     type: "signuping",
-    data:{
+    result:{
       isLoading: true,
-      data: null
+      result: null
     }
   }
 }
 
 export function signup (user) {
   return dispatch => {
-    dispatch(creatingUser());
+    dispatch(signuping());
     return Api.user.create(user).then(response => {
-      dispatch(createdUser(response));
-    })
+      dispatch(signuped(response));
+    }).catch( response => {
+      return response.json()
+    }).then((error) =>{
+      if (error.status == 403){
+        dispatch({type: "auth error", error: error});
+      }else{
+        dispatch({type: "request error", error: error});
+      }
+    });
   }
 }
 
 function signuped (user) {
   return {
     type: "signuped",
-    data: user,
+    result: user,
     isLoading: false
   }
 }
@@ -37,26 +43,70 @@ function signuped (user) {
 function signining(){
   return{
     type: "signining",
-    data:{
+    result:{
       isLoading: true,
-      data: null
+      result: null
     }
   }
 }
 
-export function signin (id) {
+export function signin (loginInfo) {
   return dispatch => {
-    dispatch(creatingUser());
-    return Api.user.show(id).then(response => {
-      dispatch(loadedUser(response));
-    })
+    dispatch(signining());
+    return Api.user.signin(loginInfo).then(result => {
+      dispatch(signined(result));
+    }).catch( response => {
+      return response.json()
+    }).then((error) =>{
+      if (error.status == 403){
+        dispatch({type: "auth error", error: error});
+      }else{
+        dispatch({type: "request error", error: error});
+      }
+    });
   }
 }
 
 function signined (user) {
   return {
     type: "signined",
-    data: user,
+    result: user,
+    isLoading: false
+  }
+}
+
+//#######################################################//
+function updating(){
+  return{
+    type: "user_updating",
+    result:{
+      isLoading: true,
+      result: null
+    }
+  }
+}
+
+export function update (token,userInfo) {
+  return dispatch => {
+    dispatch(updating());
+    return Api.user.update(token,userInfo).then(result => {
+      dispatch(updated(result));
+    }).catch( response => {
+      return response.json()
+    }).then((error) =>{
+      if (error.status == 403){
+        dispatch({type: "auth error", error: error});
+      }else{
+        dispatch({type: "request error", error: error});
+      }
+    });
+  }
+}
+
+function updated (user) {
+  return {
+    type: "user_updated",
+    result: user,
     isLoading: false
   }
 }

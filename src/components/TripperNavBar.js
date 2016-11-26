@@ -42,6 +42,10 @@ class TripperNavBar extends React.Component {
       return (
         <NavigationBar
           style={{flex: 1,backgroundColor: '#69D685', alignItems: 'center', height: 50}}
+          statusBar={
+            {style: 'light-content',
+            tintColor: '#8FBC8F'}   
+          }
           actions={this.props.actions}
           onActionSelected={this.onActionSelected}
           titleColor='#fff'

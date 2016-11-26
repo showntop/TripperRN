@@ -3,8 +3,10 @@
 import ApiClient            from './ApiClient';
 // import UsersAPI             from './Users';
 import ProjectApi             from './Project';
+import UserApi             from './User';
 
-const baseUrl = `http://192.168.1.103:7007/api/v1`;
+const ssoUrl  = `http://192.168.1.103:7000/api/v1`;
+const busUrl = `http://192.168.1.103:7007/api/v1`;
 // const baseUrl = `https://tripper-1990.herokuapp.com`;
 
 function Api({ apiPrefix } = {}) {
@@ -17,7 +19,8 @@ function Api({ apiPrefix } = {}) {
     return {
         apiClient         : api,
         // users             : new UsersAPI({ apiClient: api }),
-        project           :new ProjectApi({baseUrl: baseUrl, apiClient: api})
+        project           :new ProjectApi({baseUrl: busUrl, apiClient: api}),
+        user              :new UserApi({baseUrl: ssoUrl, apiClient: api})
     };
 }
 

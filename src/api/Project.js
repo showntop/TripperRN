@@ -14,7 +14,8 @@ export default class ProjectApi extends Base {
         return this.apiClient.get(this.baseUrl + '/projects?daily=true', {}, params);
     }
 
-    create(project) {
+    create(token, project) {
+        this.apiClient.setAuthToken(token)
     	return this.apiClient.post(this.baseUrl + '/projects', {}, project)
     }
 

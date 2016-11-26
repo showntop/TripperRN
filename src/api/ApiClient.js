@@ -19,6 +19,7 @@ export default class ApiClient {
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
+                'Sun-Token': this.authToken
             }
         };
 
@@ -26,9 +27,9 @@ export default class ApiClient {
             init.body = JSON.stringify(body);
         }
         return fetch(`${urlWithQuery}`, init).then(res => {
-            // if (res.status >= 400) {
-            //     throw new Error('Bad response from server');
-            // }
+            if (res.status >= 400) {
+                throw res;
+            }
             return res.json();
         }).then(data => {
             return data;
@@ -55,7 +56,7 @@ export default class ApiClient {
     patch(requestUrl, payload = {}) {
         return this.request({
             url: requestUrl,
-            method: 'put',
+            method: 'patch',
             body: payload
         });
     }

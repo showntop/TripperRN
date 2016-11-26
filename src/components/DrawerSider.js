@@ -8,12 +8,14 @@ import {
   View,
   Image,
   Dimensions,
+  InteractionManager
 } from 'react-native'
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import UserContainer from '../containers/UserContainer';
 import AlbumContainer from '../containers/AlbumContainer';
+import SigninContainer from '../containers/SigninContainer';
 
 class DrawerSider extends Component {
   static propTypes = {
@@ -46,25 +48,41 @@ class DrawerSider extends Component {
   openUser(){
     const {navigator, closeDrawer} = this.props;
     closeDrawer()
-        navigator.push({
-      component: UserContainer,
-      name: 'UserContainer'
-    });
+
+    let user = this.props.currentUser.data || {};
+
+    if(!user.id) {
+        InteractionManager.runAfterInteractions(() => {
+            this.props.navigator.push({
+                name: 'SigninContainer',
+                component: SigninContainer,
+                passProps: {
+                    ...this.props,
+                }
+            })
+        });
+    } else {
+      navigator.push({
+        component: UserContainer,
+        name: 'UserContainer'
+      });
+    }    
   }
 
   render () {
+    let user = this.props.currentUser.data || {};
     return (
       <View style={{flex: 1}}>
-          <TouchableOpacity onPress={this.openUser.bind(this)} style={{flexDirection: 'row', alignItems: 'center', backgroundColor: '#2B2B2B', padding: 10,  paddingTop: 20}}>
-	    {user.avatar ?
-		<Image style={styles.headIcon} source={{uri:user.avatar}}/> :
-		<Image style={styles.headIcon} source={require('../images/img_default_head.png')}/>
-	    }
-	    {user.id ?
-		<Text style={styles.login}>{user.name}</Text> :
-		<Text style={styles.login}>点击登录</Text>
-	    }
-          </TouchableOpacity>
+        <TouchableOpacity onPress={this.openUser.bind(this)} style={styles.headWrap}>
+    	    {user.avatar ?
+        		<Image style={styles.headIcon} source={{uri:user.avatar}}/> :
+        		<Image style={styles.headIcon} source={require('../images/img_default_head.png')}/>
+    	    }
+    	    {user.id ?
+        		<Text style={styles.loginButton}>{user.username}</Text> :
+        		<Text style={styles.loginButton}>点击登录</Text>
+    	    }
+        </TouchableOpacity>
         <View style={{flex: 1, backgroundColor: '#ffffff'}}>
           <TouchableOpacity
             style={styles.drawerContent}
@@ -135,6 +153,28 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     color: 'black',
   },
+  headWrap: {
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    backgroundColor: '#2B2B2B', 
+    padding: 10,  
+    paddingTop: 20
+  },
+  headIcon: {
+    height: 70,
+    width: 70,
+    borderRadius: 35,
+  },
+  loginButton: {
+      borderColor: 'white',
+      color: 'white',
+      borderWidth: 0.5,
+      padding: 5,
+      marginTop: 10,
+      marginLeft: 20,
+      borderRadius: 3,
+  },
+
 })
 
 export default DrawerSider;

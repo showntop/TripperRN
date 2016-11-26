@@ -57,9 +57,13 @@ class TripperEditor extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.data) {
+    if (!nextProps.error.status) {
       Alert.alert('温馨提醒','提交成功',[
           { text:'确定', onPress: () => { nextProps.navigator.pop() } }
+        ]);
+    }else{
+      Alert.alert('温馨提醒',nextProps.error.message,[
+          { text:'确定', onPress: () => {  } }
         ]);
     }
   }
@@ -110,9 +114,9 @@ class TripperEditor extends Component {
     let project = {
       asset: this.state.asset.uri,
       title: this.state.title,
-      content: this.state.content
+      content: this.state.content,
     }
-    dispatch(createProject(project))
+    dispatch(createProject(this.props.currentUser.data, project))
   }
 
   render() {

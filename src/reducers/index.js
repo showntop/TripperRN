@@ -3,6 +3,8 @@
 import { combineReducers } from 'redux';
 
 import project from './project';
+import user from './user';
+import error from './error';
 // import maps from './maps';
 // import sessions from './sessions';
 // import schedule from './schedule';
@@ -13,10 +15,11 @@ import project from './project';
 
 const rootReducer = combineReducers({
   // config,
-  // user,
+  user,
   // spot,
   // location,
   project,
+  error,
   // maps,
   // sessions,
   // schedule,

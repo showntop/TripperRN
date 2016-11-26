@@ -25,8 +25,10 @@ const styles = StyleSheet.create({
 
 
 function mapStateToProps (state) {
-	const {project} = state;
-	return project.createdProject;
+	const {project, user, error} = state;
+	const {createdProject} = project;
+	const {currentUser} = user;
+	return {currentUser, createdProject, error};
 }
 
 export default connect(mapStateToProps)(EditorContainer);

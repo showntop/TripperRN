@@ -7,6 +7,7 @@ import {
   View,
   Text,
   Image,
+  Platform,
   TouchableHighlight,
   TouchableOpacity,
 } from 'react-native';
@@ -14,7 +15,24 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 // import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import NavigationBar from 'react-native-navbar';
+import ImagePicker from 'react-native-image-picker';
 
+import {update} from '../actions/users'
+
+import * as Apix from '../api';
+const Api = Apix.default()
+
+// More info on all the options is below in the README...just some common use cases shown here
+var options = {
+  title: '选择图片',
+  customButtons: [
+    {name: 'fb', title: 'Choose Photo from Facebook'},
+  ],
+  storageOptions: {
+    skipBackup: true,
+    path: 'images'
+  }
+};
 
 class UserView extends Component {
   constructor(props) {
@@ -26,6 +44,45 @@ class UserView extends Component {
   navtoLast() {
     const {navigator} = this.props;
     navigator.pop();
+  }
+
+  uploadAvatar() {
+    /**
+     * The first arg is the options object for customization (it can also be null or omitted for default options),
+     * The second arg is the callback which sends object: response (more info below in README)
+     */
+    ImagePicker.showImagePicker(options, (response) => {
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      }
+      else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      }
+      else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      }
+      else {
+
+        // You can display the image using either data...
+        const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
+
+        // or a reference to the platform specific asset location
+        if (Platform.OS === 'ios') {
+          const source = {uri: response.uri.replace('file://', ''), isStatic: true};
+        } else {
+          const source = {uri: response.uri, isStatic: true};
+        }
+        let result = Api.project.createUptoken(response.uri).then(result => {
+          return Api.project.uploadAsset(response.uri,result.uptoken)
+        }).then(resp =>{
+          return resp.json()
+        }).then(result => {
+          const {currentUser} = this.props
+          this.props.dispatch(update(currentUser.data.token, {avatar: "http://og7lh5z5q.bkt.clouddn.com/"+result.key}))  
+        });
+      }
+    });
   }
 
   render() {
@@ -51,7 +108,9 @@ class UserView extends Component {
         />
         <View style={{flex: 1, }}>
           <View style={{flex: 1, justifyContent: 'flex-start', alignItems: 'center', marginTop: 25}}>
-              <Image source={{uri: 'http://imgsize.ph.126.net/?imgurl=http://img2.ph.126.net/JMYXYuEEosKxlU3t-DMD2Q==/6631800040445927351.jpg_64x64x0.jpg'}} style={{width: 80, height: 80}}/>
+              <TouchableOpacity  onPress ={this.uploadAvatar.bind(this)}>
+                <Image source={{uri: 'http://imgsize.ph.126.net/?imgurl=http://img2.ph.126.net/JMYXYuEEosKxlU3t-DMD2Q==/6631800040445927351.jpg_64x64x0.jpg'}} style={{width: 80, height: 80, borderRadius: 40}}/>
+              </TouchableOpacity>
               <Text style={{fontSize: 20, fontWeight: 'bold'}}>南芝</Text>
               <View style={{flexDirection: 'row'}}>
                 <Icon name='female' size={14} style={{color: 'red'}} />

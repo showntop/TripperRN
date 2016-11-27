@@ -19,7 +19,7 @@ const rootReducer = combineReducers({
   // spot,
   // location,
   project,
-  error,
+  errorStore: error,
   // maps,
   // sessions,
   // schedule,

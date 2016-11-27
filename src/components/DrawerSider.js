@@ -2,14 +2,16 @@ import React, {PropTypes, Component} from 'react';
 
 import {
   ScrollView,
-  StyleSheet,
   Text,
   TouchableOpacity,
+  TouchableHighlight,
   View,
   Image,
   Dimensions,
   InteractionManager
 } from 'react-native'
+
+import  * as StyleSheet from '../utility/StyleSheet';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -72,7 +74,7 @@ class DrawerSider extends Component {
   render () {
     let user = this.props.currentUser.data || {};
     return (
-      <View style={{flex: 1}}>
+      <View style={styles.container}>
         <TouchableOpacity onPress={this.openUser.bind(this)} style={styles.headWrap}>
     	    {user.avatar ?
         		<Image style={styles.headIcon} source={{uri:user.avatar}}/> :
@@ -137,6 +139,13 @@ class DrawerSider extends Component {
 }
 
 const styles = StyleSheet.create({
+  container:{
+    flex: 1,
+    backgroundColor: 'white',
+    android:{
+      marginTop: 20
+    }
+  },
   drawerContent: {
     margin: 10,
     marginLeft: 20,

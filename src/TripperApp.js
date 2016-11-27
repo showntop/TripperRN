@@ -14,6 +14,8 @@ import {
 
 var { connect } = require('react-redux');
 
+import Toast from 'react-native-root-toast';
+
 import Style from './constants/Style';
 import TripperNavigator from './TripperNavigator'
 
@@ -29,6 +31,15 @@ class TripperApp extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { errorStore } = nextProps;
+    if (errorStore.errors.length > 0) {
+      errorStore.errors.every( error => {
+        Toast.show(error.message, {position:Toast.positions.BOTTOM});
+      })
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -38,13 +49,15 @@ class TripperApp extends Component {
           barStyle="light-content"
           />
         <TripperNavigator/>
-        <Modal
-          animationType={"slide"}
-          transparent={true}
-          visible={this.state.showDaily}
-          onRequestClose={()=>{this.setState({showDaily: false});}}>
-          <DailyContainer close={()=>{this.setState({showDaily: false});}}/>
-        </Modal>
+        {        
+        //         <Modal
+        //           animationType={"slide"}
+        //           transparent={true}
+        //           visible={this.state.showDaily}
+        //           onRequestClose={()=>{this.setState({showDaily: false});}}>
+        //           <DailyContainer close={()=>{this.setState({showDaily: false});}}/>
+        //         </Modal>
+        }
       </View>
     )
   }
@@ -57,9 +70,9 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps (state) {
-  const {reddit} = state;
+  const {errorStore} = state;
   return {
-    reddit
+    errorStore
   }
 }
 

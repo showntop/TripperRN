@@ -57,15 +57,15 @@ class TripperEditor extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.error.status) {
-      Alert.alert('温馨提醒','提交成功',[
-          { text:'确定', onPress: () => { nextProps.navigator.pop() } }
-        ]);
-    }else{
-      Alert.alert('温馨提醒',nextProps.error.message,[
-          { text:'确定', onPress: () => {  } }
-        ]);
-    }
+    // if (!nextProps.error.status) {
+    //   Alert.alert('温馨提醒','提交成功',[
+    //       { text:'确定', onPress: () => { nextProps.navigator.pop() } }
+    //     ]);
+    // }else{
+    //   Alert.alert('温馨提醒',nextProps.error.message,[
+    //       { text:'确定', onPress: () => {  } }
+    //     ]);
+    // }
   }
 
   selectAsset() {

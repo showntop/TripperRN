@@ -46,13 +46,15 @@ function user(state: State = initState, action: Action): State {
               }
             });
   }
-  if (action.type === 'auth error') {
-    return Object.assign({}, state, {
-      currentUser: {
-        loading: false,
-        data: {},
-      }
-    });
+  if (action.type === 'REQUEST_ERROR') {
+    if (action.errors.message === "用户验证出错"){
+      return Object.assign({}, state, {
+        currentUser: {
+          loading: false,
+          data: {},
+        }
+      });
+    }
   }
   return state;
 }

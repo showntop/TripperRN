@@ -27,8 +27,17 @@ export default class ApiClient {
             init.body = JSON.stringify(body);
         }
         return fetch(`${urlWithQuery}`, init).then(res => {
+            if (res.status === 403) {
+                // return res.json().then((error) =>{
+                    error = new Error("用户验证出错");
+                    throw error
+                // })
+            }
+            if (res.status >= 500) {
+                throw new Error("服务端出错");
+            }
             if (res.status >= 400) {
-                throw res;
+                throw new Error("请求格式校验出错");
             }
             return res.json();
         }).then(data => {

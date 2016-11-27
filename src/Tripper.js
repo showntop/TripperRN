@@ -1,5 +1,6 @@
 'use strict';
 import React, { Component, PropTypes } from 'react';
+import {View, Text} from 'react-native'
 
 import { Provider } from "react-redux"
 
@@ -14,18 +15,22 @@ class Tripper extends Component {
     
       this.state = {
         isLoading: true,
-        store: configureStore(() => this.setState({isLoading: false})),
+        rehydrated: false,
+        store: configureStore(() => this.setState({rehydrated: true})),
       };
     }
 
-      render() {
+    render() {
+      if(!this.state.rehydrated){
+         return (<View style={{justifyContent: 'center', alignItems: 'center'}}><Text>Loading...</Text></View>);
+       }
         //need to fetch user and env before render the launching view
-        return (
-            <Provider store={ this.state.store }>
-                <TripperApp/>
-            </Provider>
-        );
-      }
+      return (
+        <Provider store={ this.state.store }>
+          <TripperApp/>
+        </Provider>
+      );
+    }
 }
 
 global.LOG = (...args) => {

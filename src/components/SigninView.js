@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {
-    StyleSheet,
     Text,
     TextInput,
     View,
@@ -15,6 +14,7 @@ import {signin} from '../actions/users';
 // import Loading from '../components/Loading';
 import NavigationBar from 'react-native-navbar';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import * as StyleSheet from '../utility/StyleSheet';
 
 export default class SigninView extends Component {
     constructor(props){
@@ -43,21 +43,17 @@ export default class SigninView extends Component {
     }
 
     componentWillUpdate(nextProps, nextState) {
-        if (nextProps.error.status) {
-            Alert.alert('温馨提醒',nextProps.error.message,[
-              { text:'确定', onPress: () => {  } }
-            ]);
-            return
+        if(this.props.currentUser.data.id){
+            InteractionManager.runAfterInteractions(() => {
+                const currentUser = this.props.currentUser.data;
+                if (currentUser.id) {
+                    this.props.navigator.popToTop();
+                    Toast.show("登录成功", {position: Toast.positions.CENTER});
+                }
+                // if (!this.props.currentUser.loading) {
+                // }
+            });
         }
-        InteractionManager.runAfterInteractions(() => {
-            const currentUser = this.props.currentUser.data;
-            if (currentUser.id) {
-                this.props.navigator.popToTop();
-                Toast.show("登录成功", {position: Toast.positions.CENTER});
-            }
-            // if (!this.props.currentUser.loading) {
-            // }
-        });
     }
 
     render(){
@@ -177,6 +173,9 @@ class RegisterBtn extends Component{
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        android:{
+          marginTop: 20
+        }
     },
     navbar: {
       flex: 0,
@@ -186,7 +185,7 @@ const styles = StyleSheet.create({
       paddingLeft: 10,
       paddingRight: 10,
       height: 50,
-      backgroundColor: '#69D685'
+      backgroundColor: '#5597B8'
     },
 
 

@@ -1,22 +1,24 @@
 'use strict';
 
-type State = Array<string>;
-type Action = { type: string; list: Array<any>; };
-
-var initState = {
-  status: false,
-  message: "",
-}
-
-function error(state: State = initState, action: Action): State {
-  if (action.type === 'request error') {
-    return Object.assign({}, state, {
-                status: true,
-                message: action.error.message,
+function error(state = {errors: []}, action) {
+	switch(action.type) {
+		case "REQUEST_ERROR":
+	      return Object.assign({}, state, {
+              errors: [
+              	action.errors
+              ]
             });
-  }
 
-  return state;
+
+	      state.errors.concat([...action.errors]);
+
+	    case "REMOVE_ERROR":
+	      return state.filter((error, i) => i !== action.index);
+
+	    default:
+	      return {errors: []};
+	}
+  	return state;
 }
 
 export default error;

@@ -41,7 +41,7 @@ class DiscoverContainer extends BaseContainer {
   render() {
   	let	rightItem = {
   		  title: 'Share',
-  		  icon: require('../images/menu.png'),
+  		  icon: require('../images/note.png'),
   		  onPress: this.openEditor,
   		};
 

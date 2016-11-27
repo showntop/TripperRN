@@ -20,7 +20,9 @@ export function fetchSelectedProjects () {
     dispatch(loadingSelectedProjects());
     return Api.project.select().then(response => {
       dispatch(loadedSelectedProjects(response));
-    })
+    }).catch((errors) =>{
+      dispatch({type: "REQUEST_ERROR", errors: errors});
+    });
   }
 }
 
@@ -75,14 +77,8 @@ export function createProject (user, project) {
     dispatch(creatingProject());
     return Api.project.create(user.token,project).then(result => {
       dispatch(createdProject(result));
-    }).catch( response => {
-      return response.json()
-    }).then((error) =>{
-      if (error.status == 403){
-        dispatch({type: "auth error", error: error});
-      }else{
-        dispatch({type: "request error", error: error});
-      }
+    }).catch((errors) =>{
+      dispatch({type: "REQUEST_ERROR", errors: errors});
     });
   }
 }

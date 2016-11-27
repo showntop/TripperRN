@@ -57,7 +57,7 @@ let styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     height: 50,
-    backgroundColor: '#9BCD9B'
+    backgroundColor: '#5597B8'
   },
   toolItem: {
     alignItems: 'center',

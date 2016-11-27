@@ -1,6 +1,6 @@
 'use strict';
 
-import {applyMiddleware, createStore}  from 'redux';
+import {applyMiddleware, createStore, compose}  from 'redux';
 import thunk  from 'redux-thunk';
 import promise  from './promise';
 import array  from './array';
@@ -24,7 +24,7 @@ function configureStore(onComplete: ?() => void) {
   // TODO(frantic): reconsider usage of redux-persist, maybe add cache breaker
   // const store = (createTripStore)(reducers);
 
-  const store = autoRehydrate()(createTripStore)(reducers);
+  const store = compose(autoRehydrate())(createTripStore)(reducers);
   persistStore(store, {storage: AsyncStorage}, onComplete);
   if (isDebuggingInChrome) {
     window.store = store;

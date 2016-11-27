@@ -5,8 +5,8 @@ import ApiClient            from './ApiClient';
 import ProjectApi             from './Project';
 import UserApi             from './User';
 
-const ssoUrl  = `http://192.168.1.103:7000/api/v1`;
-const busUrl = `http://192.168.1.103:7007/api/v1`;
+const ssoUrl  = `http://192.168.1.112:7000/api/v1`;
+const busUrl = `http://192.168.1.112:7007/api/v1`;
 // const baseUrl = `https://tripper-1990.herokuapp.com`;
 
 function Api({ apiPrefix } = {}) {

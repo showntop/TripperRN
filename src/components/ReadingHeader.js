@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     android: {
     	marginTop: 20
     },
-    backgroundColor: '#9BCD9B'
+    backgroundColor: '#5597B8'
   },
   toolItem: {
   	marginLeft: 10,

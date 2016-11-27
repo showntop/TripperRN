@@ -56,8 +56,11 @@ class MainContainer extends BaseContainer {
 
 	  return (
 	  	<Drawer
+	  	  type="overlay"
+
 	      ref='drawer'
 	      openDrawerOffset={100}
+	      style={styles.drawer}
 	      content={<DrawerSider closeDrawer={()=>this.refs.drawer.close()} {...this.props}/>}>
 	      <ScrollableTabView
 	         tabBarPosition="bottom"
@@ -84,7 +87,11 @@ MainContainer.childContextTypes = {
 };
 
 const styles = StyleSheet.create({
-
+	drawer: { 
+		shadowColor: '#000000', 
+		shadowOpacity: 0.8, 
+		shadowRadius: 3
+	},
 
 });
 

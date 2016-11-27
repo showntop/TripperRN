@@ -21,13 +21,7 @@ export function signup (user) {
       dispatch(signuped(response));
     }).catch( response => {
       return response.json()
-    }).then((error) =>{
-      if (error.status == 403){
-        dispatch({type: "auth error", error: error});
-      }else{
-        dispatch({type: "request error", error: error});
-      }
-    });
+    })
   }
 }
 
@@ -55,14 +49,8 @@ export function signin (loginInfo) {
     dispatch(signining());
     return Api.user.signin(loginInfo).then(result => {
       dispatch(signined(result));
-    }).catch( response => {
-      return response.json()
-    }).then((error) =>{
-      if (error.status == 403){
-        dispatch({type: "auth error", error: error});
-      }else{
-        dispatch({type: "request error", error: error});
-      }
+    }).catch((errors) =>{
+      dispatch({type: "REQUEST_ERROR", errors: errors});
     });
   }
 }

@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 const colors = {
-  STATUSBAR_COLOR: '#8FBC8F',
+  STATUSBAR_COLOR: '#5597B8',
   MAIN_COLOR: 'white',
   // LINE_GRAY_COLOR: '#E8E8E8',
   GRAY_COLOR: '#DADADA',

@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 
 import {
-  StyleSheet,
   View,
   Text,
   Image,
@@ -16,6 +15,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 // import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import NavigationBar from 'react-native-navbar';
 import ImagePicker from 'react-native-image-picker';
+import * as StyleSheet from '../utility/StyleSheet';
 
 import {update} from '../actions/users'
 
@@ -93,16 +93,17 @@ class UserView extends Component {
           title={{title: '我的小点'}}
           statusBar={
             {style: 'light-content',
-            tintColor: '#8FBC8F'}   
+            tintColor: '#8FBC8F'} ,
+            {hidden: false}  
           }
           leftButton={  
             <TouchableOpacity style={styles.toolItem} activeOpacity={0.1} onPress ={this.navtoLast.bind(this)}>
-              <Icon name='arrow-left' size={18} style={{color: 'white'}} />
+              <Icon name='arrow-left' size={28} style={{color: 'white'}} />
             </TouchableOpacity>
           } 
           rightButton={
             <TouchableOpacity style={styles.toolItem} activeOpacity={0.1} onPress ={ this.props.onRightPress}>
-                <Icon name='check' size={18} style={{color: 'white'}} />
+                <Icon name='check' size={28} style={{color: 'white'}} />
             </TouchableOpacity>
           }
         />
@@ -150,7 +151,10 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
     height: 50,
-    backgroundColor: '#69D685'
+    backgroundColor: '#5597B8',
+    android:{
+      marginTop: 20
+    }
   },
   toolItem: {
     alignItems: 'center',

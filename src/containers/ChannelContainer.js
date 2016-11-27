@@ -15,18 +15,10 @@ import BaseContainer from '../containers/BaseContainer'
 
 import TripperHeader from '../components/TripperHeader'
 import {Text} from '../components/TripperText'
+import ChannelView from '../components/ChannelView'
 
 class ChannelContainer extends BaseContainer {
   render() {
-  	var rightItem;
-  	if (Platform.OS === 'android') {
-  		rightItem = {
-  		  title: 'Share',
-  		  icon: require('../images/menu.png'),
-  		  onPress: this.shareCurrentSession,
-  		};
-  	}
-
     return (
       <View style={styles.container}>
 	      <TripperHeader
@@ -34,13 +26,11 @@ class ChannelContainer extends BaseContainer {
 	        leftItem={{
 	          layout: 'icon',
 	          title: 'Close',
-	          icon: require('../images/menu.png'),
+	          icon: require('../images/logo_white@32.png'),
 	          onPress: this.handleShowMenu,
-	        }}
-	        rightItem={rightItem}>
-	        
+	        }}>
 	      </TripperHeader>
-
+	      <ChannelView />
       </View>
     );
   }

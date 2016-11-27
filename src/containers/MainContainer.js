@@ -25,10 +25,10 @@ import ShopContainer from '../containers/ShopContainer'
 
 //tabbar图片资源
 const TAB_BAR_RESOURCES = [
-  [require('../images/home.png'), require('../images/home_active.png')],
-  [require('../images/reading.png'), require('../images/reading_active.png')],
-  [require('../images/music.png'), require('../images/music_active.png')],
-  [require('../images/movie.png'), require('../images/movie_active.png')]
+  [require('../images/wonder.png'), require('../images/wonder_active.png')],
+  [require('../images/category.png'), require('../images/category_active.png')],
+  [require('../images/topic.png'), require('../images/topic_active.png')],
+  [require('../images/mall.png'), require('../images/mall_active.png')]
 ];
 
 

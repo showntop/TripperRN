@@ -52,7 +52,7 @@ class DiscoverContainer extends BaseContainer {
 	        leftItem={{
 	          layout: 'icon',
 	          title: 'Close',
-	          icon: require('../images/menu.png'),
+	          icon: require('../images/logo_white@32.png'),
 	          onPress: this.handleShowMenu,
 	        }}
 	        rightItem={rightItem}>

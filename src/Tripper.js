@@ -8,6 +8,8 @@ import configureStore from "./store/configureStore"
 
 import TripperApp from "./TripperApp"
 
+import SplashScreen from 'react-native-splash-screen'
+
 class Tripper extends Component {
 
     constructor(props) {
@@ -18,6 +20,10 @@ class Tripper extends Component {
         rehydrated: false,
         store: configureStore(() => this.setState({rehydrated: true})),
       };
+    }
+
+    componentDidMount() {
+      SplashScreen.hide();
     }
 
     render() {

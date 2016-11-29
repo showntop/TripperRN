@@ -1,6 +1,9 @@
 package com.tripperrn;
 
+import android.os.Bundle;
+
 import com.facebook.react.ReactActivity;
+import com.cboy.rn.splashscreen.SplashScreen;
 
 public class MainActivity extends ReactActivity {
 
@@ -12,4 +15,12 @@ public class MainActivity extends ReactActivity {
     protected String getMainComponentName() {
         return "TripperRN";
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        SplashScreen.show(this);  // 添加这一句
+        super.onCreate(savedInstanceState);
+    }
+       // ...other code
+
 }

@@ -11,6 +11,7 @@
 
 #import "RCTBundleURLProvider.h"
 #import "RCTRootView.h"
+#import "SplashScreen.h"  // here
 
 @implementation AppDelegate
 
@@ -31,6 +32,9 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+
+  [SplashScreen show];  // 添加这一句，这一句一定要在最后
+
   return YES;
 }
 

@@ -226,12 +226,12 @@ Header.height = HEADER_HEIGHT;
 Header.__cards__ = (define) => {
   const menuItem = {
     title: 'Menu',
-    icon: require('../images/menu.png'),
+    icon: require('../images/logo_white@32.png'),
     onPress: () => alert('Menu button pressed!'),
   };
   const filterItem = {
     title: 'Filter',
-    icon: require('../images/menu.png'),
+    icon: require('../images/logo_white@32.png'),
     onPress: () => alert('Filter button pressed!'),
   };
 

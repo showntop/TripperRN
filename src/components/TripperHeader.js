@@ -159,7 +159,7 @@ class ItemWrapperIOS extends React.Component {
         </Text>
       );
     } else if (icon) {
-      content = <Image source={icon} />;
+      content = <Image source={icon} style={{width: 32, height: 32}}/>;
     }
 
     return (

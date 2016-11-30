@@ -19,6 +19,12 @@ import ChannelView from '../components/ChannelView'
 
 class ChannelContainer extends BaseContainer {
   render() {
+  	let	rightItem = {
+  		  layout: 'icon',
+  		  title: 'search',
+  		  icon: require('../images/icon_search.png'),
+  		  onPress: this.searchView,
+  		};
     return (
       <View style={styles.container}>
 	      <TripperHeader
@@ -28,7 +34,8 @@ class ChannelContainer extends BaseContainer {
 	          title: 'Close',
 	          icon: require('../images/logo_white@32.png'),
 	          onPress: this.handleShowMenu,
-	        }}>
+	        }}
+	        rightItem={rightItem}>
 	      </TripperHeader>
 	      <ChannelView />
       </View>

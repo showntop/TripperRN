@@ -53,7 +53,6 @@ class MainContainer extends BaseContainer {
   }
 
   render() {
-
 	  return (
 	  	<Drawer
 	  	  type="overlay"

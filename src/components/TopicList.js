@@ -6,9 +6,11 @@ import {
   StyleSheet,
   View,
   ListView,
+  RefreshControl,
 } from 'react-native';
 
 import TopicListItem from '../components/TopicListItem'
+import {listTopic} from '../actions/topics';
 
 class TopicList extends Component {
 
@@ -19,21 +21,44 @@ class TopicList extends Component {
 
     let dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
-    dataSource = dataSource.cloneWithRows(articleList);
     this.state = {
+      loading: false,
       dataSource,
     };
   }
 
+  componentDidMount() {
+    const {dispatch} =  this.props;
+    dispatch(listTopic());
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const {topicStore} = nextProps;
+    this.setState({
+      loading: topicStore.loading,
+      dataSource: this.state.dataSource.cloneWithRows(topicStore.topics)
+    });
+  }
+
+  _onRefresh() {
+    const {dispatch} =  this.props;
+    dispatch(listTopic());  
+  }
+
   render() {
-    const {loadingStatus, dataSource} = this.state;
 
     return (
 	    <ListView
 	      removeClippedSubviews={false}
 	      style={styles.listView}
-	      dataSource={dataSource}
-	      renderRow={this.renderRow}/>
+	      dataSource={this.state.dataSource}
+	      renderRow={this.renderRow}
+        refreshControl={
+          <RefreshControl
+            refreshing={this.state.loading}
+            onRefresh={this._onRefresh.bind(this)}
+          />
+        }/>
 	);
   }
 

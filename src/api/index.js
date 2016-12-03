@@ -1,9 +1,10 @@
 'use strict';
 
 import ApiClient            from './ApiClient';
-// import UsersAPI             from './Users';
-import ProjectApi             from './Project';
-import UserApi             from './User';
+
+import ProjectApi           from './Project';
+import TopicApi             from './Topic';
+import UserApi              from './User';
 
 const ssoUrl  = `http://192.168.1.103:7000/api/v1`;
 // const busUrl = `http://192.168.1.103:7007/api/v1`;
@@ -20,6 +21,7 @@ function Api({ apiPrefix } = {}) {
         apiClient         : api,
         // users             : new UsersAPI({ apiClient: api }),
         project           :new ProjectApi({baseUrl: busUrl, apiClient: api}),
+        topic             :new TopicApi({baseUrl: busUrl, apiClient: api}),
         user              :new UserApi({baseUrl: ssoUrl, apiClient: api})
     };
 }

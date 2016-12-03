@@ -17,18 +17,18 @@ class TopicListItem extends Component {
     const {data} = this.props;
     let title, authorName, content;
     let imageSource;
+
+    title = data.title;
+
     if (data.content_id) {
-      title = data.hp_title;
       authorName = data.author[0].user_name;//为什么这个author字段是个数组, 跟其他的又不一样
       content = data.guide_word;
       imageSource = require('../images/essay_image.png');
     } else if (data.serial_id) {
-      title = data.title;
       authorName = data.author.user_name;
       content = data.excerpt;
       imageSource = require('../images/serial_image.png');
     } else if (data.question_id) {
-      title = data.question_title;
       authorName = data.answer_title;
       content = data.answer_content;
       imageSource = require('../images/question_image.png');

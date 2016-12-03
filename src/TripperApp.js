@@ -5,11 +5,11 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Navigator,
-  BackAndroid,
   View,
   StatusBar,
   Modal,
   Text,
+  Platform
 } from 'react-native';
 
 var { connect } = require('react-redux');

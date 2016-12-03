@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps (state) {
-  const {project, navigator} = state;
+  const {project} = state;
   return project.selectedProject;
  
 }

@@ -122,7 +122,7 @@ class TripperEditor extends Component {
   render() {
     return (
         <View style={styles.container}>
-            <EditorHeader {...this.props} onRightPress={this.saveSpot}/>
+            <EditorHeader {...this.props} onRightPress={this.saveSpot} title="记..."/>
 
             <View style={{ flex: 1}} >
                 <Image

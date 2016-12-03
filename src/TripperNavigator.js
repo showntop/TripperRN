@@ -14,50 +14,49 @@ var { connect } = require('react-redux');
 
 import Style from './constants/Style';
 import MainContainer from './containers/MainContainer';
+import Toast from 'react-native-root-toast';
+
+let lastClickTime = 0;
 
 class TripperNavigator extends Component {
 
-  componentDidMount() {
-    BackAndroid.addEventListener('hardwareBackPress', this.handleBackButton);
+  constructor(props) {
+    super(props);
+  
+    this.state = {};
+
+    this.onBackAndroid = this.onBackAndroid.bind(this);
+  }
+
+  componentWillMount() {
+    if (Platform.OS === 'android') {
+      BackAndroid.addEventListener('hardwareBackPress', this.onBackAndroid);
+    }
+  }
+
+  componentDidMount (){
+    //想要使用微信分享, 你必须到微信分享平台 https://open.weixin.qq.com/ 申请appid
   }
 
   componentWillUnmount() {
-    BackAndroid.removeEventListener('hardwareBackPress', this.handleBackButton);
-  }
-
-  getChildContext() {
-    return {
-      addBackButtonListener: this.addBackButtonListener,
-      removeBackButtonListener: this.removeBackButtonListener,
-    };
-  }
-
-  addBackButtonListener(listener) {
-    this._handlers.push(listener);
-  }
-
-  removeBackButtonListener(listener) {
-    this._handlers = this._handlers.filter((handler) => handler !== listener);
-  }
-
-  handleBackButton() {
-    for (let i = this._handlers.length - 1; i >= 0; i--) {
-      if (this._handlers[i]()) {
-        return true;
-      }
+    if (Platform.OS === 'android') {
+      BackAndroid.removeEventListener('hardwareBackPress', this.onBackAndroid);
     }
+  }
 
-    const {navigator} = this.refs;
-    if (navigator && navigator.getCurrentRoutes().length > 1) {
-      navigator.pop();
+  onBackAndroid() {
+    const routers = this.refs.navigator.getCurrentRoutes();
+    if (routers.length > 1) {
+      this.refs.navigator.pop();
       return true;
     }
-
-    if (this.props.tab !== 'schedule') {
-      this.props.dispatch(switchTab('schedule'));
-      return true;
+    let now = new Date().getTime();
+    if (now - lastClickTime < 2500) {//2.5秒内点击后退键两次推出应用程序
+      return false;//控制权交给原生
     }
-    return false;
+    lastClickTime = now;
+    Toast.show('再按一次退出应用');
+    return true;
   }
 
   render() {
@@ -84,7 +83,7 @@ class TripperNavigator extends Component {
   renderScene(route, navigator) {
     let Component = route.component;
     return (
-      <Component navigator={navigator} route={route}/>
+      <Component navigator={navigator} {...route.props}/>
     );
   }
 

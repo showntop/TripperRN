@@ -18,7 +18,7 @@ import ViewPager from 'react-native-viewpager';
 import commonStyle from '../constants/Style'
 
 const windowWidth = Dimensions.get('window').width;
-const HEIGHT = 300;
+const HEIGHT = 200;
 
 const channels = ['散文', '大学生活', '中国妖怪录',"历史的边角科","剪辑师爱电影"]
 

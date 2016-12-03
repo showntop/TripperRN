@@ -3,6 +3,7 @@
 import { combineReducers } from 'redux';
 
 import project from './project';
+import topic from './topic';
 import user from './user';
 import error from './error';
 // import maps from './maps';
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   // location,
   project,
   errorStore: error,
+  topicStore: topic,
   // maps,
   // sessions,
   // schedule,

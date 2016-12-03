@@ -30,7 +30,7 @@ export default class EditorHeader extends React.Component {
     return (
       <NavigationBar
               style={styles.navbar}
-              title={{title: '记...'}}
+              title={{title: this.props.title}}
               statusBar={
                 {style: 'light-content',
                 tintColor: '#8FBC8F'}   

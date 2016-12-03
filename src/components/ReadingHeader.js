@@ -17,7 +17,7 @@ class ReadingHeader extends Component {
     return (
       <NavigationBar
 	      style={styles.navbar}
-	      title={{title: this.props.data.title}}
+	      title={{title: this.props.title}}
 	      statusBar={
 	        {style: 'light-content',
 	        tintColor: '#8FBC8F'}   

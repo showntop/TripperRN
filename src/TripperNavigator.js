@@ -83,7 +83,7 @@ class TripperNavigator extends Component {
   renderScene(route, navigator) {
     let Component = route.component;
     return (
-      <Component navigator={navigator} {...route.props}/>
+      <Component navigator={navigator} {...route}/>
     );
   }
 
@@ -103,10 +103,7 @@ const styles = StyleSheet.create({
 
 
 function mapStateToProps (state) {
-  const {reddit} = state;
-  return {
-    reddit
-  }
+  return {}
 }
 
 export default connect(mapStateToProps)(TripperNavigator);

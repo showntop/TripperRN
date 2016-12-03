@@ -3,9 +3,10 @@
 import { combineReducers } from 'redux';
 
 import project from './project';
-import topic from './topic';
-import user from './user';
-import error from './error';
+import topic   from './topic';
+import post    from './post';
+import user    from './user';
+import error   from './error';
 // import maps from './maps';
 // import sessions from './sessions';
 // import schedule from './schedule';
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   project,
   errorStore: error,
   topicStore: topic,
+  postStore:  post,
   // maps,
   // sessions,
   // schedule,

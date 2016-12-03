@@ -38,7 +38,7 @@ class CommunityContainer extends BaseContainer {
   	let	rightItem = {
   		  layout: 'icon',
   		  title: 'write',
-  		  icon: require('../images/icon_add.png'),
+  		  icon: require('../images/icon_add_topic.png'),
   		  onPress: this.openEditor,
   		};
 

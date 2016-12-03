@@ -28,7 +28,7 @@ class ProjectView extends Component {
 
   componentWillMount() {
   	const {dispatch} = this.props
-  	dispatch(fetchProject(this.props.route.project.id))
+  	dispatch(fetchProject(this.props.project.id))
   }
 
   navtoLast() {
@@ -46,7 +46,7 @@ class ProjectView extends Component {
     }    
     return (
       <View  style={styles.container}>
-        <ReadingHeader {...this.props} style={styles.header}/>
+        <ReadingHeader {...this.props} style={styles.header} title={this.props.project.title}/>
         <ScrollView style={styles.body}>
         	<Image source={{uri: this.props.data.asset}} style={{flex: 1, height: 300}}/>
         	<Paragraph style={styles.paragraph}>

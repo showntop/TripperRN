@@ -10,12 +10,20 @@ import {
 import {connect} from 'react-redux'
 
 import TopicCreator from '../components/TopicCreator'
+import TopicView    from '../components/TopicView'
 
 class TopicContainer extends Component {
   render() {
-    return (
-      <TopicCreator {...this.props} />
-    );
+
+    if (this.props.route && this.props.route.id) {
+      return(
+        <TopicView {...this.props} id={this.props.route.id}/>
+        );
+    }else{
+      return (
+        <TopicCreator {...this.props} />
+      );
+    }
   }
 }
 

@@ -32,6 +32,14 @@ function topic(state: State = initState, action: Action): State {
               topic: action.data            
             });
   }
+  if (action.type === 'showed_topic') {
+    return Object.assign({}, state, {
+              loading: false,
+              status: true,
+              message: "创建成功",
+              topic: action.data            
+            });
+  }
   return state;
 }
 

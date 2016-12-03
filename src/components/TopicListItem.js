@@ -11,36 +11,41 @@ import {
 } from 'react-native';
 
 import commonStyle from '../constants/Style';
+import TopicContainer from '../containers/TopicContainer'
 
 class TopicListItem extends Component {
+  constructor(props) {
+    super(props);
+  
+    this.onPress = this.onPress.bind(this);
+  }
+
+  onPress(){
+    const {navigator, data} = this.props
+
+    navigator.push({
+      component: TopicContainer,
+      name: 'TopicContainer',
+      route: {id: data.id}
+    })
+  }
+
   render() {
     const {data} = this.props;
-    let title, authorName, content;
-    let imageSource;
 
-    title = data.title;
+    let title = data.title;
+    let content = data.content;
+    let tag = data.tag || '问答'
+    let authorName = data.author.nickname
 
-    if (data.content_id) {
-      authorName = data.author[0].user_name;//为什么这个author字段是个数组, 跟其他的又不一样
-      content = data.guide_word;
-      imageSource = require('../images/essay_image.png');
-    } else if (data.serial_id) {
-      authorName = data.author.user_name;
-      content = data.excerpt;
-      imageSource = require('../images/serial_image.png');
-    } else if (data.question_id) {
-      authorName = data.answer_title;
-      content = data.answer_content;
-      imageSource = require('../images/question_image.png');
-    }
     return (
       <TouchableOpacity style={styles.touchableOpacity} onPress={() => this.onPress(data)}>
         <View>
           <View style={styles.rowContainer}>
             <Text style={styles.titleText}>{title}</Text>
-            <Image style={styles.image} resizeMode="contain" source={imageSource}/>
+            <View style={styles.tag}><Text style={{color: '#8fbff9'}}>{tag}</Text></View>
           </View>
-          <Text style={styles.text}>{authorName}</Text>
+          <Text style={styles.text}>{"@" + authorName}</Text>
           <Text style={styles.text}>{content}</Text>
         </View>
       </TouchableOpacity>
@@ -68,9 +73,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginTop: 5
   },
-  image: {
+  tag: {
     height: 25,
     width: 60,
+    borderColor: '#8fbff9',
+    borderWidth: 1,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 });
 

@@ -53,18 +53,19 @@ class TopicList extends Component {
 	      style={styles.listView}
 	      dataSource={this.state.dataSource}
 	      renderRow={this.renderRow}
+        enableEmptySections={true}
         refreshControl={
           <RefreshControl
             refreshing={this.state.loading}
             onRefresh={this._onRefresh.bind(this)}
           />
         }/>
-	);
+	  );
   }
 
   renderRow(data) {
     return (
-      <TopicListItem data={data}/>
+      <TopicListItem data={data} {...this.props}/>
     );
   }
 }

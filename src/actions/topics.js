@@ -65,4 +65,34 @@ function listedTopic (topics) {
   }
 }
 
+//#######################################################//
+function showingTopic(){
+  return{
+    type: "showing_topic",
+    data:{
+      isLoading: true,
+      data: null
+    }
+  }
+}
+
+export function showTopic (id) {
+  return dispatch => {
+    dispatch(showingTopic());
+    return Api.topic.show(id).then(result => {
+      dispatch(showedTopic(result));
+    }).catch((errors) =>{
+      dispatch({type: "REQUEST_ERROR", errors: errors});
+    });
+  }
+}
+
+function showedTopic (topic) {
+  return {
+    type: "showed_topic",
+    data: topic,
+    isLoading: false
+  }
+}
+
 

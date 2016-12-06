@@ -44,20 +44,20 @@ class MediaCard extends Component {
           /> : <View/>
       }
         <View style={{flex: 1, width: 300, alignItems: 'center'}}>
-          <Heading1>{this.props.title.substring(0,6) + '...'}</Heading1>
+          <Heading1 style={{textAlign: 'center', marginBottom: 5}}>{this.props.title}</Heading1>
           <View style={{height: 1, width: 280, backgroundColor: '#ededef'}}/>
           <Text style={styles.content}>
-            {this.props.content}
+            {this.props.intro}
           </Text>
         </View>
         <View style={styles.user}>
           <View style={{flexDirection: 'row'}}>
             <Image 
             style={{width: 30, height: 30, borderRadius: 15}}
-            source={{url: this.props.author.avatar}}/>
-            <Text style={{alignSelf: "center", marginLeft: 10}}>{this.props.author.name}</Text>
+            source={{uri: this.props.author.avatar}}/>
+            <Text style={{alignSelf: "center", marginLeft: 5}}>{this.props.author.nickname}</Text>
           </View>
-          <Text style={{alignSelf: "center"}}>{this.props.created_at}</Text>
+          <Text style={{alignSelf: "center", fontWeight: 'bold'}}>{this.props.created_at.split('T')[0].replace('-', '.').replace('-', '.')}</Text>
         </View>
 	    </View>
     );
@@ -108,7 +108,7 @@ class ProjectCard extends Component {
     return (
       <SwipeCards 
         cards={this.props.data}
-        loop={false}
+        loop={true}
         renderCard={(cardData) => <MediaCard {...cardData} />}
         renderNoMoreCards={() => <NoMoreCards />}
         handleNope={this.handleNope}
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   },
   thumbnail: {
     width: 300,
-    height: 360,
+    height: 320,
   },
   title: {
     fontSize: 20,

@@ -14,7 +14,7 @@ import {
 import {Text, Heading1, Paragraph} from '../components/TripperText'
 
 import {fetchProject} from '../actions/projects';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon2 from 'react-native-vector-icons/EvilIcons';
 
 import ReadingHeader from '../components/ReadingHeader'
 
@@ -56,17 +56,17 @@ class ProjectView extends Component {
 
         <View style={styles.footer}>
             <TouchableOpacity style={styles.toolItem} activeOpacity={0.1} onPress ={this.navtoLast.bind(this)}>
-              <Icon name='arrow-back' size={28} style={{color: 'black'}} />
+              <Icon2 name='arrow-left' size={32} style={{color: '#BDBDBD'}} />
             </TouchableOpacity>
             <View style={{flex: 1}}/>
             <TouchableOpacity style={styles.toolItem} activeOpacity={0.1} onPress ={this.operation.bind(this)}>
-              <Icon name='comment' size={28} style={{color: 'black'}} />
+              <Icon2 name='comment' size={32} style={{color: '#BDBDBD'}} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.toolItem} activeOpacity={0.1} onPress ={this.operation.bind(this)}>
-              <Icon name='favorite' size={28} style={{color: 'black'}} />
+              <Icon2 name='heart' size={32} style={{color: '#BDBDBD'}} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.toolItem} activeOpacity={0.1} onPress ={this.operation.bind(this)}>
-              <Icon name='open-in-new' size={28} style={{color: 'black'}} />
+              <Icon2 name='share-google' size={32} style={{color: '#BDBDBD'}} />
             </TouchableOpacity>
         </View>
       </View>
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   footer: {
     flex: 1,
     alignSelf: 'stretch',
-    borderTopColor: 'grey',
+    borderTopColor: '#F0F0F0',
     borderTopWidth: 1,
     flexDirection: 'row',
     backgroundColor: 'white',

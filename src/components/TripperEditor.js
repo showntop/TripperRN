@@ -119,6 +119,10 @@ class TripperEditor extends Component {
     dispatch(createProject(this.props.currentUser.data, project))
   }
 
+  onSelectAlbum() {
+
+  }
+
   render() {
     return (
         <View style={styles.container}>
@@ -148,10 +152,13 @@ class TripperEditor extends Component {
                   </View>
 
                   <View style={{flexDirection: 'row',backgroundColor: 'white', opacity: 0.5, height: 30}}>
-                     <TouchableOpacity activeOpacity={0.1} onPress ={() => this.tabColor(1)} style={{flexDirection: 'row', flex: 1, alignItems: 'center'}}>
-                          <Icon name='user' size={25} style={{color: 'black'}} />
+                     <TouchableOpacity activeOpacity={0.1} onPress ={() => this.onSelectAlbum()} style={{flexDirection: 'row', flex: 1, alignItems: 'center'}}>
+                          <Icon name='archive' size={25} style={{color: 'black'}} />
                           <Text style={{color: 'black'}} >亲人</Text>
                       </TouchableOpacity>
+                      <TouchableOpacity onPress ={() => this.selectAsset(2)}  style={{flexDirection: 'row',  alignItems: 'center', marginRight: 10}}>
+                          <Icon name='credit-card' size={25}  style={{color: 'black'}} />
+                      </TouchableOpacity>                    
                       <TouchableOpacity onPress ={() => this.selectAsset(2)}  style={{flexDirection: 'row',  alignItems: 'center'}}>
                           <Icon name='image' size={25}  style={{color: 'black'}} />
                       </TouchableOpacity>

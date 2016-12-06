@@ -17,14 +17,14 @@ class ReadingHeader extends Component {
     return (
       <NavigationBar
 	      style={styles.navbar}
-	      title={{title: this.props.title}}
+	      title={{title: this.props.title, tintColor: 'white'}}
 	      statusBar={
 	        {style: 'light-content',
 	        tintColor: '#8FBC8F'}   
 	      }
 	      leftButton={  
 	        <TouchableOpacity style={styles.toolItem} activeOpacity={0.1} >
-	          <Icon name='ios-book' size={28} style={{color: 'green'}} />
+	          <Icon name='ios-book' size={28} style={{color: 'white'}} />
 	        </TouchableOpacity>
 	      } 
       />

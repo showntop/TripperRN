@@ -20,7 +20,7 @@ const rootReducer = combineReducers({
   user,
   // spot,
   // location,
-  project,
+  projectStore: project,
   errorStore: error,
   topicStore: topic,
   postStore:  post,

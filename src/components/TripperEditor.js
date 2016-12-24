@@ -9,12 +9,14 @@ import {
     ScrollView,
     Dimensions,
     Alert,
-    Platform
+    Platform,
+    Modal
 } from 'react-native'
 
 import Icon from 'react-native-vector-icons/EvilIcons';
 
 import EditorHeader from '../components/EditorHeader';
+import AlbumSelector from '../components/AlbumSelector';
 import * as StyleSheet from '../utility/StyleSheet';
 import ImagePicker from 'react-native-image-picker';
 
@@ -46,10 +48,24 @@ class TripperEditor extends Component {
     this.state = {  
         asset: require('../images/default_cover.jpg'),
         title: null,
-        content: null
+        content: null,
+        geo: {
+          "coords":{
+            "speed":34.94,
+            "longitude":-122.18241295,
+            "latitude":37.4002115,
+            "accuracy":5,
+            "heading":320.98,
+            "altitude":0,
+            "altitudeAccuracy":-1
+          },
+          address: "北京清华园",
+        },
+        showAlbumSelector: false,
     }
 
     this.saveSpot = this.saveSpot.bind(this)
+    this.parseLocation = this.parseLocation.bind(this)
   }
 
   componentDidMount() {
@@ -57,6 +73,12 @@ class TripperEditor extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    let { createdProject } = nextProps.projectStore;
+    if (createdProject.data.id) {
+        Alert.alert('温馨提醒','提交成功',[
+            { text:'确定', onPress: () => { nextProps.navigator.pop() } }
+          ]);
+    }
     // if (!nextProps.error.status) {
     //   Alert.alert('温馨提醒','提交成功',[
     //       { text:'确定', onPress: () => { nextProps.navigator.pop() } }
@@ -101,7 +123,7 @@ class TripperEditor extends Component {
           return resp.json()
         }).then(result => {
           this.setState({
-            asset: {uri: "http://og7lh5z5q.bkt.clouddn.com/"+result.key}
+            asset: {uri: "http://og7lh5z5q.bkt.clouddn.com/"+result.key + "?imageView/2/w/300/h/320"}
           });  
         });
       }
@@ -120,14 +142,61 @@ class TripperEditor extends Component {
   }
 
   onSelectAlbum() {
+    this.setState({showAlbumSelector: true});
+  }
 
+
+  parseLocation(coords) {
+    return fetch(`http://restapi.amap.com/v3/geocode/regeo?output=json&location=116.310003,39.991957&key=2e98a619ace93e8fbd01c7fc9ac748a7&radius=1000&extensions=all`).then(response => {
+      return response.json();
+    }, (error)=>{
+      console.log(error)
+    }).then(json => {
+        // 可以多次 dispatch！
+        // 这里，使用 API 请求结果来更新应用的 state。
+        this.setState({geo: { coords: coords, address: json.regeocode.formatted_address }})
+    }, error =>{
+      console.log(error)
+    })
+  }
+
+
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        var initialPosition = JSON.stringify(position);
+        // this.setState({initialPosition});
+        this.parseLocation(initialPosition.coords)
+      },
+      ((error) => {
+        alert(error);
+      }),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    );
+    this.watchID = navigator.geolocation.watchPosition((position) => {
+      var lastPosition = JSON.stringify(position);
+      // this.setState({lastPosition});
+      this.parseLocation(lastPosition.coords)
+    });
+  }
+
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchID);
   }
 
   render() {
     return (
         <View style={styles.container}>
             <EditorHeader {...this.props} onRightPress={this.saveSpot} title="记..."/>
-
+            <Modal
+              animationType={"slide"}
+              transparent={true}
+              visible={this.state.showAlbumSelector}
+              onRequestClose={() => {this.setState({showAlbumSelector: false})}}>
+              <View style={{flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.5)', alignItems: 'center', justifyContent: 'center',}} >
+                <AlbumSelector style={{width: 300, height: 500}}/>
+              </View>
+            </Modal>
             <View style={{ flex: 1}} >
                 <Image
                   ref="spotCover"
@@ -147,14 +216,14 @@ class TripperEditor extends Component {
 
                       <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' ,backgroundColor: '#BEBEBE', borderRadius: 5, width: 150,height: 18, position: 'relative', bottom: 12}} >
                         <Icon name="location" style={{marginTop: 2}}/>
-                        <Text style={{fontSize: 10, width: 130}} numberOfLines={1}>{'北京市清湖园'}</Text>
+                        <Text style={{fontSize: 10, width: 150}} numberOfLines={1}>{this.state.geo.address}</Text>
                       </TouchableOpacity>
                   </View>
 
                   <View style={{flexDirection: 'row',backgroundColor: 'white', opacity: 0.5, height: 30}}>
                      <TouchableOpacity activeOpacity={0.1} onPress ={() => this.onSelectAlbum()} style={{flexDirection: 'row', flex: 1, alignItems: 'center'}}>
                           <Icon name='archive' size={25} style={{color: 'black'}} />
-                          <Text style={{color: 'black'}} >亲人</Text>
+                          <Text style={{color: 'black'}} >随笔</Text>
                       </TouchableOpacity>
                       <TouchableOpacity onPress ={() => this.selectAsset(2)}  style={{flexDirection: 'row',  alignItems: 'center', marginRight: 10}}>
                           <Icon name='credit-card' size={25}  style={{color: 'black'}} />

@@ -48,7 +48,9 @@ class ProjectView extends Component {
       <View  style={styles.container}>
         <ReadingHeader {...this.props} style={styles.header} title={this.props.project.title}/>
         <ScrollView style={styles.body}>
-        	<Image source={{uri: this.props.data.asset}} style={{flex: 1, height: 300}}/>
+          { 
+            this.props.data.asset && this.props.data.asset != "" ? <Image source={{uri: this.props.data.asset}} style={{flex: 1, height: 300}}/> : <View/>
+          }
         	<Paragraph style={styles.paragraph}>
         		{this.props.data.content}
         	</Paragraph>

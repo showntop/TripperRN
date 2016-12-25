@@ -44,7 +44,7 @@ class MediaCard extends Component {
           /> : <View/>
       }
         <View style={{flex: 1, width: 300, alignItems: 'center'}}>
-          <Heading1 style={{textAlign: 'center', marginBottom: 5}}>{this.props.title}</Heading1>
+          <Heading1 style={{textAlign: 'center', marginTop: 5, marginBottom: 5}}>{this.props.title}</Heading1>
           <View style={{height: 1, width: 280, backgroundColor: '#ededef'}}/>
           <Text style={styles.content}>
             {this.props.intro}
@@ -145,8 +145,7 @@ const styles = StyleSheet.create({
   },
   content: {
     fontSize: 12,
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingTop: 3,
     lineHeight: 20
   },
   user: {
@@ -156,6 +155,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingLeft: 15,
     paddingRight: 15,
+    marginTop: 10,
   },
   noMoreCards: {
     flex: 1,

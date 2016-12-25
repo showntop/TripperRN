@@ -214,9 +214,9 @@ class TripperEditor extends Component {
                           multiline={true} value={this.state.content} onChangeText={content => this.setState({content})}/>
                       </View>
 
-                      <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' ,backgroundColor: '#BEBEBE', borderRadius: 5, width: 150,height: 18, position: 'relative', bottom: 12}} >
+                      <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' ,backgroundColor: '#BEBEBE', borderRadius: 5, width: 160,height: 18, position: 'relative', bottom: 12}} >
                         <Icon name="location" style={{marginTop: 2}}/>
-                        <Text style={{fontSize: 10, width: 150}} numberOfLines={1}>{this.state.geo.address}</Text>
+                        <Text style={{fontSize: 10, width: 145}} numberOfLines={1}>{this.state.geo.address}</Text>
                       </TouchableOpacity>
                   </View>
 

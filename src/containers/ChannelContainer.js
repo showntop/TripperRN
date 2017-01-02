@@ -7,6 +7,7 @@ import {
   Platform
 } from 'react-native';
 
+import {connect} from 'react-redux'
 
 import * as StyleSheet from '../utility/StyleSheet'
 
@@ -37,7 +38,7 @@ class ChannelContainer extends BaseContainer {
 	        }}
 	        rightItem={rightItem}>
 	      </TripperHeader>
-	      <ChannelView />
+	      <ChannelView {...this.props}/>
       </View>
     );
   }
@@ -52,46 +53,13 @@ const styles = StyleSheet.create({
 	    backgroundColor: '#5597B8',
 	  // },
 	},
-	headerContent: {
-	  android: {
-	    flex: 1,
-	    alignItems: 'flex-start',
-	    justifyContent: 'center',
-	  },
-	  ios: {
-	    height: 65,
-	    alignItems: 'center',
-	    justifyContent: 'center',
-	  },
-	},
-	title: {
-	  color: 'white',
-	  fontSize: 12,
-	  ios: {
-	    textAlign: 'center',
-	  },
-	},
-	day: {
-	  ios: {
-	    fontWeight: 'bold',
-	  },
-	  android: {
-	    fontSize: 9,
-	  },
-	},
-	time: {
-	  android: {
-	    fontWeight: 'bold',
-	    fontSize: 17,
-	  }
-	},
-	card: {
-	  ios: {
-	    borderRadius: 2,
-	    marginHorizontal: 3,
-	  },
-	},
 });
 
 
-export default ChannelContainer;
+function mapStateToProps (state) {
+  const {projectStore} = state;
+  return projectStore.selectedProject;
+ 
+}
+
+export default connect(mapStateToProps)(ChannelContainer);

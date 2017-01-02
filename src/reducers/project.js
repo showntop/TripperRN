@@ -4,6 +4,8 @@ type State = Array<string>;
 type Action = { type: string; list: Array<any>; };
 
 var initState = {
+  loading: false,
+  projectList: [],
   selectedProject: {
     data: [],
   },
@@ -22,6 +24,11 @@ var initState = {
 }
 
 function project(state: State = initState, action: Action): State {
+  if (action.type === 'listed_project') {
+    return Object.assign({}, state, {
+              projectList: action.data
+            });
+  }
   if (action.type === 'loaded_selected_projects') {
     return Object.assign({}, state, {
               selectedProject: {

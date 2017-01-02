@@ -5,6 +5,38 @@ import TripperHeader from '../components/TripperHeader';
 
 const Api = Apix.default()
 
+//#######################################################//
+function listingProject(){
+  return{
+    type: "listing_project",
+    data:{
+      isLoading: true,
+      data: null
+    }
+  }
+}
+
+export function listProject () {
+  return dispatch => {
+    dispatch(listingProject());
+    return Api.project.list().then(result => {
+      dispatch(listedProject(result));
+    }).catch((errors) =>{
+      dispatch({type: "REQUEST_ERROR", errors: errors});
+    });
+  }
+}
+
+function listedProject (projects) {
+  return {
+    type: "listed_project",
+    data: projects,
+    isLoading: false
+  }
+}
+
+//#######################################################//
+
 function loadingSelectedProjects(){
   return{
     type: "loading_selected_projects",

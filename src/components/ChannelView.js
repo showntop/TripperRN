@@ -17,6 +17,8 @@ import Swiper from 'react-native-swiper'
 import ViewPager from 'react-native-viewpager';
 import commonStyle from '../constants/Style'
 
+import ProjectListContainer from '../containers/ProjectListContainer'
+
 const windowWidth = Dimensions.get('window').width;
 const HEIGHT = 200;
 
@@ -52,6 +54,17 @@ class ChannelView extends Component {
   		dataSource: ds.cloneWithRows(channels),
       userSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}).cloneWithRows(userList)
   	};
+
+    this.listCategory = this.listCategory.bind(this);
+  }
+
+  listCategory() {
+    const {navigator} = this.props;
+    navigator.push({
+      component: ProjectListContainer,
+      name: 'ProjectListContainer',
+      category: 0,
+    })    
   }
 
   renderPage(data) {
@@ -80,18 +93,18 @@ class ChannelView extends Component {
 
         <View style={styles.container2}>
 
-          <View style={{backgroundColor: '#E0EEEE', width: 50, height: 50, borderRadius: 5, alignItems: 'center', justifyContent: 'center',}}>
+          <TouchableOpacity onPress={()=>this.listCategory()} style={{backgroundColor: '#E0EEEE', width: 50, height: 50, borderRadius: 5, alignItems: 'center', justifyContent: 'center',}}>
             <Text>文字</Text>
-          </View>       
-          <View style={{backgroundColor: '#E0EEEE', width: 50, height: 50, borderRadius: 5, alignItems: 'center', justifyContent: 'center',}}>
+          </TouchableOpacity>       
+          <TouchableOpacity onPress={()=>this.listCategory()} style={{backgroundColor: '#E0EEEE', width: 50, height: 50, borderRadius: 5, alignItems: 'center', justifyContent: 'center',}}>
             <Text>音频</Text>
-          </View>       
-          <View style={{backgroundColor: '#E0EEEE', width: 50, height: 50, borderRadius: 5, alignItems: 'center', justifyContent: 'center',}}>
+          </TouchableOpacity>       
+          <TouchableOpacity onPress={()=>this.listCategory()} style={{backgroundColor: '#E0EEEE', width: 50, height: 50, borderRadius: 5, alignItems: 'center', justifyContent: 'center',}}>
             <Text>电影</Text>
-          </View>       
-          <View style={{backgroundColor: '#E0EEEE', width: 50, height: 50, borderRadius: 5, alignItems: 'center', justifyContent: 'center',}}>
+          </TouchableOpacity>       
+          <TouchableOpacity onPress={()=>this.listCategory()} style={{backgroundColor: '#E0EEEE', width: 50, height: 50, borderRadius: 5, alignItems: 'center', justifyContent: 'center',}}>
             <Text>杂</Text>
-          </View>
+          </TouchableOpacity>
 
         </View>
     		

@@ -61,6 +61,10 @@ class TripperEditor extends Component {
           },
           address: "北京清华园",
         },
+        album:{
+          id: "",
+          name: "选择笔记本",
+        },
         showAlbumSelector: false,
     }
 
@@ -189,12 +193,12 @@ class TripperEditor extends Component {
         <View style={styles.container}>
             <EditorHeader {...this.props} onRightPress={this.saveSpot} title="记..."/>
             <Modal
-              animationType={"slide"}
-              transparent={true}
+              animationType={"fade"}
+              transparent={false}
               visible={this.state.showAlbumSelector}
               onRequestClose={() => {this.setState({showAlbumSelector: false})}}>
               <View style={{flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.5)', alignItems: 'center', justifyContent: 'center',}} >
-                <AlbumSelector style={{width: 300, height: 500}}/>
+                <AlbumSelector style={{width: 300, height: 500}} callback={(album)=>{this.setState({album: album}); this.setState({showAlbumSelector: false});}}/>
               </View>
             </Modal>
             <View style={{ flex: 1}} >
@@ -223,7 +227,7 @@ class TripperEditor extends Component {
                   <View style={{flexDirection: 'row',backgroundColor: 'white', opacity: 0.5, height: 30}}>
                      <TouchableOpacity activeOpacity={0.1} onPress ={() => this.onSelectAlbum()} style={{flexDirection: 'row', flex: 1, alignItems: 'center'}}>
                           <Icon name='archive' size={25} style={{color: 'black'}} />
-                          <Text style={{color: 'black'}} >随笔</Text>
+                          <Text style={{color: 'black'}} >{this.state.album.name}</Text>
                       </TouchableOpacity>
                       <TouchableOpacity onPress ={() => this.selectAsset(2)}  style={{flexDirection: 'row',  alignItems: 'center', marginRight: 10}}>
                           <Icon name='credit-card' size={25}  style={{color: 'black'}} />

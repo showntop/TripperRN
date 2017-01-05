@@ -15,14 +15,21 @@ import {
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+import {createAlbum} from '../actions/albums';
+
+var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
 class AlbumSelector extends Component {
   constructor(props) {
     super(props);
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
      this.state = {
         showAlbumCreator: false,
-        dataSource: ds.cloneWithRows([{id: 1, name: '随笔'}, {id: 2, name: '花儿'}]),
+        createdAlbum: {
+          name: ""
+        }
      };  
+
+    this.toCreateAlbum = this.toCreateAlbum.bind(this)
   }
 
   onCreateAlbum() {
@@ -31,11 +38,15 @@ class AlbumSelector extends Component {
     })
   }
 
-  createAlbum() {
-
+  toCreateAlbum() {
+    const {dispatch} = this.props;
+    dispatch(createAlbum({}, this.state.createdAlbum));
+    this.setState({showAlbumCreator: false});
   }
 
   render() {
+    let dataSource = ds.cloneWithRows(this.props.userStore.myAlbums);
+
     return (
      <View style={[styles.container, this.props.style]}>
 
@@ -44,18 +55,18 @@ class AlbumSelector extends Component {
         transparent={true}
         visible={this.state.showAlbumCreator}
         onRequestClose={() => {this.setState({showAlbumCreator: false})}}>
-        <View style={{flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.5)', alignItems: 'center', justifyContent: 'center'}} >
-          <View style={{width: 200, height: 120, backgroundColor: "white"}}>
-            <View style={{ height: 15, borderBottomColor: '#8B7E66', borderBottomWidth: 1, paddingBottom: 6}}>
-                <TextInput ref="title" style={{height: 15, paddingBottom: 0}} placeholder="名称" underlineColorAndroid= "transparent"
-                value={this.state.title} onChangeText={title => this.setState({title})}/>
+        <View style={{flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.5)', alignItems: 'center'}} >
+          <View style={{width: 300, height: 120, backgroundColor: "white", marginTop: 100, padding: 10}}>
+            <View style={{ height: 45, borderBottomColor: '#8B7E66', borderBottomWidth: 1, paddingBottom: 6}}>
+                <TextInput ref="title" style={{height: 45, paddingBottom: 0}} placeholder="名称" underlineColorAndroid= "transparent"
+                value={this.state.createdAlbum.name} onChangeText={name => this.setState({createdAlbum: {name: name}})}/>
             </View>
-            <View style={{flexDirection: 'row'}}>
+            <View style={{flexDirection: 'row', marginTop: 20, justifyContent: 'space-between', paddingLeft: 10, paddingRight: 10}}>
               <TouchableOpacity style={styles.button} onPress ={() => {this.setState({showAlbumCreator: false})}}>
-                <Text style={{color: 'blue', fontSize: 20, textAlignVertical: 'center', textAlign: 'center'}}>取消</Text>
+                <Text style={{color: 'black', fontSize: 20, textAlignVertical: 'center', textAlign: 'center'}}>取消</Text>
               </TouchableOpacity>   
-              <TouchableOpacity style={styles.button} onPress ={this.createAlbum.bind(this)}>
-                <Text style={{color: 'blue', fontSize: 20, textAlignVertical: 'center', textAlign: 'center'}}>确定</Text>
+              <TouchableOpacity style={styles.button} onPress ={() => {this.toCreateAlbum()}}>
+                <Text style={{color: 'black', fontSize: 20, textAlignVertical: 'center', textAlign: 'center'}}>确定</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -69,7 +80,7 @@ class AlbumSelector extends Component {
         </TouchableOpacity>
      	</View>
      	<ListView
-           dataSource={this.state.dataSource}
+           dataSource={dataSource}
            renderRow={(rowData) => {
 	       		return (
 	       	      <TouchableOpacity onPress={() => {

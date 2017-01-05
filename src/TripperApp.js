@@ -21,6 +21,8 @@ import TripperNavigator from './TripperNavigator'
 
 import DailyContainer from './containers/DailyContainer'
 
+import {listMyAlbum} from './actions/albums';
+
 class TripperApp extends Component {
 
   constructor(props) {
@@ -38,6 +40,11 @@ class TripperApp extends Component {
         Toast.show(error.message, {position:Toast.positions.BOTTOM});
       })
     }
+  }
+
+  componentDidMount() {
+   const {dispatch} = this.props;
+   dispatch(listMyAlbum({}))
   }
 
   render() {

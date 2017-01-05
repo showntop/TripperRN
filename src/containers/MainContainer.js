@@ -95,10 +95,10 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps (state) {
-  const {user, error} = state;
-  const {currentUser} = user
+  const {userStore, errorStore} = state;
+  const {currentUser} = userStore
   return {
-    currentUser, error
+    currentUser, errorStore
   }
 }
 

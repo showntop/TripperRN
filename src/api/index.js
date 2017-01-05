@@ -2,6 +2,7 @@
 
 import ApiClient            from './ApiClient';
 
+import AlbumApi             from './Album';
 import ProjectApi           from './Project';
 import TopicApi             from './Topic';
 import PostApi              from './Post';
@@ -20,7 +21,7 @@ function Api({ apiPrefix } = {}) {
 
     return {
         apiClient         : api,
-        // users             : new UsersAPI({ apiClient: api }),
+        album             :new AlbumApi({baseUrl: busUrl, apiClient: api }),
         project           :new ProjectApi({baseUrl: busUrl, apiClient: api}),
         topic             :new TopicApi({baseUrl: busUrl, apiClient: api}),
         post              :new PostApi({baseUrl: busUrl, apiClient: api}),

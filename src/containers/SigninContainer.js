@@ -11,8 +11,8 @@ class SigninContainer extends Component {
 }
 
 export default connect((state) => {
-    const { user} = state;
-    const { currentUser } = user;
+    const { userStore } = state;
+    const { currentUser } = userStore;
     return {
         currentUser
     }

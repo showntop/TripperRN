@@ -17,7 +17,7 @@ import error   from './error';
 
 const rootReducer = combineReducers({
   // config,
-  user,
+  userStore: user,
   // spot,
   // location,
   projectStore: project,

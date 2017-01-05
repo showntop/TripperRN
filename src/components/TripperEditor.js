@@ -78,7 +78,7 @@ class TripperEditor extends Component {
 
   componentWillReceiveProps(nextProps) {
     let { createdProject } = nextProps.projectStore;
-    if (createdProject.data.id) {
+    if (createdProject.data && createdProject.data.id) {
         Alert.alert('温馨提醒','提交成功',[
             { text:'确定', onPress: () => { nextProps.navigator.pop() } }
           ]);
@@ -198,7 +198,7 @@ class TripperEditor extends Component {
               visible={this.state.showAlbumSelector}
               onRequestClose={() => {this.setState({showAlbumSelector: false})}}>
               <View style={{flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.5)', alignItems: 'center', justifyContent: 'center',}} >
-                <AlbumSelector style={{width: 300, height: 500}} callback={(album)=>{this.setState({album: album}); this.setState({showAlbumSelector: false});}}/>
+                <AlbumSelector style={{width: 300, height: 500}} callback={(album)=>{this.setState({album: album}); this.setState({showAlbumSelector: false});}} {...this.props}/>
               </View>
             </Modal>
             <View style={{ flex: 1}} >

@@ -151,7 +151,8 @@ class TripperEditor extends Component {
 
 
   parseLocation(coords) {
-    return fetch(`http://restapi.amap.com/v3/geocode/regeo?output=json&location=116.310003,39.991957&key=2e98a619ace93e8fbd01c7fc9ac748a7&radius=1000&extensions=all`).then(response => {
+    if (coords === undefined) { return; }
+    return fetch(`http://restapi.amap.com/v3/geocode/regeo?output=json&location=`+ (coords.longitude || "") + `,` + (coords.latitude || "") + `&key=2e98a619ace93e8fbd01c7fc9ac748a7&radius=1000&extensions=all`).then(response => {
       return response.json();
     }, (error)=>{
       console.log(error)
@@ -170,7 +171,7 @@ class TripperEditor extends Component {
       (position) => {
         var initialPosition = JSON.stringify(position);
         // this.setState({initialPosition});
-        this.parseLocation(initialPosition.coords)
+        this.parseLocation(JSON.parse(initialPosition).coords)
       },
       ((error) => {
         alert(error);
@@ -180,7 +181,7 @@ class TripperEditor extends Component {
     this.watchID = navigator.geolocation.watchPosition((position) => {
       var lastPosition = JSON.stringify(position);
       // this.setState({lastPosition});
-      this.parseLocation(lastPosition.coords)
+      this.parseLocation(JSON.parse(lastPosition).coords)
     });
   }
 

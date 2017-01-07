@@ -96,9 +96,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps (state) {
   const {userStore, errorStore} = state;
-  const {currentUser} = userStore
   return {
-    currentUser, errorStore
+    userStore, errorStore
   }
 }
 

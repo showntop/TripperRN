@@ -43,9 +43,10 @@ export default class SigninView extends Component {
     }
 
     componentWillUpdate(nextProps, nextState) {
-        if(this.props.currentUser.data.id){
+        let {userStore} = nextProps;
+        if(userStore.state == "succeeded"){
             InteractionManager.runAfterInteractions(() => {
-                const currentUser = this.props.currentUser.data;
+                const currentUser = userStore.currentUser;
                 if (currentUser.id) {
                     this.props.navigator.popToTop();
                     Toast.show("登录成功", {position: Toast.positions.CENTER});
@@ -61,7 +62,7 @@ export default class SigninView extends Component {
             <View style={styles.container}>
                 <NavigationBar
                   style={styles.navbar}
-                  title={{title: '我的小点'}}
+                  title={{title: '登录'}}
                   statusBar={
                     {style: 'light-content',
                     tintColor: '#5597B8'}   
@@ -83,6 +84,7 @@ export default class SigninView extends Component {
                         ref="login_name"
                         placeholder='请输入手机号'
                         style={styles.loginInput}
+                        underlineColorAndroid= "transparent"
                         onChangeText={this.onChangeMobile.bind(this)} />
                 </View>
                 <View style={[styles.formInput, styles.formInputSplit]}>
@@ -92,6 +94,7 @@ export default class SigninView extends Component {
                         style={styles.loginInput}
                         secureTextEntry={true}
                         placeholder='请输入密码'
+                        underlineColorAndroid= "transparent"
                         onChangeText={this.onChangePassword.bind(this)} />
                 </View>
                 <TouchableOpacity style={styles.loginBtn} onPress={this._login.bind(this)}>

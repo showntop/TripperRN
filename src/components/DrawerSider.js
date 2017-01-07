@@ -48,10 +48,10 @@ class DrawerSider extends Component {
   }
 
   openUser(){
-    const {navigator, closeDrawer} = this.props;
+    const {navigator, closeDrawer, userStore} = this.props;
     closeDrawer()
 
-    let user = this.props.currentUser.data || {};
+    let user = userStore.currentUser || {};
 
     if(!user.id) {
         InteractionManager.runAfterInteractions(() => {
@@ -72,7 +72,8 @@ class DrawerSider extends Component {
   }
 
   render () {
-    let user = this.props.currentUser.data || {};
+    const {userStore} = this.props
+    let user = userStore.currentUser || {};
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={this.openUser.bind(this)} style={styles.headWrap}>

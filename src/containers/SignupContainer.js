@@ -11,8 +11,8 @@ class SignupContainer extends Component {
 }
 
 export default connect((state) => {
-    const { currentUser } = state.user;
+    const { userStore } = state;
     return {
-        currentUser
+        userStore
     }
 })(SignupContainer);

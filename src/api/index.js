@@ -8,7 +8,7 @@ import TopicApi             from './Topic';
 import PostApi              from './Post';
 import UserApi              from './User';
 
-const ssoUrl  = `http://192.168.1.103:7000/api/v1`;
+const ssoUrl  = `http://192.168.1.127:7000/api/v1`;
 // const busUrl = `http://192.168.1.112:7007/api/v1`;
 const busUrl = `https://tripper-1990.herokuapp.com/api/v1`;
 

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {
-    StyleSheet,
     Text,
     TextInput,
     View,
@@ -13,6 +12,8 @@ import Toast from 'react-native-root-toast';
 import {signup} from '../actions/users';
 import NavigationBar from 'react-native-navbar';
 import Icon from 'react-native-vector-icons/FontAwesome';
+
+import * as StyleSheet from '../utility/StyleSheet';
 
 export default class RegisterPage extends Component {
     constructor(props){
@@ -43,13 +44,11 @@ export default class RegisterPage extends Component {
 
     componentWillUpdate(nextProps, nextState){
         InteractionManager.runAfterInteractions(() => {
-            const {currentUser} = this.props;
-            if(currentUser.data.id){
+            const {userStrore} = this.props;
+            if(userStrore.state == "succeeded"){
                 this.props.navigator.popToTop();
             }
-            if (!currentUser.isLoading && currentUser.status == false) {
-                Toast.show(currentUser.message, {position:Toast.positions.CENTER});
-            }
+            Toast.show(userStrore.message, {position:Toast.positions.CENTER});
         });
     }
 
@@ -58,7 +57,7 @@ export default class RegisterPage extends Component {
             <View style={styles.container}>
                 <NavigationBar
                   style={styles.navbar}
-                  title={{title: '我的小点'}}
+                  title={{title: '注册账号'}}
                   statusBar={
                     {style: 'light-content',
                     tintColor: '#8FBC8F'}   
@@ -80,6 +79,7 @@ export default class RegisterPage extends Component {
                         ref="login_name"
                         placeholder='请输入手机号'
                         style={styles.loginInput}
+                        underlineColorAndroid= "transparent"
                         onChangeText={this._onChangeMobile.bind(this)} />
                 </View>
                 <View style={[styles.formInput, styles.formInputSplit]}>
@@ -89,6 +89,7 @@ export default class RegisterPage extends Component {
                         style={styles.loginInput}
                         secureTextEntry={true}
                         placeholder='请设置密码'
+                        underlineColorAndroid= "transparent"
                         onChangeText={this._onChangePassword.bind(this)} />
                 </View>
                 <View style={[styles.formInput, styles.formInputSplit]}>
@@ -97,6 +98,7 @@ export default class RegisterPage extends Component {
                         ref="login_psw"
                         style={styles.loginInput}
                         secureTextEntry={true}
+                        underlineColorAndroid= "transparent"
                         placeholder='请输入验证码: 8888'
                         onChangeText={this._onChangeCode.bind(this)} />
                     <TouchableOpacity style={styles.verifyCodeBtn} onPress={this._sendVerifyCode.bind(this)}>
@@ -179,34 +181,20 @@ export default class RegisterPage extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        android:{
+            marginTop: 20,
+        }
     },
-
-    headerWrap: {
-        alignItems: 'center',
-        height: 44,
-        backgroundColor: '#ff7419',
+    navbar: {
+      flex: 0,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingLeft: 10,
+      paddingRight: 10,
+      height: 50,
+      backgroundColor: '#5597B8'
     },
-    header: {
-        color: '#fff',
-        paddingTop: 22,
-        fontSize: 17,
-    },
-
-    loginWrap: {
-        backgroundColor: '#FCE9D4',
-    },
-    imgWrap: {
-        flexDirection: 'row',
-        flex: 1,
-    },
-    loginMain: {
-        flex:1,
-    },
-    comCulture: {
-        width:320,
-        marginTop:50,
-    },
-
     formInput:{
         flexDirection:'row',
         height: 60,
@@ -248,13 +236,5 @@ const styles = StyleSheet.create({
     registerText:{
         color:'#ffffff',
         fontSize: 17,
-    },
-
-    registerWrap: {
-        flexDirection: 'row',
-        marginTop: 20,
-        marginBottom: 20,
-        marginLeft: 10,
-        marginRight: 10,
     },
 });

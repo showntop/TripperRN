@@ -4,9 +4,8 @@ type State = Array<string>;
 type Action = { type: string; list: Array<any>; };
 
 var initState = {
-  loading: false,
-  status: true,
-  message: "",
+  state: "initing",
+  message: "initing",
   myAlbums:[],
   currentUser: {
     id: "",
@@ -16,49 +15,39 @@ var initState = {
 function user(state: State = initState, action: Action): State {
   if (action.type === 'created_album') {
     return Object.assign({}, state, {
-              loading: true,
+              state: "succeeded",
               myAlbums: state.myAlbums.concat([action.data]),
             });
   }  
   if (action.type === 'listed_my_album') {
     return Object.assign({}, state, {
-              loading: true,
+              state: "succeeded",
               myAlbums: action.data,
             });
   }  
   if (action.type === 'signining') {
     return Object.assign({}, state, {
-              loading: true,
+              state: "requesting",
               currentUser: action.data          
             });
   }
   if (action.type === 'signined') {
     return Object.assign({}, state, {
-              loading: false,
+              state: "succeeded",
               currentUser: action.data          
             });
   }
   if (action.type === 'signuping') {
     return Object.assign({}, state, {
+              state: "requesting",
               currentUser: action.data          
             });
   }
   if (action.type === 'signuped') {
-
     return Object.assign({}, state, {
-              loading: false,
+              state: "succeeded",
               currentUser: action.data          
             });
-  }
-  if (action.type === 'REQUEST_ERROR') {
-    if (action.errors.message === "用户验证出错"){
-      return Object.assign({}, state, {
-        currentUser: {
-          loading: false,
-          data: {},
-        }
-      });
-    }
   }
   return state;
 }

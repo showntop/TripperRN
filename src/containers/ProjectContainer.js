@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps (state) {
   const {projectStore} = state;
-  return projectStore.currentProject;
+  return {projectStore};
 }
 
 export default connect(mapStateToProps)(ProjectContainer);

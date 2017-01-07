@@ -29,7 +29,7 @@ const Api = Apix.default()
 var options = {
   title: '选择图片',
   customButtons: [
-    {name: 'fb', title: 'Choose Photo from Facebook'},
+    {name: 'fb', title: '从云相册选取'},
   ],
   storageOptions: {
     skipBackup: true,
@@ -83,15 +83,6 @@ class TripperEditor extends Component {
             { text:'确定', onPress: () => { nextProps.navigator.pop() } }
           ]);
     }
-    // if (!nextProps.error.status) {
-    //   Alert.alert('温馨提醒','提交成功',[
-    //       { text:'确定', onPress: () => { nextProps.navigator.pop() } }
-    //     ]);
-    // }else{
-    //   Alert.alert('温馨提醒',nextProps.error.message,[
-    //       { text:'确定', onPress: () => {  } }
-    //     ]);
-    // }
   }
 
   selectAsset() {
@@ -136,13 +127,14 @@ class TripperEditor extends Component {
   }
 
   saveSpot(){
-    const {dispatch} = this.props;
+    const {userStore, dispatch} = this.props;
     let project = {
       asset: this.state.asset.uri,
       title: this.state.title,
       content: this.state.content,
+      album: this.state.album,
     }
-    dispatch(createProject(this.props.currentUser.data, project))
+    dispatch(createProject(userStore.currentUser, project))
   }
 
   onSelectAlbum() {

@@ -105,9 +105,10 @@ class ProjectCard extends Component {
   }
 
   render() {
+    const {projectStore} = this.props;
     return (
       <SwipeCards 
-        cards={this.props.data}
+        cards={projectStore.selectedProjects}
         loop={true}
         renderCard={(cardData) => <MediaCard {...cardData} />}
         renderNoMoreCards={() => <NoMoreCards />}

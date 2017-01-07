@@ -41,18 +41,20 @@ class ProjectView extends Component {
   }
   
   render() {
-    if (this.props.data == null) {
+    const {projectStore} = this.props;
+    if (projectStore.state != "succeeded") {
       return (<Text>加载中...</Text>);
-    }    
+    }
+    const project = projectStore.currentProject;
     return (
       <View  style={styles.container}>
-        <ReadingHeader {...this.props} style={styles.header} title={this.props.project.title}/>
+        <ReadingHeader {...this.props} style={styles.header} title={project.title}/>
         <ScrollView style={styles.body}>
           { 
-            this.props.data.asset && this.props.data.asset != "" ? <Image source={{uri: this.props.data.asset}} style={{flex: 1, height: 300}}/> : <View/>
+            project.asset && project.asset != "" ? <Image source={{uri: project.asset}} style={{flex: 1, height: 300}}/> : <View/>
           }
         	<Paragraph style={styles.paragraph}>
-        		{this.props.data.content}
+        		{project.content}
         	</Paragraph>
         </ScrollView>
 

@@ -4,78 +4,58 @@ type State = Array<string>;
 type Action = { type: string; list: Array<any>; };
 
 var initState = {
-  loading: false,
+  state: "initing",
+  message: "initing",
+
   projectList: [],
-  selectedProject: {
-    data: [],
-  },
+  selectedProjects: [],
   dailyProject: {
-    data: null,
   },
   createdProject: {
-    loading: false,
-    status: 200,
-    message: "",
-    data: null
   },
   currentProject: {
-    data: null
-  }
+  },
 }
 
 function project(state: State = initState, action: Action): State {
   if (action.type === 'listed_project') {
     return Object.assign({}, state, {
+              state: "succeeded",
               projectList: action.data
             });
   }
   if (action.type === 'loaded_selected_projects') {
     return Object.assign({}, state, {
-              selectedProject: {
-              	loading: false,
-              	data: action.data,
-              }
+              state: "succeeded",
+              selectedProjects: action.data,
             });
   }
   if (action.type === 'loading_selected_projects') {
     return Object.assign({}, state, {
-              selectedProject: {
-                loading: true,
-                data: [],
-              }
+              state: "succeeded",
             });
   }
 
   if (action.type === 'loading_daily_project') {
     return Object.assign({}, state, {
-              dailyProject: {
-                loading: true,
-                data: null,
-              }
+              dailyProject: {}
             });
   }
   if (action.type === 'loaded_daily_project') {
     return Object.assign({}, state, {
-              dailyProject: {
-                loading: false,
-                data: action.data,
-              }
+              dailyProject: {}
             });
   }
   if (action.type === 'created_project') {
     return Object.assign({}, state, {
-              createdProject: {
-                loading: false,
-                data: action.data,
-              }
+              state: "succeeded",
+              createdProject: {}
             });
   }
   if (action.type === 'loaded_current_project') {
     return Object.assign({}, state, {
-              currentProject: {
-              	loading: false,
-              	data: action.data,
-              }
+              state: "succeeded",
+              currentProject: action.data
             });
   }
   return state;

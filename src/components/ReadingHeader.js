@@ -20,7 +20,7 @@ class ReadingHeader extends Component {
 	      title={{title: this.props.title, tintColor: 'white'}}
 	      statusBar={
 	        {style: 'light-content',
-	        tintColor: '#8FBC8F'}   
+	        tintColor: '#5597B8'}   
 	      }
 	      leftButton={  
 	        <TouchableOpacity style={styles.toolItem} activeOpacity={0.1} >

@@ -40,11 +40,10 @@ class ProjectList extends Component {
   componentWillReceiveProps(nextProps) {
     const {projectStore} = nextProps;
     this.setState({
-      loading: projectStore.loading,
+      loading: projectStore.state != "succeeded",
       dataSource: this.state.dataSource.cloneWithRows(projectStore.projectList)
     });
   }
-
 
   _onRefresh() {
     const {dispatch} =  this.props;
@@ -64,7 +63,7 @@ class ProjectList extends Component {
           title={{title: '列表'}}
           statusBar={
             {style: 'light-content',
-            tintColor: '#8FBC8F'}   
+            tintColor: '#5597B8'}   
           }
           leftButton={  
             <TouchableOpacity style={styles.toolItem} activeOpacity={0.1} onPress ={this.navtoLast.bind(this)}>

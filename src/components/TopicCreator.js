@@ -41,12 +41,12 @@ class TopicCreator extends Component {
   }
 
   onCreateTopic(){
-    const {dispatch} = this.props;
+    const {dispatch, userStore} = this.props;
     let topic = {
       title: this.state.title,
       content: this.state.description,
     }
-    dispatch(createTopic(this.props.currentUser.data, topic))
+    dispatch(createTopic(userStore.currentUser, topic))
   }
 
   render() {

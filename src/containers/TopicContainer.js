@@ -33,9 +33,8 @@ const styles = StyleSheet.create({
 
 
 function mapStateToProps (state) {
-	const {topicStore, user} = state;
-	const {currentUser} = user;
-	return {currentUser, topicStore};
+	const {topicStore, userStore} = state;
+	return {userStore, topicStore};
 }
 
 export default connect(mapStateToProps)(TopicContainer);

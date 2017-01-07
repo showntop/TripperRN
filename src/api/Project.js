@@ -35,4 +35,18 @@ export default class ProjectApi extends Base {
         return Qiniu.uploadFile(furi, token, {})
     }
 
+    createComment(token, project_id, comment) {
+        this.apiClient.setAuthToken(token)
+        return this.apiClient.post(this.baseUrl + '/projects/'+project_id+'/comments', {}, comment)
+    }
+
+    createLike(token, project_id) {
+        this.apiClient.setAuthToken(token)
+        return this.apiClient.put(this.baseUrl + '/projects/'+project_id+'/likes', {}, {})
+    }
+
+    deleteLike(token, project_id) {
+        this.apiClient.setAuthToken(token)
+        return this.apiClient.delete(this.baseUrl + '/projects/'+project_id+'/likes', {}, {})
+    }
 }

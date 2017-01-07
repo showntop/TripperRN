@@ -8,22 +8,33 @@ import {
   Image,
   View,
   Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
+  TextInput,
+  ListView,
 } from 'react-native';
 
 import {Text, Heading1, Paragraph} from '../components/TripperText'
+import Icon2 from 'react-native-vector-icons/Ionicons';
+import ReadingHeader from '../components/ReadingHeader';
 
-import {fetchProject} from '../actions/projects';
-import Icon2 from 'react-native-vector-icons/EvilIcons';
+import {fetchProject, createComment, createLike, deleteLike} from '../actions/projects';
 
-import ReadingHeader from '../components/ReadingHeader'
+let dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 class ProjectView extends Component {
 
   constructor(props) {
     super(props);
   
-    this.state = {};
+    this.state = {
+      comment:{
+        content: ""
+      }
+    };
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+
   }
 
   componentWillMount() {
@@ -39,6 +50,20 @@ class ProjectView extends Component {
   operation() {
 
   }
+
+  onCreateComment() {
+    const {dispatch, userStore} = this.props;
+    dispatch(createComment(userStore.currentUser, this.props.project.id, this.state.comment))
+  }
+
+  onUpdateLike() {
+    const {dispatch, userStore, projectStore} = this.props;
+    if (projectStore.currentProject.liked) {
+      dispatch(deleteLike(userStore.currentUser, this.props.project.id))
+    }else{
+      dispatch(createLike(userStore.currentUser, this.props.project.id))
+    }
+  }
   
   render() {
     const {projectStore} = this.props;
@@ -46,31 +71,68 @@ class ProjectView extends Component {
       return (<Text>加载中...</Text>);
     }
     const project = projectStore.currentProject;
+    debugger;
     return (
       <View  style={styles.container}>
-        <ReadingHeader {...this.props} style={styles.header} title={project.title}/>
-        <ScrollView style={styles.body}>
-          { 
-            project.asset && project.asset != "" ? <Image source={{uri: project.asset}} style={{flex: 1, height: 300}}/> : <View/>
-          }
-        	<Paragraph style={styles.paragraph}>
-        		{project.content}
-        	</Paragraph>
-        </ScrollView>
+        <ReadingHeader {...this.props} style={styles.header} title={'阅读'}/>
+        <Image source={{uri: project.asset}} style={{flex: 1}}>
+         
+              
+                <ListView
+                  removeClippedSubviews={false}
+                  style={styles.body}
+                  dataSource={dataSource.cloneWithRows(project.comments)}
+                  renderHeader= {()=>{
 
+                      return(
+                        <View style={{backgroundColor: 'white', marginTop: 200, alignItems: 'center',}}>
+                          <Heading1 style={{alignSelf: 'flex-start', paddingHorizontal: 10, paddingTop: 20,}}>{project.title}</Heading1>
+                          <Text style={{fontSize: 10, alignSelf: 'flex-start', paddingHorizontal: 10, paddingTop: 5}}>{'作者：' + project.author.name + "   " + project.created_at.split('T')[0].replace('-', '.').replace('-', '.')}</Text>
+                          <Paragraph style={styles.paragraph}>
+                            {project.content}
+                          </Paragraph>
+                        </View>
+                        );
+                    }
+                  }
+                  renderRow={(comment)=>{
+                    return(
+                      <View style={styles.commentItem}>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                          <Image 
+                            style={{width: 30, height: 30, borderRadius: 15}}
+                            source={{uri: project.author.avatar}}/>
+                          <View style={{ marginLeft: 10}}>
+                            <Text style={{fontSize: 12}}>{'飞行的猪'}</Text>
+                            <Text style={{fontSize: 10, color: 'grey'}}>{'50 min ago'}</Text>
+                          </View>
+                        </View>
+                        <Text  style={{ paddingTop: 10, paddingBottom: 10}}>{comment.content}</Text>
+                      </View>
+                      );
+                  }}
+                  enableEmptySections={true}
+                  />
+        </Image>
         <View style={styles.footer}>
-            <TouchableOpacity style={styles.toolItem} activeOpacity={0.1} onPress ={this.navtoLast.bind(this)}>
-              <Icon2 name='arrow-left' size={32} style={{color: '#BDBDBD'}} />
+            <View style={{flex: 1, borderBottomWidth: 1, borderColor:'#DDD8CE', marginBottom: 2}}>
+              <TextInput
+                  style={{height: 40,paddingLeft: 10,flex: 1,fontSize: 14}}
+                  placeholder='点评一下'
+                  underlineColorAndroid= "transparent"
+                  value={this.state.comment.content}
+                  onChangeText={(content)=>{ this.setState({comment: {content: content}})}} />
+            </View>
+            <TouchableOpacity style={styles.toolItem} activeOpacity={0.1} onPress ={this.onCreateComment.bind(this)}>
+              <Icon2 name='md-send' size={30} style={{color: '#BDBDBD'}} />
             </TouchableOpacity>
-            <View style={{flex: 1}}/>
-            <TouchableOpacity style={styles.toolItem} activeOpacity={0.1} onPress ={this.operation.bind(this)}>
-              <Icon2 name='comment' size={32} style={{color: '#BDBDBD'}} />
+            <TouchableOpacity style={styles.toolItem} activeOpacity={0.1} onPress ={this.onUpdateLike.bind(this)}>
+              {
+                project.liked ? <Icon2 name='md-heart' size={30} style={{color: 'red'}} /> : <Icon2 name='md-heart-outline' size={30} style={{color: '#BDBDBD'}} />
+              }
             </TouchableOpacity>
             <TouchableOpacity style={styles.toolItem} activeOpacity={0.1} onPress ={this.operation.bind(this)}>
-              <Icon2 name='heart' size={32} style={{color: '#BDBDBD'}} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.toolItem} activeOpacity={0.1} onPress ={this.operation.bind(this)}>
-              <Icon2 name='share-google' size={32} style={{color: '#BDBDBD'}} />
+              <Icon2 name='md-share' size={30} style={{color: '#BDBDBD'}} />
             </TouchableOpacity>
         </View>
       </View>
@@ -91,10 +153,19 @@ const styles = StyleSheet.create({
 	},
   body:{
     flex: 1,
+    marginBottom: 50,
   },
   paragraph:{
     paddingHorizontal: 20,
+    paddingTop: 20,
     paddingBottom:60,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  commentItem: {
+    flex: 1,
+    padding: 8,
+    backgroundColor: 'white',
   },
   footer: {
     flex: 1,
@@ -107,11 +178,12 @@ const styles = StyleSheet.create({
     height: 50,
     width: Dimensions.get('window').width,
     bottom: 0,
+    padding: 5,
     justifyContent: 'flex-end',
   },
   toolItem: {
     flex: 0,
-    marginLeft: 5,
+    marginRight: 10,
     alignItems: 'center',
     justifyContent: 'center',
   }

@@ -24,7 +24,7 @@ class ReadingHeader extends Component {
 	      }
 	      leftButton={  
 	        <TouchableOpacity style={styles.toolItem} activeOpacity={0.1} >
-	          <Icon name='ios-book' size={28} style={{color: 'white'}} />
+	          <Icon name='md-arrow-back' size={28} style={{color: 'white'}} />
 	        </TouchableOpacity>
 	      } 
       />

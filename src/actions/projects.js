@@ -151,4 +151,87 @@ function loadedProject (project) {
   }
 }
 
+//#######################################################//
+function creatingComment(){
+  return{
+    type: "creating_project_comment",
+    data: {}
+  }
+}
+
+export function createComment (user, project_id, comment) {
+  return dispatch => {
+    dispatch(creatingComment());
+    return Api.project.createComment(user.token,project_id, comment).then(result => {
+      dispatch(createdComment(result));
+    }).catch((errors) =>{
+      dispatch({type: "REQUEST_ERROR", errors: errors});
+    });
+  }
+}
+
+function createdComment (comment) {
+  return {
+    type: "created_project_comment",
+    data: comment,
+  }
+}
+
+//#######################################################//
+
+//#######################################################//
+function creatingLike(){
+  return{
+    type: "creating_project_like",
+    data: {}
+  }
+}
+
+export function createLike (user, project_id) {
+  return dispatch => {
+    dispatch(creatingLike());
+    return Api.project.createLike(user.token, project_id).then(result => {
+      dispatch(createdLike(result));
+    }).catch((errors) =>{
+      dispatch({type: "REQUEST_ERROR", errors: errors});
+    });
+  }
+}
+
+function createdLike (like) {
+  return {
+    type: "created_project_like",
+    data: like,
+  }
+}
+
+//#######################################################//
+
+//#######################################################//
+function deletingLike(){
+  return{
+    type: "deleting_project_like",
+    data: {}
+  }
+}
+
+export function deleteLike (user, project_id) {
+  return dispatch => {
+    dispatch(deletingLike());
+    return Api.project.deleteLike(user.token, project_id).then(result => {
+      dispatch(deletedLike(result));
+    }).catch((errors) =>{
+      dispatch({type: "REQUEST_ERROR", errors: errors});
+    });
+  }
+}
+
+function deletedLike (like) {
+  return {
+    type: "deleted_project_like",
+    data: like,
+  }
+}
+
+//#######################################################//
 

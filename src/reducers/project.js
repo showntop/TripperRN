@@ -18,6 +18,28 @@ var initState = {
 }
 
 function project(state: State = initState, action: Action): State {
+  if (action.type === 'created_project_comment') {
+    let a = state.currentProject.comments;
+    state.currentProject.comments = a.concat(action.data);
+    return Object.assign({}, state, {
+              state: "succeeded",
+              currentProject: state.currentProject,
+            });
+  }  
+  if (action.type === 'created_project_like') {
+    state.currentProject.liked = true;
+    return Object.assign({}, state, {
+              state: "succeeded",
+              currentProject: state.currentProject,
+            });
+  }  
+  if (action.type === 'deleted_project_like') {
+    state.currentProject.liked = false;
+    return Object.assign({}, state, {
+              state: "succeeded",
+              currentProject: state.currentProject,
+            });
+  }  
   if (action.type === 'listed_project') {
     return Object.assign({}, state, {
               state: "succeeded",

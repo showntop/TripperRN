@@ -33,7 +33,7 @@ export default class EditorHeader extends React.Component {
               title={{title: this.props.title}}
               statusBar={
                 {style: 'light-content',
-                tintColor: '#8FBC8F'}   
+                tintColor: '#5597B8'}   
               }
               leftButton={  
                 <TouchableOpacity style={styles.toolItem} activeOpacity={0.1} onPress ={this.navtoLast.bind(this)}>

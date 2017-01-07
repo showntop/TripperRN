@@ -18,6 +18,9 @@ import ViewPager from 'react-native-viewpager';
 import commonStyle from '../constants/Style'
 
 import ProjectListContainer from '../containers/ProjectListContainer'
+import AlbumContainer from '../containers/AlbumContainer'
+
+import {listAlbum} from '../actions/albums';
 
 const windowWidth = Dimensions.get('window').width;
 const HEIGHT = 200;
@@ -44,18 +47,19 @@ const userList=[
   'http://pkicdn.image.alimmdn.com/old/icon/000/648670/cec6d4c88a5fd04a02f9d25cbc9534c3'
 ]
 
+var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
 class ChannelView extends Component {
   constructor(props) {
   	super(props);
-  	var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
   	this.state = {
       carouselSource: new ViewPager.DataSource({pageHasChanged: (p1, p2) => p1 !== p2}).cloneWithPages(dataList),
-  		dataSource: ds.cloneWithRows(channels),
       userSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}).cloneWithRows(userList)
   	};
 
     this.listCategory = this.listCategory.bind(this);
+    this.showAlbum = this.showAlbum.bind(this);
   }
 
   listCategory() {
@@ -65,6 +69,24 @@ class ChannelView extends Component {
       name: 'ProjectListContainer',
       category: 0,
     })    
+  }
+
+  showAlbum(id) {
+    const {navigator} = this.props;
+    navigator.push({
+      component: AlbumContainer,
+      name: 'AlbumContainer',
+      album_id: id,
+    })    
+  }
+
+  componentWillReceiveProps(nextProps) {
+    nextProps.channelStore.albums
+  }
+
+  componentDidMount() {
+    const {dispatch} = this.props;
+    dispatch(listAlbum())
   }
 
   renderPage(data) {
@@ -77,6 +99,8 @@ class ChannelView extends Component {
   }
 
   render() {
+    let albumSource = ds.cloneWithRows(this.props.channelStore.albums || channels)
+
     return (
       <ScrollView style={{flex: 1, backgroundColor: "#E0EEEE"}}>
         <View>
@@ -88,8 +112,6 @@ class ChannelView extends Component {
             autoPlay={true}
           />
         </View>
-
-
 
         <View style={styles.container2}>
 
@@ -111,37 +133,44 @@ class ChannelView extends Component {
 
 	  	 <View style={{paddingVertical: 20}}>
 	  	 	<ListView
- 	         dataSource={this.state.dataSource}
- 	         renderRow={(rowData) => 
- 	         	<View style={{flexDirection: 'row',backgroundColor: 'white', height: 50, borderBottomWidth: 1, borderColor: '#EBEBEB', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20}}>
- 	         	  <View style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center',}}>
-                <Image source={{uri: 'http://tp4.sinaimg.cn/1583890703/180/5687878857/1'}} style={{width: 30, height: 30}}>
-                </Image>
-                <View style={{width: 10}}/>
-                <Text>{rowData}</Text>
+ 	         dataSource={albumSource}
+           enableEmptySections={true}
+ 	         renderRow={(album) => 
+ 	         	<TouchableOpacity onPress={()=>this.showAlbum(album.id)}>
+              <View style={{flexDirection: 'row',backgroundColor: 'white', height: 50, borderBottomWidth: 1, borderColor: '#EBEBEB', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20}}>
+                <View style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center',}}>
+                 <Image source={{uri: 'http://tp4.sinaimg.cn/1583890703/180/5687878857/1'}} style={{width: 30, height: 30}}>
+                 </Image>
+                 <View style={{width: 10}}/>
+                 <Text>{album.name}</Text>
+               </View>
+               <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center',}}>
+                 <View style={{backgroundColor: 'red', height: 16, width: 16, borderRadius: 8, justifyContent: 'center',alignItems: 'center',}}>
+                   <Text style={{fontSize: 6 }}>99+</Text>
+                 </View>
+                 <Text>></Text>
+               </View>
               </View>
-              <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center',}}>
-                <View style={{backgroundColor: 'red', height: 16, width: 16, borderRadius: 8, justifyContent: 'center',alignItems: 'center',}}>
-                  <Text style={{fontSize: 6 }}>99+</Text>
-                </View>
-                <Text>></Text>
-              </View>
- 	         	</View>
+            </TouchableOpacity>
  	         }/>
 	  	 </View>
 
-       <View style={{flex: 1}}>
+       <View style={{flex: 1, backgroundColor: "white"}}>
         <Text>知名推荐</Text>
-          <View style={{flex: 1}}>
-                  <ListView
-                    contentContainerStyle={{flexDirection: 'row', justifyContent: 'center',flexWrap: 'wrap'}}
-                     dataSource={this.state.userSource}
-                     renderRow={(rowData) => 
-                      <View style={{flex: 1}}>
-                        <Image source={{uri: rowData}} style={{width: 80, height: 80}}/>
-                      </View>
-                     }/>
-          </View>
+        <View style={{flex: 1, marginTop: 10}}>
+          <ListView
+            style={{flex: 1}}
+            contentContainerStyle={styles.grid}
+            dataSource={this.state.userSource}
+            enableEmptySections={true}
+            renderRow={(rowData) =>
+              <View>
+                <View style={{width: 100, height: 100}}>
+                  <Image source={{uri: rowData}} style={{width: 80, height: 80}}/>
+                </View>
+              </View>
+            }/>
+        </View>
        </View>
       </ScrollView>
     );
@@ -157,7 +186,6 @@ const styles = StyleSheet.create({
     width: windowWidth,
     height: HEIGHT
   }, 
-
   container2: {
     flexDirection: 'row',
     marginBottom: 10,
@@ -169,55 +197,11 @@ const styles = StyleSheet.create({
     borderColor: commonStyle.GRAY_COLOR,
     backgroundColor: 'white'
   },
-  leftContainer: {
-    justifyContent: 'space-between',
-    flex: 1
-  },
-  rightContainer: {
-    justifyContent: 'space-between',
-    alignItems: 'flex-end'
-  },
-  authorInfoContainer: {
+  grid: {
     flexDirection: 'row',
-    alignItems: 'center',
-  },
-  authorInfo: {
-    marginLeft: 10
-  },
-  authorName: {
-    color: commonStyle.LIGHT_BLUE_COLOR,
-    fontSize: 12
-  },
-  authorDesc: {
-    color: commonStyle.TEXT_GRAY_COLOR,
-    marginTop: 5,
-    fontSize: 12
-  },
-  avatarImage: {
-    height: 50,
-    width: 50,
-    borderRadius: 25,
-  },
-  dateText: {
-    color: commonStyle.TEXT_GRAY_COLOR,
-    marginTop: 5,
-    fontSize: 12
-  },
-  musicImage: {
-    height: 40,
-    width: 40,
-  },
-  xiamiImage: {
-    width: 60,
-    height: 20,
-  },
-  titleText: {
-    color: commonStyle.TEXT_COLOR,
-    fontSize: 18,
-    marginTop: 5
-  },
-  transparentImage: {
-    backgroundColor: 'transparent'
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
+    justifyContent: 'space-around'
   }
 
 });

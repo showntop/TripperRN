@@ -64,7 +64,7 @@ export default class SigninView extends Component {
                   title={{title: '我的小点'}}
                   statusBar={
                     {style: 'light-content',
-                    tintColor: '#8FBC8F'}   
+                    tintColor: '#5597B8'}   
                   }
                   leftButton={  
                     <TouchableOpacity style={styles.toolItem} activeOpacity={0.1} onPress ={this.navtoLast.bind(this)}>

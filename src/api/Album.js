@@ -14,4 +14,8 @@ export default class AlbumApi extends Base {
     	return this.apiClient.get(this.baseUrl + '/users/me/albums', {}, {})
     }
 
+    list() {
+    	return this.apiClient.get(this.baseUrl + '/albums', {}, {})
+    }
+
 }

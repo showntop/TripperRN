@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 
 import {
-  StyleSheet,
   View,
   TouchableOpacity,
   Text,
@@ -14,6 +13,7 @@ import NavigationBar from 'react-native-navbar';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Swiper from 'react-native-swiper';
 // import PageGroup from '../components/PageGroup';
+import * as StyleSheet from '../utility/StyleSheet'
 
 
 class AlbumView extends Component {
@@ -39,7 +39,7 @@ class AlbumView extends Component {
           title={{title: '札记'}}
           statusBar={
             {style: 'light-content',
-            tintColor: '#8FBC8F'}   
+            tintColor: '#5597B8'}   
           }
           leftButton={  
             <TouchableOpacity style={styles.toolItem} activeOpacity={0.1} onPress ={this.navtoLast.bind(this)}>
@@ -120,7 +120,10 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
     height: 50,
-    backgroundColor: '#69D685'
+    backgroundColor: '#5597B8',
+    android: {
+      marginTop: 20
+    }
   },
   toolItem: {
     alignItems: 'center',

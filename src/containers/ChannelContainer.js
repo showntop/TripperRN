@@ -57,8 +57,8 @@ const styles = StyleSheet.create({
 
 
 function mapStateToProps (state) {
-  const {projectStore} = state;
-  return projectStore.selectedProject;
+  const {channelStore} = state;
+  return {channelStore};
  
 }
 

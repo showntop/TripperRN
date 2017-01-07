@@ -4,6 +4,7 @@ import { combineReducers } from 'redux';
 
 import project from './project';
 import topic   from './topic';
+import channel from './channel';
 import post    from './post';
 import user    from './user';
 import error   from './error';
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   errorStore: error,
   topicStore: topic,
   postStore:  post,
+  channelStore:  channel,
   // maps,
   // sessions,
   // schedule,

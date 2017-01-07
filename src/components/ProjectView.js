@@ -81,7 +81,7 @@ class ProjectView extends Component {
                 <ListView
                   removeClippedSubviews={false}
                   style={styles.body}
-                  dataSource={dataSource.cloneWithRows(project.comments)}
+                  dataSource={dataSource.cloneWithRows(project.comments || [])}
                   renderHeader= {()=>{
 
                       return(

@@ -83,7 +83,7 @@ class TripperNavigator extends Component {
   renderScene(route, navigator) {
     let Component = route.component;
     return (
-      <Component navigator={navigator} {...route}/>
+      <Component navigator={navigator} {...route.props}/>
     );
   }
 

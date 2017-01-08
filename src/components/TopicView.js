@@ -62,7 +62,9 @@ class TopicView extends Component {
     navigator.push({
       component: PostContainer,
       name: 'PostContainer',
-      topicId: this.props.id,
+      props:{
+        topicId: this.props.id,
+      }
     })
   }
 

@@ -16,6 +16,7 @@ import {
 import {Text, Heading1, Paragraph} from '../components/TripperText'
 import Icon2 from 'react-native-vector-icons/Ionicons';
 import ReadingHeader from '../components/ReadingHeader';
+import SharePage from '../components/SharePage';
 
 import {fetchProject, createComment, createLike, deleteLike} from '../actions/projects';
 
@@ -47,8 +48,21 @@ class ProjectView extends Component {
     navigator.pop();
   }
 
-  operation() {
-
+  onShare() {
+    const {navigator, projectStore} = this.props;
+    navigator.push({
+      component: SharePage,
+      name: 'SharePage',
+      props:{
+        shareData: {
+          type: 'news',
+          webpageUrl: "http://www.wimill.com",
+          thumbImage: 'ic_launcher',
+          title: `《${'tripper'}》`,
+          description: `作者/ ${'share your heart whith others'}`
+        }
+      }, 
+    });
   }
 
   onCreateComment() {
@@ -87,7 +101,7 @@ class ProjectView extends Component {
                       return(
                         <View style={{backgroundColor: 'white', marginTop: 200, alignItems: 'center',}}>
                           <Heading1 style={{alignSelf: 'flex-start', paddingHorizontal: 10, paddingTop: 20,}}>{project.title}</Heading1>
-                          <Text style={{fontSize: 10, alignSelf: 'flex-start', paddingHorizontal: 10, paddingTop: 5}}>{'作者：' + project.author.name + "   " + project.created_at.split('T')[0].replace('-', '.').replace('-', '.')}</Text>
+                          <Text style={{fontSize: 10, alignSelf: 'flex-start', paddingHorizontal: 10, paddingTop: 5}}>{'作者：' + (project.author || {name: '佚名'}).name + "   " + project.created_at.split('T')[0].replace('-', '.').replace('-', '.')}</Text>
                           <Paragraph style={styles.paragraph}>
                             {project.content}
                           </Paragraph>
@@ -131,7 +145,7 @@ class ProjectView extends Component {
                 project.liked ? <Icon2 name='md-heart' size={30} style={{color: 'red'}} /> : <Icon2 name='md-heart-outline' size={30} style={{color: '#BDBDBD'}} />
               }
             </TouchableOpacity>
-            <TouchableOpacity style={styles.toolItem} activeOpacity={0.1} onPress ={this.operation.bind(this)}>
+            <TouchableOpacity style={styles.toolItem} activeOpacity={0.1} onPress ={this.onShare.bind(this)}>
               <Icon2 name='md-share' size={30} style={{color: '#BDBDBD'}} />
             </TouchableOpacity>
         </View>

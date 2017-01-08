@@ -58,7 +58,7 @@ class DrawerSider extends Component {
             this.props.navigator.push({
                 name: 'SigninContainer',
                 component: SigninContainer,
-                passProps: {
+                props: {
                     ...this.props,
                 }
             })

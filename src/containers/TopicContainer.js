@@ -15,9 +15,9 @@ import TopicView    from '../components/TopicView'
 class TopicContainer extends Component {
   render() {
 
-    if (this.props.route && this.props.route.id) {
+    if (this.props.id) {
       return(
-        <TopicView {...this.props} id={this.props.route.id}/>
+        <TopicView {...this.props} id={this.props.id}/>
         );
     }else{
       return (

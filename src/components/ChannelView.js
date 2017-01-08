@@ -67,7 +67,9 @@ class ChannelView extends Component {
     navigator.push({
       component: ProjectListContainer,
       name: 'ProjectListContainer',
-      category: 0,
+      props:{
+        category: 0,
+      }
     })    
   }
 
@@ -76,7 +78,9 @@ class ChannelView extends Component {
     navigator.push({
       component: AlbumContainer,
       name: 'AlbumContainer',
-      album_id: id,
+      props:{
+        album_id: id,
+      }
     })    
   }
 

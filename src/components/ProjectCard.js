@@ -100,7 +100,9 @@ class ProjectCard extends Component {
     navigator.push({
       component: ProjectContainer,
       name: 'ProjectContainer',
-      project: project,
+      props:{
+        project: project,
+      }
     })  
   }
 

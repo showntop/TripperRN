@@ -117,7 +117,7 @@ export default class SigninView extends Component {
             this.props.navigator.push({
                 name: 'RegisterContainer',
                 component: SignupContainer,
-                passProps: {
+                props: {
                     ...this.props,
                 }
             })

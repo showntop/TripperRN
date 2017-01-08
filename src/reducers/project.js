@@ -18,6 +18,17 @@ var initState = {
 }
 
 function project(state: State = initState, action: Action): State {
+  if (action.type === 'loaded_selected_projects') {
+    return Object.assign({}, state, {
+              state: "succeeded",
+              selectedProjects: action.data,
+            });
+  }
+  if (action.type === 'loading_selected_projects') {
+    return Object.assign({}, state, {
+              state: "succeeded",
+            });
+  }
   if (action.type === 'created_project_comment') {
     let a = state.currentProject.comments;
     state.currentProject.comments = a.concat(action.data);
@@ -44,17 +55,6 @@ function project(state: State = initState, action: Action): State {
     return Object.assign({}, state, {
               state: "succeeded",
               projectList: action.data
-            });
-  }
-  if (action.type === 'loaded_selected_projects') {
-    return Object.assign({}, state, {
-              state: "succeeded",
-              selectedProjects: action.data,
-            });
-  }
-  if (action.type === 'loading_selected_projects') {
-    return Object.assign({}, state, {
-              state: "succeeded",
             });
   }
 

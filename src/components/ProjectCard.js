@@ -91,19 +91,31 @@ class ProjectCard extends Component {
     dispatch(fetchSelectedProjects());
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    const lastProjects = this.props.projectStore.selectedProjects;
+    const nextProjects = nextProps.projectStore.selectedProjects;
+
+    for (var i = lastProjects.length - 1; i >= 0; i--) {
+      if(lastProjects[i].id != nextProjects[i].id){
+        return true;
+      }
+    }
+    return false;
+  }
+
   handleNope(){
     console.log('handleNope');
   }
 
   handleYup(project){
-    let {navigator} =  this.props
+    let {navigator} =  this.props;
     navigator.push({
       component: ProjectContainer,
       name: 'ProjectContainer',
       props:{
         project: project,
       }
-    })  
+    });
   }
 
   render() {

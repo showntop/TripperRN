@@ -13,6 +13,12 @@ import NavigationBar from 'react-native-navbar';
 import * as StyleSheet from '../utility/StyleSheet'
 
 class ReadingHeader extends Component {
+
+  navtoLast() {
+    const {navigator} = this.props;
+    navigator.pop();
+  }
+
   render() {
     return (
       <NavigationBar
@@ -23,7 +29,7 @@ class ReadingHeader extends Component {
 	        tintColor: '#5597B8'}   
 	      }
 	      leftButton={  
-	        <TouchableOpacity style={styles.toolItem} activeOpacity={0.1} >
+	        <TouchableOpacity style={styles.toolItem} activeOpacity={0.1} onPress={() => {this.navtoLast()}}>
 	          <Icon name='md-arrow-back' size={28} style={{color: 'white'}} />
 	        </TouchableOpacity>
 	      } 

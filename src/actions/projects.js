@@ -136,7 +136,7 @@ function loadingCurrentProject(){
 
 export function fetchProject (id) {
   return dispatch => {
-    dispatch(creatingProject());
+    dispatch(loadingCurrentProject());
     return Api.project.show(id).then(response => {
       dispatch(loadedProject(response));
     })

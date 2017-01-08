@@ -122,8 +122,8 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps (state) {
-  const {projectStore} = state;
-  return {projectStore};
+  const { projectStore } = state;
+  return { projectStore };
  
 }
 

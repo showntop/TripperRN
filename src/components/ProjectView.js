@@ -38,15 +38,12 @@ class ProjectView extends Component {
 
   }
 
-  componentWillMount() {
+
+  componentDidMount() {
   	const {dispatch} = this.props
   	dispatch(fetchProject(this.props.project.id))
   }
 
-  navtoLast() {
-    const {navigator} = this.props;
-    navigator.pop();
-  }
 
   onShare() {
     const {navigator, projectStore} = this.props;
@@ -85,7 +82,6 @@ class ProjectView extends Component {
       return (<Text>加载中...</Text>);
     }
     const project = projectStore.currentProject;
-    debugger;
     return (
       <View  style={styles.container}>
         <ReadingHeader {...this.props} style={styles.header} title={'阅读'}/>

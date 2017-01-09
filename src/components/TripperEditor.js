@@ -166,7 +166,7 @@ class TripperEditor extends Component {
         this.parseLocation(JSON.parse(initialPosition).coords)
       },
       ((error) => {
-        alert(error);
+        console.log(error);
       }),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
     );
@@ -182,9 +182,10 @@ class TripperEditor extends Component {
   }
 
   render() {
+    debugger;
     return (
         <View style={styles.container}>
-            <EditorHeader {...this.props} onRightPress={this.saveSpot} title="记..."/>
+            <EditorHeader {...this.props} onRightPress={this.saveSpot} title="记材忆..."/>
             <Modal
               animationType={"fade"}
               transparent={false}
@@ -243,9 +244,6 @@ class TripperEditor extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    android:{
-      marginTop: 20
-    }
   },
 });
 

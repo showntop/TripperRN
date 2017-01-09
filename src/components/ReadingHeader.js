@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#5597B8'
   },
   toolItem: {
-  	marginLeft: 10,
+    paddingHorizontal: 10,
     alignItems: 'center',
     justifyContent: 'center',
   }

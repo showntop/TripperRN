@@ -3,18 +3,18 @@
 import React, { Component } from 'react';
 
 import {
+  StyleSheet,
   View,
   ListView,
   RefreshControl,
   TouchableOpacity
 } from 'react-native';
 
-import * as StyleSheet from '../utility/StyleSheet';
-
 import NavigationBar from 'react-native-navbar';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import ProjectListItem from '../components/ProjectListItem';
+import ReadingHeader from '../components/ReadingHeader';
 import {listProject} from '../actions/projects';
 
 class ProjectList extends Component {
@@ -58,19 +58,7 @@ class ProjectList extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <NavigationBar
-          style={styles.navbar}
-          title={{title: '列表'}}
-          statusBar={
-            {style: 'light-content',
-            tintColor: '#5597B8'}   
-          }
-          leftButton={  
-            <TouchableOpacity style={styles.toolItem} activeOpacity={0.1} onPress ={this.navtoLast.bind(this)}>
-              <Icon name='arrow-left' size={18} style={{color: 'white'}} />
-            </TouchableOpacity>
-          } 
-        />
+        <ReadingHeader title={'列表'} {...this.props}/>
   	    <ListView
   	      removeClippedSubviews={false}
   	      style={styles.listView}
@@ -97,9 +85,6 @@ class ProjectList extends Component {
 const styles = StyleSheet.create({
   container:{
     flex: 1,
-    android:{
-      marginTop: 20
-    }
   },
   listView:{
     flex: 1,

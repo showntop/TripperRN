@@ -12,6 +12,7 @@ import Toast from 'react-native-root-toast';
 import {signup} from '../actions/users';
 import NavigationBar from 'react-native-navbar';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import ReadingHeader from '../components/ReadingHeader';
 
 import * as StyleSheet from '../utility/StyleSheet';
 
@@ -55,24 +56,7 @@ export default class RegisterPage extends Component {
     render(){
         return (
             <View style={styles.container}>
-                <NavigationBar
-                  style={styles.navbar}
-                  title={{title: '注册账号'}}
-                  statusBar={
-                    {style: 'light-content',
-                    tintColor: '#8FBC8F'}   
-                  }
-                  leftButton={  
-                    <TouchableOpacity style={styles.toolItem} activeOpacity={0.1} onPress ={this.navtoLast.bind(this)}>
-                      <Icon name='arrow-left' size={18} style={{color: 'white'}} />
-                    </TouchableOpacity>
-                  } 
-                  rightButton={
-                    <TouchableOpacity style={styles.toolItem} activeOpacity={0.1} onPress ={ this.props.onRightPress}>
-                        <Icon name='check' size={18} style={{color: 'white'}} />
-                    </TouchableOpacity>
-                  }
-                />
+                <ReadingHeader title={'注册'} {...this.props}/>
                 <View style={[styles.formInput, styles.formInputSplit]}>
                     <Image source={require('../images/user.png')} style={{width:25,height:25,resizeMode: 'contain'}}/>
                     <TextInput
@@ -181,9 +165,6 @@ export default class RegisterPage extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        android:{
-            marginTop: 20,
-        }
     },
     navbar: {
       flex: 0,

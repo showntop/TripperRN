@@ -13,12 +13,31 @@ import * as StyleSheet from '../utility/StyleSheet'
 
 import TripperNavBar from '../components/TripperNavBar'
 import BaseContainer from '../containers/BaseContainer'
+import SearcherContainer from '../containers/SearcherContainer'
 
 import TripperHeader from '../components/TripperHeader'
 import {Text} from '../components/TripperText'
 import ChannelView from '../components/ChannelView'
 
 class ChannelContainer extends BaseContainer {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {};
+    
+    (this: any).searchView = this.searchView.bind(this);
+  }
+
+  searchView (){
+  	const {navigator} = this.props;
+
+  	navigator.push({
+  	  component: SearcherContainer,
+  	  name: 'SearcherContainer',
+  	})
+  }
+
   render() {
   	let	rightItem = {
   		  layout: 'icon',
@@ -37,6 +56,9 @@ class ChannelContainer extends BaseContainer {
 	          onPress: this.handleShowMenu,
 	        }}
 	        rightItem={rightItem}>
+          <View style={{alignItems: 'center', justifyContent: 'center',}}>
+            <Text style={{color: 'white'}}>{'频道'}</Text>
+          </View>
 	      </TripperHeader>
 	      <ChannelView {...this.props}/>
       </View>

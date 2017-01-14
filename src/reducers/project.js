@@ -4,7 +4,7 @@ type State = Array<string>;
 type Action = { type: string; list: Array<any>; };
 
 var initState = {
-  showOping: false,
+  showSpinner: false,
   message: "initing",
 
   projectList: [],
@@ -14,6 +14,7 @@ var initState = {
   createdProject: {
   },
   currentProject: {
+    id: "",
   },
 }
 
@@ -81,7 +82,13 @@ function project(state: State = initState, action: Action): State {
   }
   if (action.type === 'loaded_current_project') {
     return Object.assign({}, state, {
-              state: "succeeded",
+              showSpinner: false,
+              currentProject: action.data
+            });
+  }
+  if (action.type === 'loading_current_project') {
+    return Object.assign({}, state, {
+              showSpinner: true,
               currentProject: action.data
             });
   }

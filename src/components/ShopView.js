@@ -5,14 +5,58 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
-  ListView
+  ListView,
+  Text
 } from 'react-native';
 
-import GiftedListView from '../widget/GiftedListView'
-import ProductListItem from '../components/ProductListItem'
+import TripperComponent from '../components/TripperComponent';
+import TripperHeader    from '../components/TripperHeader';
+import GiftedListView   from '../widget/GiftedListView'
+import ProductListItem  from '../components/ProductListItem'
 
-class ShopView extends Component {
-  render() {
+class ShopView extends TripperComponent {
+
+  static contextTypes = {
+    openDrawer: React.PropTypes.func,
+  };
+
+  constructor(props) {
+    super(props);
+  }
+
+  _handleShowMenu() {
+    this.context.openDrawer();
+  }
+
+  renderHeader() {
+    let rightItem = {
+        layout: 'icon',
+        title: 'write',
+        icon: require('../images/note.png'),
+        onPress: this.openEditor,
+      };
+    return(
+      <TripperHeader
+        style={styles.header}
+        leftItem={{
+          layout: 'icon',
+          title: 'Close',
+          icon: require('../images/logo_white@32.png'),
+          onPress: () => this._handleShowMenu(),
+        }}
+        rightItem={rightItem}>
+        <View style={styles.headerContent}>
+          <Text style={styles.title}>
+            <Text style={styles.day}>11月 {'11'}</Text>
+            {'\n'}
+            <Text style={styles.time}>{'创意商品'}</Text>
+          </Text>
+        </View>
+      </TripperHeader>
+    );
+  }
+
+  renderBody() {
     //pageSize代表一个event loop绘制多少个row
     let dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}).cloneWithRows(movieList);
     return (
@@ -39,7 +83,11 @@ class ShopView extends Component {
 }
 
 const styles = StyleSheet.create({
-
+  header: {
+    // android: {
+      backgroundColor: '#5597B8',
+    // },
+  },
 });
 
 

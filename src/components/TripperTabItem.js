@@ -51,7 +51,6 @@ class TripperTabItem extends React.Component {
               <TouchableOpacity style={styles.touchableContainer} key={index} onPress={() => {goToPage(index)}} activeOpacity={1}>
                 <Image style={styles.image} source={tabBarResources[index][activeTab === index ? 1 : 0]}/>
               </TouchableOpacity>
-              
             );
           })
         }

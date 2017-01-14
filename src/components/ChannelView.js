@@ -17,7 +17,11 @@ import Swiper from 'react-native-swiper'
 import ViewPager from 'react-native-viewpager';
 import commonStyle from '../constants/Style'
 
+import TripperComponent from '../components/TripperComponent';
+import TripperHeader    from '../components/TripperHeader';
+
 import ProjectListContainer from '../containers/ProjectListContainer'
+import SearcherContainer from '../containers/SearcherContainer'
 import AlbumContainer from '../containers/AlbumContainer'
 
 import {listAlbum} from '../actions/albums';
@@ -49,7 +53,12 @@ const userList=[
 
 var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
-class ChannelView extends Component {
+class ChannelView extends TripperComponent {
+
+  static contextTypes = {
+    openDrawer: React.PropTypes.func,
+  };
+
   constructor(props) {
   	super(props);
 
@@ -60,7 +69,23 @@ class ChannelView extends Component {
 
     this.listCategory = this.listCategory.bind(this);
     this.showAlbum = this.showAlbum.bind(this);
+    this.searchView = this.searchView.bind(this);
   }
+
+
+  _handleShowMenu() {
+    this.context.openDrawer();
+  }
+
+  searchView (){
+    const {navigator} = this.props;
+
+    navigator.push({
+      component: SearcherContainer,
+      name: 'SearcherContainer',
+    })
+  }
+
 
   listCategory() {
     const {navigator} = this.props;
@@ -102,7 +127,31 @@ class ChannelView extends Component {
     );
   }
 
-  render() {
+  renderHeader() {
+    let rightItem = {
+        layout: 'icon',
+        title: 'search',
+        icon: require('../images/icon_search.png'),
+        onPress: this.searchView,
+      };
+    return(
+      <TripperHeader
+        style={styles.header}
+        leftItem={{
+          layout: 'icon',
+          title: 'Close',
+          icon: require('../images/logo_white@32.png'),
+          onPress: () => this._handleShowMenu(),
+        }}
+        rightItem={rightItem}>
+        <View style={{alignItems: 'center', justifyContent: 'center',}}>
+          <Text style={{color: 'white'}}>{'频道'}</Text>
+        </View>
+      </TripperHeader>
+      );
+  }
+
+  renderBody() {
     let albumSource = ds.cloneWithRows(this.props.channelStore.albums || channels)
 
     return (
@@ -185,6 +234,11 @@ const styles = StyleSheet.create({
   container: {
     width: windowWidth,
     height: HEIGHT
+  },
+  header: {
+    // android: {
+      backgroundColor: '#5597B8',
+    // },
   },
   image: {
     width: windowWidth,

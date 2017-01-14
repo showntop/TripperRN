@@ -10,6 +10,7 @@ import * as StyleSheet  from '../utility/StyleSheet';
 
 import TripperComponent from '../components/TripperComponent';
 import EditorContainer  from '../containers/EditorContainer'
+import ProjectContainer from '../containers/ProjectContainer'
 import TripperHeader    from '../components/TripperHeader'
 import {Text}           from '../components/TripperText'
 import ProjectCard      from '../components/ProjectCard'
@@ -17,11 +18,16 @@ import ProjectCard      from '../components/ProjectCard'
 import {fetchSelectedProjects} from '../actions/projects';
 
 class CharmView extends TripperComponent {
+  
+  static contextTypes = {
+    openDrawer: React.PropTypes.func,
+  };
 
   constructor(props) {
     super(props);
   
-    this.openEditor = this.openEditor.bind(this)
+    this.openEditor    = this.openEditor.bind(this)
+    this._handleSelect = this._handleSelect.bind(this)
   }
 
   componentDidMount() {
@@ -38,6 +44,10 @@ class CharmView extends TripperComponent {
   	})
   }
 
+  _handleShowMenu() {
+    this.context.openDrawer();
+  }
+
   renderHeader() {
   	let	rightItem = {
   		  layout: 'icon',
@@ -52,7 +62,7 @@ class CharmView extends TripperComponent {
 	        layout: 'icon',
 	        title: 'Close',
 	        icon: require('../images/logo_white@32.png'),
-	        onPress: this.handleShowMenu,
+	        onPress: () => this._handleShowMenu(),
 	      }}
     	  rightItem={rightItem}>
     	  <View style={styles.headerContent}>
@@ -80,7 +90,7 @@ class CharmView extends TripperComponent {
   renderBody() {
   	let {charmStore} = this.props;
     return (
-        <ProjectCard items={charmStore.projects} handleSelect={this._handleSelect}/>
+      <ProjectCard items={charmStore.projects} handleSelect={this._handleSelect}/>
     );
   }
 

@@ -20,7 +20,6 @@ class EditorContainer extends Component {
 
 
 function mapStateToProps (state) {
-	debugger;
 	const {editorStore, userStore} = state;
 	return {userStore, editorStore};
 }

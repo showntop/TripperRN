@@ -14,7 +14,7 @@ import ProjectView from '../components/ProjectView'
 class ProjectContainer extends Component {
   render() {
     return (
-      <ProjectView {...this.props} style={{flex: 1}}/>
+      <ProjectView {...this.props}/>
     );
   }
 }

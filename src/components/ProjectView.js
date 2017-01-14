@@ -78,10 +78,10 @@ class ProjectView extends Component {
   
   render() {
     const {projectStore} = this.props;
-    if (projectStore.state != "succeeded") {
+    const project = projectStore.currentProject;
+    if (projectStore.showSpinner == true || project.id == undefined ||project.id == "") {
       return (<Text>加载中...</Text>);
     }
-    const project = projectStore.currentProject;
     return (
       <View  style={styles.container}>
         <NaviHeader {...this.props} style={styles.header} title={'阅读'}/>

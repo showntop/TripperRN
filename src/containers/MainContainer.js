@@ -7,97 +7,27 @@ import {
   Platform,
 } from 'react-native';
 
-import  * as StyleSheet from '../utility/StyleSheet';
-
 import { connect }  from 'react-redux';
 
-import ScrollableTabView from 'react-native-scrollable-tab-view';
-import Drawer from 'react-native-drawer';
+import MainView from '../components/MainView'
 
-import DrawerSider from '../components/DrawerSider';
-import TripperTabItem from '../components/TripperTabItem'
-
-import BaseContainer from '../containers/BaseContainer'
-import CharmContainer from '../containers/CharmContainer'
-import ChannelContainer from '../containers/ChannelContainer'
-import CommunityContainer from '../containers/CommunityContainer'
-import ShopContainer from '../containers/ShopContainer'
-
-//tabbar图片资源
-const TAB_BAR_RESOURCES = [
-  [require('../images/wonder.png'), require('../images/wonder_active.png')],
-  [require('../images/category.png'), require('../images/category_active.png')],
-  [require('../images/topic.png'), require('../images/topic_active.png')],
-  [require('../images/mall.png'), require('../images/mall_active.png')]
-];
-
-
-class MainContainer extends BaseContainer {
+class MainContainer extends Component {
 
   constructor(props) {
-	super(props);
-	
-	this.state = {};
-
-    this.openDrawer = this.openDrawer.bind(this);
-  }
-
-  getChildContext() {
-    return {
-      openDrawer: this.openDrawer,
-    };
-  }
-
-  openDrawer() {
-    this.refs.drawer.open();
+	  super(props);
   }
 
   render() {
-	  return (
-	  	<Drawer
-	  	  type="overlay"
-
-	      ref='drawer'
-	      openDrawerOffset={100}
-	      style={styles.drawer}
-	      content={<DrawerSider closeDrawer={()=>this.refs.drawer.close()} {...this.props}/>}>
-	      <ScrollableTabView
-	         tabBarPosition="bottom"
-	         locked={true}
-	         scrollWithoutAnimation={false}
-	         prerenderingSiblingsNumber={4}
-	         renderTabBar={() => {
-	           /*使用自定义tabbar*/
-	           return <TripperTabItem tabBarResources={TAB_BAR_RESOURCES}/>
-	         }}>
-	         <CharmContainer style={styles.subView} {...this.props}/>
-	         <ChannelContainer style={styles.subView} {...this.props}/>
-	         <CommunityContainer style={styles.subView} {...this.props}/>
-	         <ShopContainer style={styles.subView} {...this.props}/>
-
-	       </ScrollableTabView>
-	    </Drawer>
-	  );
-	}
+  	return (
+  	  <MainView {...this.props}/>
+  	);
+  }
 }
 
-MainContainer.childContextTypes = {
-  openDrawer: React.PropTypes.func,
-};
-
-const styles = StyleSheet.create({
-	drawer: { 
-		shadowColor: '#000000', 
-		shadowOpacity: 0.8, 
-		shadowRadius: 3
-	},
-
-});
-
 function mapStateToProps (state) {
-  const {userStore, errorStore} = state;
+  const {userStore, charmStore, channelStore, topicStore} = state;
   return {
-    userStore, errorStore
+    userStore, charmStore, channelStore, topicStore
   }
 }
 

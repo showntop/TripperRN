@@ -18,7 +18,7 @@ import DrawerSider from '../components/DrawerSider';
 import TripperTabItem from '../components/TripperTabItem'
 
 import BaseContainer from '../containers/BaseContainer'
-import DiscoverContainer from '../containers/DiscoverContainer'
+import CharmContainer from '../containers/CharmContainer'
 import ChannelContainer from '../containers/ChannelContainer'
 import CommunityContainer from '../containers/CommunityContainer'
 import ShopContainer from '../containers/ShopContainer'
@@ -70,7 +70,7 @@ class MainContainer extends BaseContainer {
 	           /*使用自定义tabbar*/
 	           return <TripperTabItem tabBarResources={TAB_BAR_RESOURCES}/>
 	         }}>
-	         <DiscoverContainer style={styles.subView} {...this.props}/>
+	         <CharmContainer style={styles.subView} {...this.props}/>
 	         <ChannelContainer style={styles.subView} {...this.props}/>
 	         <CommunityContainer style={styles.subView} {...this.props}/>
 	         <ShopContainer style={styles.subView} {...this.props}/>

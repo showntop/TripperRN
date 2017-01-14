@@ -12,7 +12,7 @@ import {
 import NavigationBar from 'react-native-navbar';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Swiper from 'react-native-swiper';
-import ReadingHeader from '../components/ReadingHeader';
+import NaviHeader from '../components/NaviHeader';
 import ProjectContainer from '../containers/ProjectContainer'
 import * as StyleSheet from '../utility/StyleSheet'
 
@@ -51,7 +51,7 @@ class AlbumView extends Component {
 
     return (
       <View style={{flex: 1, backgroundColor: '#F0FFF0'}}>
-        <ReadingHeader title={'札记'} {...this.props}/>
+        <NaviHeader title={'札记'} {...this.props}/>
         <Swiper
           dot={<View style={{backgroundColor: '#CDCDC1', width: 13, height: 13, borderRadius: 7, marginLeft: 7, marginRight: 7}} />}
           activeDot={<View style={{backgroundColor: '#838B83', width: 13, height: 13, borderRadius: 7, marginLeft: 7, marginRight: 7}} />}

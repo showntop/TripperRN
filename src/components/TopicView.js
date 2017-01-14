@@ -17,7 +17,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/EvilIcons';
 
 import {showTopic} from '../actions/topics';
-import ReadingHeader from '../components/ReadingHeader'
+import NaviHeader from '../components/NaviHeader'
 import PostContainer from '../containers/PostContainer'
 
 class TopicView extends Component {
@@ -73,7 +73,7 @@ class TopicView extends Component {
 
     return (
       <View  style={styles.container}>
-        <ReadingHeader {...this.props} style={styles.header} title={topicStore.topic.title}/>
+        <NaviHeader {...this.props} style={styles.header} title={topicStore.topic.title}/>
 	      <ListView
   	      removeClippedSubviews={false}
   	      style={styles.listView}

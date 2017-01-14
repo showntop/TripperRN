@@ -2,6 +2,8 @@
 
 import { combineReducers } from 'redux';
 
+import charm   from './charm';
+import editor  from './editor';
 import project from './project';
 import topic   from './topic';
 import channel from './channel';
@@ -21,6 +23,8 @@ const rootReducer = combineReducers({
   userStore: user,
   // spot,
   // location,
+  charmStore: charm,
+  editorStore: editor,
   projectStore: project,
   errorStore: error,
   topicStore: topic,

@@ -12,7 +12,7 @@ import Toast from 'react-native-root-toast';
 import {signup} from '../actions/users';
 import NavigationBar from 'react-native-navbar';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import ReadingHeader from '../components/ReadingHeader';
+import NaviHeader from '../components/NaviHeader';
 
 import * as StyleSheet from '../utility/StyleSheet';
 
@@ -56,7 +56,7 @@ export default class RegisterPage extends Component {
     render(){
         return (
             <View style={styles.container}>
-                <ReadingHeader title={'注册'} {...this.props}/>
+                <NaviHeader title={'注册'} {...this.props}/>
                 <View style={[styles.formInput, styles.formInputSplit]}>
                     <Image source={require('../images/user.png')} style={{width:25,height:25,resizeMode: 'contain'}}/>
                     <TextInput

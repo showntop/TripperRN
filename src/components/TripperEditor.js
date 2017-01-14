@@ -19,6 +19,7 @@ import EditorHeader from '../components/EditorHeader';
 import AlbumSelector from '../components/AlbumSelector';
 import * as StyleSheet from '../utility/StyleSheet';
 import ImagePicker from 'react-native-image-picker';
+import TripperComponent from '../components/TripperComponent';
 
 import {createProject} from '../actions/projects';
 
@@ -38,7 +39,7 @@ var options = {
 };
 
 
-class TripperEditor extends Component {
+class TripperEditor extends TripperComponent {
   static propTypes = {
     name: React.PropTypes.string,
   };
@@ -77,8 +78,8 @@ class TripperEditor extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let { createdProject } = nextProps.projectStore;
-    if (createdProject.data && createdProject.data.id) {
+    let { project } = nextProps.editorStore;
+    if (project && project.id) {
         Alert.alert('温馨提醒','提交成功',[
             { text:'确定', onPress: () => { nextProps.navigator.pop() } }
           ]);
@@ -181,11 +182,15 @@ class TripperEditor extends Component {
     navigator.geolocation.clearWatch(this.watchID);
   }
 
-  render() {
-    debugger;
+  renderHeader() {
+    return(
+      <EditorHeader {...this.props} onRightPress={this.saveSpot} title="记忆材..."/>
+    );
+  }
+
+  renderBody() {
     return (
         <View style={styles.container}>
-            <EditorHeader {...this.props} onRightPress={this.saveSpot} title="记材忆..."/>
             <Modal
               animationType={"fade"}
               transparent={false}

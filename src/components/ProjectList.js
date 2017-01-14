@@ -14,7 +14,7 @@ import NavigationBar from 'react-native-navbar';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import ProjectListItem from '../components/ProjectListItem';
-import ReadingHeader from '../components/ReadingHeader';
+import NaviHeader from '../components/NaviHeader';
 import {listProject} from '../actions/projects';
 
 class ProjectList extends Component {
@@ -58,7 +58,7 @@ class ProjectList extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <ReadingHeader title={'列表'} {...this.props}/>
+        <NaviHeader title={'列表'} {...this.props}/>
   	    <ListView
   	      removeClippedSubviews={false}
   	      style={styles.listView}

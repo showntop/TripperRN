@@ -11,18 +11,8 @@ import {
 
 import SwipeCards from 'react-native-swipe-cards';
 import {Text, Heading1} from '../components/TripperText'
-import {fetchSelectedProjects} from '../actions/projects';
 
 import ProjectContainer from '../containers/ProjectContainer'
-
-const Cards = [
-  {title: '生命之于我', content: "不知道从什么时候开始\n应是我走的那一年\n那天晚上\n还有什么来？", image: 'http://imglf2.nosdn.127.net/img/aVFjTjU3a2NtVHdyeVZEaUFOV0doVWJPYjAyazFPZS96WFJMMTF3TUlJZi9NSmFobUd6aG9BPT0.jpg?imageView&thumbnail=500x0&quality=96&stripmeta=0&type=jpg%7Cwatermark&type=2&text=wqkgTUFHSUMgWUFOR-adqOaipuaZtiAvIGxpdHRsZW1hZ2ljeWFuZy5sb2Z0ZXIuY29t&font=bXN5aA==&gravity=southwest&dissolve=30&fontsize=240&dx=8&dy=10&stripmeta=0'},
-  {title: '来看你', content: "我只知道那是一个褐色的夜\n你说了什么\n那天晚上\n还有什么来？", image: 'http://imglf.nosdn.127.net/img/ek85Ny8zV0tPRUFBSFlkdDVmQjVuNjVxY3F2anB0QXBnNklsNkJJaVl1ZEpWZUthYkVGYVJRPT0.gif'},
-  {title: '还记得那天', content: "今晨没有阳光\n应是我走的那一年\n那天晚上\n还有什么来？", image: 'https://img1.doubanio.com/view/photo/photo/public/p2395318067.jpg'},
-  {title: '海', content: "生命从你开始的\n应是我走的那一年\n那天晚上\n还有什么来？", image: 'https://img1.doubanio.com/view/site/median/public/f29689de998e45b.jpg'},
-  {title: '放声', content: "之于我啊\n应是我走的那一年\n那天晚上\n还有什么来？", image: 'https://media.giphy.com/media/oDLDbBgf0dkis/giphy.gif'},
-  {title: '蓝色的气球', content: "去了就这样biubiubiu啦啦啦\n应是我走的那一年\n那天晚上\n还有什么来？", image: 'https://media.giphy.com/media/7r4g8V2UkBUcw/giphy.gif'},
-]
 
 
 class MediaCard extends Component {
@@ -77,26 +67,14 @@ class NoMoreCards extends Component{
 class ProjectCard extends Component {
   constructor(props) {
     super(props);
-  
-    this.state = {
-      cards: Cards,
-      outOfCards: false
-    };
-
-    this.handleYup = this.handleYup.bind(this)
-  }
-
-  componentDidMount() {
-    const {dispatch} = this.props;
-    dispatch(fetchSelectedProjects());
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    const lastProjects = this.props.projectStore.selectedProjects;
-    const nextProjects = nextProps.projectStore.selectedProjects;
+    const lastItems = this.props.items;
+    const nextItems = nextProps.items;
 
-    for (var i = lastProjects.length - 1; i >= 0; i--) {
-      if(lastProjects[i].id != nextProjects[i].id){
+    for (var i = lastItems.length - 1; i >= 0; i--) {
+      if(lastItems[i].id != nextItems[i].id){
         return true;
       }
     }
@@ -107,27 +85,15 @@ class ProjectCard extends Component {
     console.log('handleNope');
   }
 
-  handleYup(project){
-    let {navigator} =  this.props;
-    navigator.push({
-      component: ProjectContainer,
-      name: 'ProjectContainer',
-      props:{
-        project: project,
-      }
-    });
-  }
-
   render() {
-    const {projectStore} = this.props;
     return (
       <SwipeCards 
-        cards={projectStore.selectedProjects}
+        cards={this.props.items}
         loop={true}
         renderCard={(cardData) => <MediaCard {...cardData} />}
         renderNoMoreCards={() => <NoMoreCards />}
         handleNope={this.handleNope}
-        handleYup={this.handleYup}
+        handleYup={(p) => this.props.handleSelect(p)}
         showYup={true}
         showNope={true}
       />

@@ -12,7 +12,7 @@ import NavigationBar from 'react-native-navbar';
 
 import * as StyleSheet from '../utility/StyleSheet'
 
-class ReadingHeader extends Component {
+class NaviHeader extends Component {
 
   navtoLast() {
     const {navigator} = this.props;
@@ -45,9 +45,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     height: 50,
-    android: {
-    	marginTop: 20
-    },
     backgroundColor: '#5597B8'
   },
   toolItem: {
@@ -58,4 +55,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default ReadingHeader;
+export default NaviHeader;

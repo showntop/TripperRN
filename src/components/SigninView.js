@@ -15,20 +15,18 @@ import {signin} from '../actions/users';
 import NavigationBar from 'react-native-navbar';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as StyleSheet from '../utility/StyleSheet';
-import ReadingHeader from '../components/ReadingHeader';
+import NaviHeader from '../components/NaviHeader';
+import TripperComponent from '../components/TripperComponent';
 
-export default class SigninView extends Component {
+
+export default class SigninView extends TripperComponent {
     constructor(props){
         super(props);
         this.state = {
+            headerTitle: "登录",
             mobile: '',
             password: '',
         };
-    }
-
-    navtoLast() {
-        const {navigator} = this.props;
-        navigator.pop();
     }
 
     componentWillUnmount(){
@@ -58,10 +56,10 @@ export default class SigninView extends Component {
         }
     }
 
-    render(){
+    renderBody(){
+        let {userStore} = this.props;
         return (
             <View style={styles.container}>
-                <ReadingHeader title={'登录'} {...this.props}/>
                 <View style={[styles.formInput, styles.formInputSplit]}>
                     <Image source={require('../images/user.png')} style={{width:25,height:25,resizeMode: 'contain'}}/>
                     <TextInput
@@ -123,7 +121,6 @@ export default class SigninView extends Component {
             Toast.show('请输入密码', {position:Toast.positions.CENTER});
             return;
         }
-
         InteractionManager.runAfterInteractions(() => {
             const {dispatch} = this.props;
             dispatch(signin({

@@ -49,31 +49,14 @@ class TripperApp extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <StatusBar
-          translucent={true}
-          backgroundColor={Style.STATUSBAR_COLOR}
-          barStyle="light-content"
-          />
         <TripperNavigator/>
-        {        
-        //         <Modal
-        //           animationType={"slide"}
-        //           transparent={true}
-        //           visible={this.state.showDaily}
-        //           onRequestClose={()=>{this.setState({showDaily: false});}}>
-        //           <DailyContainer close={()=>{this.setState({showDaily: false});}}/>
-        //         </Modal>
-        }
-      </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container:{
-    flex: 1
-  }
+
+
 });
 
 function mapStateToProps (state) {

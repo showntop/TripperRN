@@ -4,7 +4,7 @@ type State = Array<string>;
 type Action = { type: string; list: Array<any>; };
 
 var initState = {
-  state: "initing",
+  showSpinner: false,
   message: "initing",
   myAlbums:[],
   currentUser: {
@@ -13,6 +13,7 @@ var initState = {
 }
 
 function user(state: State = initState, action: Action): State {
+
   if (action.type === 'created_album') {
     return Object.assign({}, state, {
               state: "succeeded",
@@ -27,26 +28,30 @@ function user(state: State = initState, action: Action): State {
   }  
   if (action.type === 'signining') {
     return Object.assign({}, state, {
-              state: "requesting",
-              currentUser: action.data          
+              showSpinner: true,
             });
   }
   if (action.type === 'signined') {
     return Object.assign({}, state, {
-              state: "succeeded",
+              showSpinner: false,
               currentUser: action.data          
             });
   }
   if (action.type === 'signuping') {
     return Object.assign({}, state, {
-              state: "requesting",
-              currentUser: action.data          
+              showSpinner: true,
             });
   }
   if (action.type === 'signuped') {
     return Object.assign({}, state, {
-              state: "succeeded",
+              showSpinner: false,
               currentUser: action.data          
+            });
+  }
+
+  if (action.type === 'REQUEST_ERROR') {
+    return Object.assign({}, state, {
+              showSpinner: false,
             });
   }
   return state;

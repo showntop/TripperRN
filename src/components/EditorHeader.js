@@ -57,9 +57,6 @@ let styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     height: 50,
-    android: {
-      marginTop: 20
-    },
     backgroundColor: '#5597B8'
   },
   toolItem: {

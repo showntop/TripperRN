@@ -175,8 +175,8 @@ class ItemWrapperIOS extends React.Component {
 }
 
 
-var STATUS_BAR_HEIGHT = Platform.OS === 'ios' ? 20 : 25;
-var HEADER_HEIGHT = Platform.OS === 'ios' ? 44 + STATUS_BAR_HEIGHT : 56 + STATUS_BAR_HEIGHT;
+var STATUS_BAR_HEIGHT = Platform.OS === 'ios' ? 20 : 0;
+var HEADER_HEIGHT = Platform.OS === 'ios' ? 50 + STATUS_BAR_HEIGHT : 50 + STATUS_BAR_HEIGHT;
 
 var styles = StyleSheet.create({
   toolbarContainer: {

@@ -15,7 +15,7 @@ import {
 
 import {Text, Heading1, Paragraph} from '../components/TripperText'
 import Icon2 from 'react-native-vector-icons/Ionicons';
-import ReadingHeader from '../components/ReadingHeader';
+import NaviHeader from '../components/NaviHeader';
 import SharePage from '../components/SharePage';
 
 import {fetchProject, createComment, createLike, deleteLike} from '../actions/projects';
@@ -84,7 +84,7 @@ class ProjectView extends Component {
     const project = projectStore.currentProject;
     return (
       <View  style={styles.container}>
-        <ReadingHeader {...this.props} style={styles.header} title={'阅读'}/>
+        <NaviHeader {...this.props} style={styles.header} title={'阅读'}/>
         <Image source={{uri: project.asset}} style={{flex: 1}}>
          
               

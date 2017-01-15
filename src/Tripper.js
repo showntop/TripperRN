@@ -9,6 +9,7 @@ import configureStore from "./store/configureStore"
 import TripperApp from "./TripperApp"
 
 import SplashScreen from 'react-native-splash-screen'
+import StartupView  from './components/StartupView'
 
 class Tripper extends Component {
 
@@ -28,8 +29,9 @@ class Tripper extends Component {
 
     render() {
       if(!this.state.rehydrated){
-         return (<View style={{justifyContent: 'center', alignItems: 'center'}}><Text>Loading...</Text></View>);
+        return <StartupView />;
        }
+
         //need to fetch user and env before render the launching view
       return (
         <Provider store={ this.state.store }>
@@ -38,12 +40,5 @@ class Tripper extends Component {
       );
     }
 }
-
-global.LOG = (...args) => {
-  console.log('/------------------------------\\');
-  console.log(...args);
-  console.log('\\------------------------------/');
-  return args[args.length - 1];
-};
 
 export default Tripper;

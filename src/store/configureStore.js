@@ -1,11 +1,11 @@
 'use strict';
 
 import {applyMiddleware, createStore, compose}  from 'redux';
-import thunk  from 'redux-thunk';
-import promise  from './promise';
-import array  from './array';
-import analytics  from './analytics';
-import reducers  from '../reducers';
+import thunk         from 'redux-thunk';
+import promise       from './promise';
+import array         from './array';
+import analytics     from './analytics';
+import reducers      from '../reducers';
 import createLogger  from 'redux-logger';
 import {persistStore, autoRehydrate}  from 'redux-persist';
 import {AsyncStorage}  from 'react-native';

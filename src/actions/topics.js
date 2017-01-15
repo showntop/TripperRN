@@ -10,7 +10,6 @@ function creatingTopic(){
   return{
     type: "creating_topic",
     data:{
-      isLoading: true,
       data: null
     }
   }

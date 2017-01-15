@@ -20,7 +20,7 @@ class TripperComponent extends Component {
 
   renderHeader() {
   	return(
-  	  <NaviHeader title={ this.state.headerTitle || '微米' } {...this.props}/>
+  	  <NaviHeader title={ this.props.headerTitle || '微米' } {...this.props}/>
   	);
   }
 

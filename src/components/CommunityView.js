@@ -11,6 +11,7 @@ import {
 import TripperComponent from '../components/TripperComponent';
 import TripperHeader    from '../components/TripperHeader';
 import TopicList        from '../components/TopicList';
+import TopicContainer   from '../containers/TopicContainer';
 
 class CommunityView extends TripperComponent {
 
@@ -18,16 +19,28 @@ class CommunityView extends TripperComponent {
     openDrawer: React.PropTypes.func,
   };
 
+  constructor(props) {
+    super(props);
+  }
+
   _handleShowMenu() {
     this.context.openDrawer();
+  }
+
+  openEditor() {
+    const {navigator} = this.props
+      navigator.push({
+        component: TopicContainer,
+          name: 'TopicContainer',
+      })
   }
 
   renderHeader() {
   	let	rightItem = {
   		  layout: 'icon',
   		  title: 'write',
-  		  icon: require('../images/note.png'),
-  		  onPress: this.openEditor,
+  		  icon: require('../images/icon_add_topic.png'),
+  		  onPress: () => this.openEditor(),
   		};
   	return(
       <TripperHeader

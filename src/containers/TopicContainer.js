@@ -21,7 +21,12 @@ class TopicContainer extends Component {
         );
     }else{
       return (
-        <TopicCreator {...this.props} />
+        <TopicCreator
+          headerTitle='创建话题'
+          needSpinner={true} 
+          showSpinner={this.props.topicStore.showSpinner}
+          {...this.props} 
+        />
       );
     }
   }

@@ -143,9 +143,6 @@ const styles = StyleSheet.create({
   container:{
     flex: 1,
     backgroundColor: 'white',
-    android:{
-      marginTop: 20
-    }
   },
   drawerContent: {
     margin: 10,

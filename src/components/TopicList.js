@@ -35,7 +35,7 @@ class TopicList extends Component {
   componentWillReceiveProps(nextProps) {
     const {topicStore} = nextProps;
     this.setState({
-      loading: topicStore.loading,
+      loading: topicStore.showSpinner,
       dataSource: this.state.dataSource.cloneWithRows(topicStore.topics)
     });
   }
@@ -78,96 +78,3 @@ const styles = StyleSheet.create({
 
 
 export default TopicList;
-
-
-
-const articleList = [
-  {
-    "content_id": "1547",
-    "hp_title": "他没有名字，他叫9527",
-    "hp_makettime": "2016-10-04 21:00:00",
-    "guide_word": "我们小区刚有人入住的时候，9527是第一个来摆摊卖水果的。男人离不开啤酒，女人离不开水果，这是自古的道理。",
-    "author": [
-      {
-        "user_id": "5541614",
-        "user_name": "绒绒",
-        "web_url": "http://image.wufazhuce.com/FnT7-zyYmZeammnFD1IuG14i2Nkg",
-        "desc": "一个喜欢讲故事的梦想家，已出版《输一回吧，姑娘》。",
-        "wb_name": "@小绒绒往前走"
-      }
-    ],
-    "has_audio": true
-  },
-  {
-    "id": "184",
-    "serial_id": "33",
-    "number": "4",
-    "title": "玩家·第四话",
-    "excerpt": "5W，你到底是不慎容纳了一些怪胎，还是本身就是按照一个怪胎集中营来设计的？",
-    "read_num": "7400",
-    "maketime": "2016-10-04 21:00:00",
-    "author": {
-      "user_id": "4813765",
-      "user_name": "夜X",
-      "web_url": "http://image.wufazhuce.com/Fkr-24izoJEPeeKJ0Zwga9xB325N",
-      "desc": "作家，编剧。公众号：不投币故事贩卖机"
-    },
-    "has_audio": false
-  },
-  {
-    "question_id": "1496",
-    "question_title": "作家会爱上笔下的人物吗？",
-    "answer_title": "@蔡骏 答BonBon：",
-    "answer_content": "人物既是作家在创造，到了一定阶段以后，也是人物根据其内在规律，他们自己在创造自己。",
-    "question_makettime": "2016-10-04 21:00:00"
-  },
-  {
-    "question_id": "1496",
-    "question_title": "作家会爱上笔下的人物吗？",
-    "answer_title": "@蔡骏 答BonBon：",
-    "answer_content": "人物既是作家在创造，到了一定阶段以后，也是人物根据其内在规律，他们自己在创造自己。",
-    "question_makettime": "2016-10-04 21:00:00"
-  },
-  {
-    "question_id": "1496",
-    "question_title": "作家会爱上笔下的人物吗？",
-    "answer_title": "@蔡骏 答BonBon：",
-    "answer_content": "人物既是作家在创造，到了一定阶段以后，也是人物根据其内在规律，他们自己在创造自己。",
-    "question_makettime": "2016-10-04 21:00:00"
-  },
-  {
-    "question_id": "1496",
-    "question_title": "作家会爱上笔下的人物吗？",
-    "answer_title": "@蔡骏 答BonBon：",
-    "answer_content": "人物既是作家在创造，到了一定阶段以后，也是人物根据其内在规律，他们自己在创造自己。",
-    "question_makettime": "2016-10-04 21:00:00"
-  },
-  {
-    "question_id": "1496",
-    "question_title": "作家会爱上笔下的人物吗？",
-    "answer_title": "@蔡骏 答BonBon：",
-    "answer_content": "人物既是作家在创造，到了一定阶段以后，也是人物根据其内在规律，他们自己在创造自己。",
-    "question_makettime": "2016-10-04 21:00:00"
-  },
-  {
-    "question_id": "1496",
-    "question_title": "作家会爱上笔下的人物吗？",
-    "answer_title": "@蔡骏 答BonBon：",
-    "answer_content": "人物既是作家在创造，到了一定阶段以后，也是人物根据其内在规律，他们自己在创造自己。",
-    "question_makettime": "2016-10-04 21:00:00"
-  },
-  {
-    "question_id": "1496",
-    "question_title": "作家会爱上笔下的人物吗？",
-    "answer_title": "@蔡骏 答BonBon：",
-    "answer_content": "人物既是作家在创造，到了一定阶段以后，也是人物根据其内在规律，他们自己在创造自己。",
-    "question_makettime": "2016-10-04 21:00:00"
-  },
-  {
-    "question_id": "1496",
-    "question_title": "作家会爱上笔下的人物吗？",
-    "answer_title": "@蔡骏 答BonBon：",
-    "answer_content": "人物既是作家在创造，到了一定阶段以后，也是人物根据其内在规律，他们自己在创造自己。",
-    "question_makettime": "2016-10-04 21:00:00"
-  }
-];

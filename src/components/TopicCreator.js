@@ -11,13 +11,13 @@ import {
   Alert
 } from 'react-native';
 
-import EditorHeader from '../components/EditorHeader';
-import Style from '../constants/Style';
-import * as StyleSheet from '../utility/StyleSheet';
+import TripperComponent from '../components/TripperComponent';
+import EditorHeader     from '../components/EditorHeader';
+import * as StyleSheet  from '../utility/StyleSheet';
 
 import {createTopic} from '../actions/topics';
 
-class TopicCreator extends Component {
+class TopicCreator extends TripperComponent {
 
   constructor(props) {
     super(props);
@@ -29,13 +29,10 @@ class TopicCreator extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.topicStore.status) {
+    let {topicStore} = nextProps;
+    if (topicStore.topic.id) {
       Alert.alert('温馨提醒','提交成功',[
           { text:'确定', onPress: () => { nextProps.navigator.pop() } }
-        ]);
-    }else{
-      Alert.alert('温馨x提醒',nextProps.message,[
-          { text:'确定', onPress: () => {  } }
         ]);
     }
   }
@@ -49,33 +46,25 @@ class TopicCreator extends Component {
     dispatch(createTopic(userStore.currentUser, topic))
   }
 
-  render() {
+  renderBody() {
     return (
-      <View style={styles.container}>
-      	<StatusBar
-      	  backgroundColor={Style.STATUSBAR_COLOR}
-      	  barStyle="light-content"
-      	  />
-      	<EditorHeader title="创建话题"  {...this.props}/>
-      	
-      	<View style={styles.editor}>
-      		<View style={styles.title}>
-      		    <TextInput ref="title" style={{fontSize: 20, fontWeight: 'bold', height: 40,  textAlignVertical: "center"}} placeholder="输入话题名（不超过30字）" underlineColorAndroid= "transparent"
-      		    value={this.state.title} onChangeText={title => this.setState({title})}/>
-      		</View>
+    	<View style={styles.editor}>
+    		<View style={styles.title}>
+    		    <TextInput ref="title" style={{fontSize: 20, fontWeight: 'bold', height: 40,  textAlignVertical: "center"}} placeholder="输入话题名（不超过30字）" underlineColorAndroid= "transparent"
+    		    value={this.state.title} onChangeText={title => this.setState({title})}/>
+    		</View>
 
-      		<View style={styles.description}>
-      		    <TextInput ref="description" style={{flex: 1,  textAlignVertical: "top"}} placeholder="输入话题描述（不超过100字）" underlineColorAndroid= "transparent"
-      		    multiline={true} value={this.state.description} onChangeText={description => this.setState({description})}/>
-      		</View>
+    		<View style={styles.description}>
+    		    <TextInput ref="description" style={{flex: 1,  textAlignVertical: "top"}} placeholder="输入话题描述（不超过100字）" underlineColorAndroid= "transparent"
+    		    multiline={true} value={this.state.description} onChangeText={description => this.setState({description})}/>
+    		</View>
 
-      		<View style={styles.buttonWrapper}>
-      			<TouchableOpacity style={styles.button} onPress ={this.onCreateTopic.bind(this)}>
-      				<Text style={{color: 'white', textAlignVertical: 'center', textAlign: 'center'}}>提交话题</Text>
-      			</TouchableOpacity>
-      		</View>
-      	</View>    	
-      </View>
+    		<View style={styles.buttonWrapper}>
+    			<TouchableOpacity style={styles.button} onPress ={this.onCreateTopic.bind(this)}>
+    				<Text style={{color: 'white', textAlignVertical: 'center', textAlign: 'center'}}>提交话题</Text>
+    			</TouchableOpacity>
+    		</View>
+    	</View>    	
     );
   }
 }

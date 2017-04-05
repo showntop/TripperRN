@@ -8,52 +8,34 @@ import {
     TouchableOpacity,
     InteractionManager,
 } from 'react-native';
-import Toast from 'react-native-root-toast';
-import SignupContainer from '../containers/SignupContainer';
-import {signin} from '../actions/users';
-// import Loading from '../components/Loading';
-import NavigationBar from 'react-native-navbar';
-import Icon from 'react-native-vector-icons/FontAwesome';
+
 import * as StyleSheet from '../utility/StyleSheet';
-import NaviHeader from '../components/NaviHeader';
+
+import Toast   from 'react-native-root-toast';
+import Spinner from 'react-native-spinkit';
+import Icon    from 'react-native-vector-icons/FontAwesome';
+
 import TripperComponent from '../components/TripperComponent';
+import SignupContainer  from '../containers/SignupContainer';
+import {signin}         from '../actions/users';
 
 
 export default class SigninView extends TripperComponent {
     constructor(props){
         super(props);
         this.state = {
-            headerTitle: "登录",
             mobile: '',
             password: '',
         };
     }
 
-    componentWillUnmount(){
-        // this.unsubscribe();
-    }
-    componentDidMount(){
-        // Storage.getUser()
-        // .then((user) => {
-        //     if (user.id) {
-        //         this.props.navigator.popToTop();
-        //     }
-        // });
-    }
-
-    componentWillUpdate(nextProps, nextState) {
-        let {userStore} = nextProps;
-        if(userStore.state == "succeeded"){
-            InteractionManager.runAfterInteractions(() => {
-                const currentUser = userStore.currentUser;
-                if (currentUser.id) {
-                    this.props.navigator.popToTop();
-                    Toast.show("登录成功", {position: Toast.positions.CENTER});
-                }
-                // if (!this.props.currentUser.loading) {
-                // }
-            });
-        }
+    componentWillReceiveProps(nextProps) {
+      let { currentUser } = nextProps.userStore;
+      debugger;
+      if(currentUser.id && currentUser.token){
+        this.props.navigator.popToTop();
+        Toast.show("登录成功", {position: Toast.positions.CENTER});
+      }
     }
 
     renderBody(){
@@ -79,9 +61,16 @@ export default class SigninView extends TripperComponent {
                         underlineColorAndroid= "transparent"
                         onChangeText={this.onChangePassword.bind(this)} />
                 </View>
-                <TouchableOpacity style={styles.loginBtn} onPress={this._login.bind(this)}>
-                    <Text style={styles.loginText}>登录</Text>
-                </TouchableOpacity>
+                {
+                    userStore.showSpinner ?
+                    <View style={styles.loginBtn}>
+                      <Spinner style={{justifyContent: 'center', alignItems: 'center'}} isVisible={true} size={20} type='ThreeBounce' color='white'/> 
+                    </View>
+                    :
+                    <TouchableOpacity style={styles.loginBtn} onPress={this._login.bind(this)}>
+                      <Text style={styles.loginText}>登录</Text> 
+                    </TouchableOpacity>
+                }                
                 <View style={styles.registerWrap}>
                     <TouchableOpacity style={{alignItems:'flex-start',flex:1}} onPress={this._forgetPassword.bind(this)}>
                         <Text style={{color:'#62a2e0'}}>忘记密码?</Text>

@@ -4,10 +4,9 @@ import { connect } from 'react-redux';
 import UserView from '../components/UserView';
 
 function mapStateToProps(state) {
-  const {user} = state
-  const {currentUser} = user
+  const {userStore} = state
   return {
-    currentUser
+    userStore
   };
 }
 
@@ -22,7 +21,7 @@ export class UserContainer extends React.Component {
 
   render() {
     return (
-        <UserView {...this.props}/>
+        <UserView headerTitle="我&me" {...this.props}/>
     );
   }
 }

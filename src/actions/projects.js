@@ -16,10 +16,10 @@ function listingProject(){
   }
 }
 
-export function listProject () {
+export function listProject(params) {
   return dispatch => {
     dispatch(listingProject());
-    return Api.project.list().then(result => {
+    return Api.project.list(params).then(result => {
       dispatch(listedProject(result));
     }).catch((errors) =>{
       dispatch({type: "REQUEST_ERROR", errors: errors});

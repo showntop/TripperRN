@@ -11,6 +11,8 @@ import {
   Alert
 } from 'react-native';
 
+import Toast from 'react-native-root-toast';
+
 import TripperComponent from '../components/TripperComponent';
 import EditorHeader     from '../components/EditorHeader';
 import * as StyleSheet  from '../utility/StyleSheet';
@@ -38,6 +40,10 @@ class TopicCreator extends TripperComponent {
   }
 
   onCreateTopic(){
+    if (this.state.title === "" || this.state.description === "") {
+      Toast.show("标题或者内容不能为空", {position:Toast.positions.Center});
+      return;
+    }
     const {dispatch, userStore} = this.props;
     let topic = {
       title: this.state.title,
@@ -50,7 +56,7 @@ class TopicCreator extends TripperComponent {
     return (
     	<View style={styles.editor}>
     		<View style={styles.title}>
-    		    <TextInput ref="title" style={{fontSize: 20, fontWeight: 'bold', height: 40,  textAlignVertical: "center"}} placeholder="输入话题名（不超过30字）" underlineColorAndroid= "transparent"
+    		    <TextInput ref="title" style={{fontSize: 20, fontWeight: 'bold', height: 45,  textAlignVertical: "center"}} placeholder="输入话题名（不超过30字）" underlineColorAndroid= "transparent"
     		    value={this.state.title} onChangeText={title => this.setState({title})}/>
     		</View>
 
@@ -70,12 +76,6 @@ class TopicCreator extends TripperComponent {
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		android:{
-		  marginTop: 20
-		}
-	},
 	editor: {
 		flex: 1
 	},
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
 		margin: 12,
 		height: 40, 
 		backgroundColor: '#EDEDED',
-		padding: 6
+		padding: 1
 	},
 	description: {
 		margin: 12,

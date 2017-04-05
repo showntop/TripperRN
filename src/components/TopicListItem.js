@@ -26,7 +26,7 @@ class TopicListItem extends Component {
     navigator.push({
       component: TopicContainer,
       name: 'TopicContainer',
-      props: {id: data.id}
+      props: {topic: data}
     })
   }
 

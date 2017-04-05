@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 
 import {
-  StyleSheet,
   View,
   Text,
   Image,
@@ -12,6 +11,8 @@ import {
   TouchableOpacity,
   Dimensions
 } from 'react-native';
+
+import * as StyleSheet  from '../utility/StyleSheet';
 
 import Swiper from 'react-native-swiper'
 import ViewPager from 'react-native-viewpager';
@@ -25,6 +26,7 @@ import SearcherContainer from '../containers/SearcherContainer'
 import AlbumContainer from '../containers/AlbumContainer'
 
 import {listAlbum} from '../actions/albums';
+import {listCategory} from '../actions/category';
 
 const windowWidth = Dimensions.get('window').width;
 const HEIGHT = 200;
@@ -67,7 +69,7 @@ class ChannelView extends TripperComponent {
       userSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}).cloneWithRows(userList)
   	};
 
-    this.listCategory = this.listCategory.bind(this);
+    this.showCategory = this.showCategory.bind(this);
     this.showAlbum = this.showAlbum.bind(this);
     this.searchView = this.searchView.bind(this);
   }
@@ -87,27 +89,27 @@ class ChannelView extends TripperComponent {
   }
 
 
-  listCategory() {
+  showCategory(i) {
     const {navigator} = this.props;
     navigator.push({
       component: ProjectListContainer,
       name: 'ProjectListContainer',
       props:{
-        category: 0,
+        category: i,
       }
     })    
   }
 
-  showAlbum(id) {
+  showAlbum(theAlbum) {
     const {navigator} = this.props;
     navigator.push({
       component: AlbumContainer,
       name: 'AlbumContainer',
       props:{
-        album_id: id,
+        album: theAlbum,
       }
-    })    
-  }
+    });
+  }    
 
   componentWillReceiveProps(nextProps) {
     nextProps.channelStore.albums
@@ -115,7 +117,8 @@ class ChannelView extends TripperComponent {
 
   componentDidMount() {
     const {dispatch} = this.props;
-    dispatch(listAlbum())
+    dispatch(listAlbum());
+    dispatch(listCategory());
   }
 
   renderPage(data) {
@@ -144,15 +147,20 @@ class ChannelView extends TripperComponent {
           onPress: () => this._handleShowMenu(),
         }}
         rightItem={rightItem}>
-        <View style={{alignItems: 'center', justifyContent: 'center',}}>
-          <Text style={{color: 'white'}}>{'频道'}</Text>
+        <View style={styles.headerContent}>
+          <Text style={styles.title}>
+            <Text style={styles.day}>{'频道/专栏'}</Text>
+            {'\n'}
+            <Text style={styles.time}>{'世界很大，一块看看'}</Text>
+          </Text>        
         </View>
       </TripperHeader>
       );
   }
 
   renderBody() {
-    let albumSource = ds.cloneWithRows(this.props.channelStore.albums || channels)
+    let albumSource = ds.cloneWithRows(this.props.channelStore.albums || channels);
+    let categories = this.props.channelStore.categories;
 
     return (
       <ScrollView style={{flex: 1, backgroundColor: "#E0EEEE"}}>
@@ -165,52 +173,73 @@ class ChannelView extends TripperComponent {
             autoPlay={true}
           />
         </View>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.container2} contentContainerStyle={{ justifyContent: 'space-around'}}>
+          {
+            categories.map((item, i) => {
+                    return (
+                      <TouchableOpacity key={"item" + i} onPress={()=>this.showCategory(item.id)} style={{backgroundColor: '#E0EEEE', width: 50, height: 50, borderRadius: 5, alignItems: 'center', justifyContent: 'center', marginLeft: 5, marginRight: 5}}>
+                        <Text>{item.name}</Text>
+                      </TouchableOpacity>
+                    );  // 多行箭头函数需要加括号和return
+                })
 
-        <View style={styles.container2}>
+          }
+          {          
+          // <TouchableOpacity onPress={()=>this.showCategory(0)} style={{backgroundColor: '#E0EEEE', width: 50, height: 50, borderRadius: 5, alignItems: 'center', justifyContent: 'center',}}>
+          //   <Text>文字</Text>
+          // </TouchableOpacity>       
+          // <TouchableOpacity onPress={()=>this.showCategory(1)} style={{backgroundColor: '#E0EEEE', width: 50, height: 50, borderRadius: 5, alignItems: 'center', justifyContent: 'center',}}>
+          //   <Text>音频</Text>
+          // </TouchableOpacity>       
+          // <TouchableOpacity onPress={()=>this.showCategory(2)} style={{backgroundColor: '#E0EEEE', width: 50, height: 50, borderRadius: 5, alignItems: 'center', justifyContent: 'center',}}>
+          //   <Text>电影</Text>
+          // </TouchableOpacity>       
+          // <TouchableOpacity onPress={()=>this.showCategory(3)} style={{backgroundColor: '#E0EEEE', width: 50, height: 50, borderRadius: 5, alignItems: 'center', justifyContent: 'center',}}>
+          //   <Text>杂</Text>
+          // </TouchableOpacity>
+          }
 
-          <TouchableOpacity onPress={()=>this.listCategory()} style={{backgroundColor: '#E0EEEE', width: 50, height: 50, borderRadius: 5, alignItems: 'center', justifyContent: 'center',}}>
-            <Text>文字</Text>
-          </TouchableOpacity>       
-          <TouchableOpacity onPress={()=>this.listCategory()} style={{backgroundColor: '#E0EEEE', width: 50, height: 50, borderRadius: 5, alignItems: 'center', justifyContent: 'center',}}>
-            <Text>音频</Text>
-          </TouchableOpacity>       
-          <TouchableOpacity onPress={()=>this.listCategory()} style={{backgroundColor: '#E0EEEE', width: 50, height: 50, borderRadius: 5, alignItems: 'center', justifyContent: 'center',}}>
-            <Text>电影</Text>
-          </TouchableOpacity>       
-          <TouchableOpacity onPress={()=>this.listCategory()} style={{backgroundColor: '#E0EEEE', width: 50, height: 50, borderRadius: 5, alignItems: 'center', justifyContent: 'center',}}>
-            <Text>杂</Text>
-          </TouchableOpacity>
-
-        </View>
+        </ScrollView>
     		
 
-	  	 <View style={{paddingVertical: 20}}>
+	  	 <View style={{paddingBottom: 20}}>
+        <Text style={{marginBottom: 5, backgroundColor: 'grey', width: 63, color: 'white'}}>精选专栏</Text>
 	  	 	<ListView
  	         dataSource={albumSource}
            enableEmptySections={true}
  	         renderRow={(album) => 
- 	         	<TouchableOpacity onPress={()=>this.showAlbum(album.id)}>
-              <View style={{flexDirection: 'row',backgroundColor: 'white', height: 50, borderBottomWidth: 1, borderColor: '#EBEBEB', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20}}>
-                <View style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center',}}>
-                 <Image source={{uri: 'http://tp4.sinaimg.cn/1583890703/180/5687878857/1'}} style={{width: 30, height: 30}}>
-                 </Image>
-                 <View style={{width: 10}}/>
-                 <Text>{album.name}</Text>
-               </View>
-               <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center',}}>
-                 <View style={{backgroundColor: 'red', height: 16, width: 16, borderRadius: 8, justifyContent: 'center',alignItems: 'center',}}>
-                   <Text style={{fontSize: 6 }}>99+</Text>
-                 </View>
-                 <Text>></Text>
-               </View>
+ 	         	<TouchableOpacity onPress={()=>this.showAlbum(album)}>
+              <View style={{backgroundColor: 'white', borderBottomWidth: 1, borderColor: '#EBEBEB', paddingHorizontal: 20, paddingVertical: 5}}>
+                
+                <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginVertical: 5}}>
+                   <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                     <Image source={{uri: 'http://tp4.sinaimg.cn/1583890703/180/5687878857/1'}} style={{width: 30, height: 30, marginRight: 3}}>
+                     </Image>
+                     <Text>{album.name}</Text>
+                   </View>
+
+                   <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center',}}>
+                      <View style={{backgroundColor: 'red', height: 16, width: 16, borderRadius: 8, justifyContent: 'center',alignItems: 'center',}}>
+                        <Text style={{fontSize: 6 }}>99+</Text>
+                      </View>
+                      <Text>></Text>
+                   </View>
+                </View>
+
+                <View style={{backgroundColor: '#EBEBEB', padding: 5}}>
+                  <Text>女子上坟归来欲自杀</Text>
+                  <Text>民警夺刀救人</Text>
+                  <Text>有群人带着像镜子一样的方块走来走去，这是一场实验</Text>
+                  <Text>习近平“三会”尼尼斯托</Text>
+                </View>
               </View>
             </TouchableOpacity>
  	         }/>
 	  	 </View>
 
-       <View style={{flex: 1, backgroundColor: "white"}}>
-        <Text>知名推荐</Text>
-        <View style={{flex: 1, marginTop: 10}}>
+       <View style={{flex: 1}}>
+        <Text style={{marginBottom: 5, backgroundColor: 'grey', width: 63, color: 'white'}}>知名精鉴</Text>
+        <View style={{flex: 1, backgroundColor: "white"}}>
           <ListView
             style={{flex: 1}}
             contentContainerStyle={styles.grid}
@@ -251,7 +280,6 @@ const styles = StyleSheet.create({
     marginTop: -20,
     padding: 8,
     borderWidth: 1,
-    justifyContent: 'space-around',
     borderColor: commonStyle.GRAY_COLOR,
     backgroundColor: 'white'
   },
@@ -260,7 +288,40 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     alignItems: 'flex-start',
     justifyContent: 'space-around'
-  }
+  },
+  headerContent: {
+    android: {
+      flex: 1,
+      alignItems: 'flex-start',
+      justifyContent: 'center',
+    },
+    ios: {
+      height: 65,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  },
+  title: {
+    color: 'white',
+    fontSize: 12,
+    ios: {
+      textAlign: 'center',
+    },
+  },
+  day: {
+    ios: {
+      fontWeight: 'bold',
+    },
+    android: {
+      fontSize: 9,
+    },
+  },
+  time: {
+    android: {
+      fontWeight: 'bold',
+      fontSize: 17,
+    }
+  },
 
 });
 

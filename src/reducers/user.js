@@ -8,7 +8,6 @@ var initState = {
   message: "initing",
   myAlbums:[],
   currentUser: {
-    id: "",
   }
 }
 
@@ -29,6 +28,8 @@ function user(state: State = initState, action: Action): State {
   if (action.type === 'signining') {
     return Object.assign({}, state, {
               showSpinner: true,
+              currentUser: {
+              }
             });
   }
   if (action.type === 'signined') {
@@ -52,6 +53,9 @@ function user(state: State = initState, action: Action): State {
   if (action.type === 'REQUEST_ERROR') {
     return Object.assign({}, state, {
               showSpinner: false,
+              currentUser: {
+                id: "",
+              }
             });
   }
   return state;

@@ -3,6 +3,7 @@
 import { combineReducers } from 'redux';
 
 import charm   from './charm';
+import album   from './album';
 import editor  from './editor';
 import project from './project';
 import topic   from './topic';
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   // spot,
   // location,
   charmStore: charm,
+  albumStore: album,
   editorStore: editor,
   projectStore: project,
   errorStore: error,

@@ -37,10 +37,6 @@ function signuped (user) {
 function signining(){
   return{
     type: "signining",
-    result:{
-      isLoading: true,
-      result: null
-    }
   }
 }
 
@@ -58,8 +54,7 @@ export function signin (loginInfo) {
 function signined (user) {
   return {
     type: "signined",
-    result: user,
-    isLoading: false
+    data: user
   }
 }
 

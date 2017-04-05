@@ -44,6 +44,12 @@ function topic(state: State = initState, action: Action): State {
               topic: action.data            
             });
   }
+  if (action.type === 'showing_topic') {
+    return Object.assign({}, state, {
+              showSpinner: true,
+              topic: action.data            
+            });
+  }
   return state;
 }
 

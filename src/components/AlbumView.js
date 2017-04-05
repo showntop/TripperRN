@@ -27,7 +27,9 @@ class AlbumView extends Component {
   }
 
   componentDidMount() {
-
+    debugger;
+    const {album, dispatch} =  this.props;
+    dispatch(fetchAlbum(album.id));
   }
 
   navtoLast() {
@@ -47,11 +49,12 @@ class AlbumView extends Component {
   }
 
   render() {
-    let projects = [{id: "1", title: "title1", intro: "今夜，此时"}, {id:"2", title: "title1", intro: "今夜，此时"}, {id:"3", title: "title1", intro: "今夜，此时"}, {id:"4", title: "title1", intro: "今夜，此时"}, {id:"5", title: "title1", intro: "今夜，此时"}]
+    const {album} = this.props;
+    let projects = album.projects || [{id: "1", title: "title1", intro: "今夜，此时"}, {id:"2", title: "title1", intro: "今夜，此时"}, {id:"3", title: "title1", intro: "今夜，此时"}, {id:"4", title: "title1", intro: "今夜，此时"}, {id:"5", title: "title1", intro: "今夜，此时"}]
 
     return (
       <View style={{flex: 1, backgroundColor: '#F0FFF0'}}>
-        <NaviHeader title={'札记'} {...this.props}/>
+        <NaviHeader title={album.name} {...this.props}/>
         <Swiper
           dot={<View style={{backgroundColor: '#CDCDC1', width: 13, height: 13, borderRadius: 7, marginLeft: 7, marginRight: 7}} />}
           activeDot={<View style={{backgroundColor: '#838B83', width: 13, height: 13, borderRadius: 7, marginLeft: 7, marginRight: 7}} />}

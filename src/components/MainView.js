@@ -15,6 +15,7 @@ import DrawerSider       from '../components/DrawerSider';
 import TripperTabItem    from '../components/TripperTabItem'
 
 import CharmView     from '../components/CharmView'
+// import StackView     from '../components/StackView'
 import ChannelView   from '../components/ChannelView'
 import CommunityView from '../components/CommunityView'
 import ShopView      from '../components/ShopView'
@@ -62,7 +63,9 @@ class MainView extends Component {
 	         renderTabBar={() => {
 	           return <TripperTabItem tabBarResources={TAB_BAR_RESOURCES}/>
 	         }}>
-	         <CharmView     style={styles.subView} {...this.props}/>
+			 {	         
+				<CharmView     style={styles.subView} {...this.props}/>
+	         }	         
 	         <ChannelView   style={styles.subView} {...this.props}/>
 	         <CommunityView style={styles.subView} {...this.props}/>
 	         <ShopView      style={styles.subView} {...this.props}/>

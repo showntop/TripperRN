@@ -15,9 +15,9 @@ import TopicView    from '../components/TopicView'
 class TopicContainer extends Component {
   render() {
 
-    if (this.props.id) {
+    if (this.props.topic && this.props.topic.id) {
       return(
-        <TopicView {...this.props} id={this.props.id}/>
+        <TopicView {...this.props} id={this.props.topic.id} headerTitle={this.props.topic.title}/>
         );
     }else{
       return (

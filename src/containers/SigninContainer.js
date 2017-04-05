@@ -5,7 +5,7 @@ import SigninView from '../components/SigninView';
 class SigninContainer extends Component {
     render() {
         return (
-            <SigninView spinnerContent="登录中..." needSpinner={true} {...this.props} showSpinner={this.props.userStore.showSpinner}/>
+            <SigninView headerTitle="登录"  needSpinner={false} {...this.props} />
         )
     }
 }

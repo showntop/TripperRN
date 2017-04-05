@@ -94,3 +94,33 @@ function listedMyAlbum (album) {
     isLoading: false
   }
 }
+
+//#######################################################//
+function fetchingAlbum(){
+  return{
+    type: "fetching_album",
+    data:{
+      isLoading: true,
+      data: null
+    }
+  }
+}
+
+export function fetchAlbum (id) {
+  return dispatch => {
+    dispatch(fetchingAlbum());
+    return Api.album.show(id).then(result => {
+      dispatch(fetchedAlbum(result));
+    }).catch((errors) =>{
+      dispatch({type: "REQUEST_ERROR", errors: errors});
+    });
+  }
+}
+
+function fetchedAlbum (album) {
+  return {
+    type: "fetched_album",
+    data: album,
+    isLoading: false
+  }
+}

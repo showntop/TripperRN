@@ -67,9 +67,9 @@ class CharmView extends TripperComponent {
     	  rightItem={rightItem}>
     	  <View style={styles.headerContent}>
     	    <Text style={styles.title}>
-    	      <Text style={styles.day}>11月 {'11'}</Text>
+    	      <Text style={styles.day}>11月 {'11日/晴'}</Text>
     	      {'\n'}
-    	      <Text style={styles.time}>{'路上'}</Text>
+    	      <Text style={styles.time}>{'五分钟速递'}</Text>
     	    </Text>
     	  </View>
       </TripperHeader>

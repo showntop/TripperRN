@@ -34,7 +34,7 @@ class ProjectList extends Component {
 
   componentDidMount() {
     const {dispatch} =  this.props;
-    dispatch(listProject(this.props.category));
+    dispatch(listProject({category: this.props.category}));
   }
 
   componentWillReceiveProps(nextProps) {

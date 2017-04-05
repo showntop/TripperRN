@@ -1,6 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
+import {connect} from 'react-redux'
 
 import {
   StyleSheet,
@@ -22,4 +23,13 @@ const styles = StyleSheet.create({
 });
 
 
-export default AlbumContainer;
+function mapStateToProps (state) {
+	const {albumStore, user} = state;
+	// const {currentUser} = user;
+	// const {album} = albumStore;
+	// return {currentUser, album};
+	return { albumStore };
+
+}
+
+export default connect(mapStateToProps)(AlbumContainer);

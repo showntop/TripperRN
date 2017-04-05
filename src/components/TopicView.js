@@ -16,11 +16,11 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/EvilIcons';
 
-import {showTopic} from '../actions/topics';
-import NaviHeader from '../components/NaviHeader'
-import PostContainer from '../containers/PostContainer'
+import TripperComponent from '../components/TripperComponent';
+import PostContainer    from '../containers/PostContainer'
+import {showTopic}      from '../actions/topics';
 
-class TopicView extends Component {
+class TopicView extends TripperComponent {
   
   constructor(props) {
     super(props);
@@ -36,7 +36,6 @@ class TopicView extends Component {
   	const {dispatch} = this.props;
   	dispatch(showTopic(this.props.id))
   }
-
 
   componentWillReceiveProps(nextProps) {
     const {topicStore} = nextProps;
@@ -68,12 +67,11 @@ class TopicView extends Component {
     })
   }
 
-  render() {
+  renderBody() {
     const {topicStore} = this.props;
 
     return (
       <View  style={styles.container}>
-        <NaviHeader {...this.props} style={styles.header} title={topicStore.topic.title}/>
 	      <ListView
   	      removeClippedSubviews={false}
   	      style={styles.listView}

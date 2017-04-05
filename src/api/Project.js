@@ -7,7 +7,7 @@ import Qiniu from './Qiniu'
 export default class ProjectApi extends Base {
 
     list(params) {
-        return this.apiClient.get(this.baseUrl + '/projects?category='+params, {});
+        return this.apiClient.get(this.baseUrl + '/projects', {}, params);
     }
 
     select(params) {

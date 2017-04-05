@@ -3,10 +3,11 @@
 import React, { Component } from 'react';
 
 import {
-  StyleSheet,
   View,
   Text
 } from 'react-native';
+
+import * as StyleSheet  from '../utility/StyleSheet';
 
 import TripperComponent from '../components/TripperComponent';
 import TripperHeader    from '../components/TripperHeader';
@@ -54,9 +55,9 @@ class CommunityView extends TripperComponent {
     	  rightItem={rightItem}>
     	  <View style={styles.headerContent}>
     	    <Text style={styles.title}>
-    	      <Text style={styles.day}>11月 {'11'}</Text>
+    	      <Text style={styles.day}>{'话题/讨论'}</Text>
     	      {'\n'}
-    	      <Text style={styles.time}>{'话题'}</Text>
+    	      <Text style={styles.time}>{'生活太美，源于你的创造'}</Text>
     	    </Text>
     	  </View>
       </TripperHeader>
@@ -76,6 +77,39 @@ const styles = StyleSheet.create({
 	    backgroundColor: '#5597B8',
 	  // },
 	},
+  headerContent: {
+    android: {
+      flex: 1,
+      alignItems: 'flex-start',
+      justifyContent: 'center',
+    },
+    ios: {
+      height: 65,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  },
+  title: {
+    color: 'white',
+    fontSize: 12,
+    ios: {
+      textAlign: 'center',
+    },
+  },
+  day: {
+    ios: {
+      fontWeight: 'bold',
+    },
+    android: {
+      fontSize: 9,
+    },
+  },
+  time: {
+    android: {
+      fontWeight: 'bold',
+      fontSize: 17,
+    }
+  },
 });
 
 

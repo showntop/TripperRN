@@ -24,6 +24,7 @@ class MediaCard extends Component {
   }
 
   render() {
+    const author = this.props.author || {avatar: 'http://v1.qzone.cc/avatar/201408/03/23/44/53de58e5da74c247.jpg%21200x200.jpg', nickname: '未知'}
     return (
 		  <View style={styles.card}>
       {
@@ -44,10 +45,10 @@ class MediaCard extends Component {
           <View style={{flexDirection: 'row'}}>
             <Image 
             style={{width: 30, height: 30, borderRadius: 15}}
-            source={{uri: this.props.author.avatar}}/>
-            <Text style={{alignSelf: "center", marginLeft: 5}}>{this.props.author.nickname}</Text>
+            source={{uri: author.avatar}}/>
+            <Text style={{alignSelf: "center", marginLeft: 5}}>{author.nickname}</Text>
           </View>
-          <Text style={{alignSelf: "center", fontWeight: 'bold'}}>{this.props.created_at.split('T')[0].replace('-', '.').replace('-', '.')}</Text>
+          <Text style={{alignSelf: "center", fontWeight: 'bold'}}>{this.props.created_at == null ? '': this.props.created_at.split('T')[0].replace('-', '.').replace('-', '.')}</Text>
         </View>
 	    </View>
     );

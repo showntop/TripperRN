@@ -16,6 +16,13 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import ProjectListItem from '../components/ProjectListItem';
 import NaviHeader from '../components/NaviHeader';
 import {listProject} from '../actions/projects';
+import ProjectContainer from '../containers/ProjectContainer'
+
+const COLORS = [
+  '#FFFAF0','#F8F8FF','#E0EEEE','#C5C1AA','#BCD2EE','#8FBC8F','#BDB76B',
+  '#CD9B1D','#B0B0B0'
+]
+
 
 class ProjectList extends Component {
 
@@ -55,6 +62,17 @@ class ProjectList extends Component {
       navigator.pop();
   }
 
+  _onPress(project) {
+    let {navigator} =  this.props;
+    navigator.push({
+      component: ProjectContainer,
+      name: 'ProjectContainer',
+      props:{
+        project: project,
+      }
+    });
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -75,9 +93,9 @@ class ProjectList extends Component {
 	  );
   }
 
-  renderRow(data) {
+  renderRow(rowData, sectionID, rowID, highlightRow) {
     return (
-      <ProjectListItem data={data} {...this.props}/>
+      <ProjectListItem onPress={(data)=> this._onPress(data)} data={rowData} {...this.props} backgroundColor={COLORS[rowID % COLORS.length]}/>
     );
   }
 }

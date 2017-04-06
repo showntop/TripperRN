@@ -77,7 +77,7 @@ class ShopView extends TripperComponent {
 
   renderRow(data, sectionID, rowID) {
     return (
-      <ProductListItem rowID={rowID} cover={data.cover} score={data.score} onPress={() => this.onPress(data)}/>
+      <ProductListItem rowID={rowID} cover={data.cover} score={data.score} onPress={() => {}}/>
     );
   }
 

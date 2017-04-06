@@ -8,13 +8,13 @@ import {
   Text,
   Image,
 } from 'react-native';
+import * as StyleSheet from '../utility/StyleSheet'
 
-import NavigationBar from 'react-native-navbar';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Swiper from 'react-native-swiper';
 import NaviHeader from '../components/NaviHeader';
 import ProjectContainer from '../containers/ProjectContainer'
-import * as StyleSheet from '../utility/StyleSheet'
+import ProjectCard      from '../components/ProjectCard'
 
 import {fetchAlbum} from '../actions/albums';
 
@@ -27,7 +27,6 @@ class AlbumView extends Component {
   }
 
   componentDidMount() {
-    debugger;
     const {album, dispatch} =  this.props;
     dispatch(fetchAlbum(album.id));
   }
@@ -37,44 +36,50 @@ class AlbumView extends Component {
     navigator.pop();
   }
 
-  _onPressButton() {
+  _onPressButton(project) {
     const {navigator} = this.props;
     navigator.push({
       component: ProjectContainer,
       name: 'ProjectContainer',
       props:{
-        project:{id: "5870b45ff16e9000042b2d94"}
+        project:{id: project.id}
       }
       });
   }
 
   render() {
-    const {album} = this.props;
-    let projects = album.projects || [{id: "1", title: "title1", intro: "今夜，此时"}, {id:"2", title: "title1", intro: "今夜，此时"}, {id:"3", title: "title1", intro: "今夜，此时"}, {id:"4", title: "title1", intro: "今夜，此时"}, {id:"5", title: "title1", intro: "今夜，此时"}]
-
+    const {albumStore} = this.props;
+    const album = this.props.album;
+    let projects = albumStore.album.projects || [{id: "1", title: "title1", intro: "今夜，此时"}, {id:"2", title: "title1", intro: "今夜，此时"}, {id:"3", title: "title1", intro: "今夜，此时"}, {id:"4", title: "title1", intro: "今夜，此时"}, {id:"5", title: "title1", intro: "今夜，此时"}]
     return (
-      <View style={{flex: 1, backgroundColor: '#F0FFF0'}}>
+      <View style={styles.container}>
         <NaviHeader title={album.name} {...this.props}/>
-        <Swiper
-          dot={<View style={{backgroundColor: '#CDCDC1', width: 13, height: 13, borderRadius: 7, marginLeft: 7, marginRight: 7}} />}
-          activeDot={<View style={{backgroundColor: '#838B83', width: 13, height: 13, borderRadius: 7, marginLeft: 7, marginRight: 7}} />}
-          paginationStyle={{
-            bottom: 160,
-          }}>
-          {
-            projects.map((project) => {return this.renderItem(project)})
-          }
-        </Swiper>
+        <ProjectCard items={projects} handleSelect={this._onPressButton.bind(this)}/>
       </View>
-    );
+      );
+    // return (
+    //   <View style={{flex: 1, backgroundColor: '#F0FFF0'}}>
+    //     <NaviHeader title={album.name} {...this.props}/>
+    //     <Swiper
+    //       dot={<View style={{backgroundColor: '#CDCDC1', width: 13, height: 13, borderRadius: 7, marginLeft: 7, marginRight: 7}} />}
+    //       activeDot={<View style={{backgroundColor: '#838B83', width: 13, height: 13, borderRadius: 7, marginLeft: 7, marginRight: 7}} />}
+    //       paginationStyle={{
+    //         bottom: 160,
+    //       }}>
+    //       {
+    //         projects.map((project) => {return this.renderItem(project)})
+    //       }
+    //     </Swiper>
+    //   </View>
+    // );
   }
 
   renderItem(project) {
     return(
       <TouchableOpacity key={project.id} style={{flex:1, marginTop: 50}} onPress={this._onPressButton.bind(this)}>
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center',}}>
-          <Text>{'title'}</Text>
-          <Text>{'intro'}</Text>
+          <Text>{project.title}</Text>
+          <Text>{project.intro}</Text>
         </View>
       </TouchableOpacity>
       );
@@ -82,6 +87,10 @@ class AlbumView extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#F0FFF0'
+  },
   navbar: {
     flex: 0,
     flexDirection: 'row',

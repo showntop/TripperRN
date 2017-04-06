@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   TextInput,
   ListView,
+  WebView,
 } from 'react-native';
 
 import {Text, Heading1, Paragraph} from '../components/TripperText'
@@ -80,7 +81,14 @@ class ProjectView extends Component {
     const {projectStore} = this.props;
     const project = projectStore.currentProject;
     if (projectStore.showSpinner == true || project.id == undefined ||project.id == "") {
-      return (<Text>加载中...</Text>);
+      return (
+        <View style={[styles.container]}>
+          <NaviHeader {...this.props} style={styles.header} title={'阅读'}/>
+          <View style={ {flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Text>加载中...</Text>
+          </View>
+        </View>
+        );
     }
     return (
       <View  style={styles.container}>
@@ -98,9 +106,18 @@ class ProjectView extends Component {
                         <View style={{backgroundColor: 'white', marginTop: 200, alignItems: 'center',}}>
                           <Heading1 style={{alignSelf: 'flex-start', paddingHorizontal: 10, paddingTop: 20,}}>{project.title}</Heading1>
                           <Text style={{fontSize: 10, alignSelf: 'flex-start', paddingHorizontal: 10, paddingTop: 5}}>{'作者：' + (project.author || {name: '佚名'}).name + "   " + project.created_at.split('T')[0].replace('-', '.').replace('-', '.')}</Text>
-                          <Paragraph style={styles.paragraph}>
-                            {project.content}
-                          </Paragraph>
+                          {
+                            <Paragraph style={styles.paragraph}>
+                                                      {project.content}
+                                                    </Paragraph>
+                          }
+                          {
+                          // <WebView
+                          //           style={styles.paragraph}
+                          //           source={{html: project.content}}
+                          //           scalesPageToFit={true}
+                          //         />
+                          }
                         </View>
                         );
                     }

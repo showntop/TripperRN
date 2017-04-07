@@ -15,11 +15,15 @@ import {
 } from 'react-native';
 
 import {Text, Heading1, Paragraph} from '../components/TripperText'
+import HTMLView from 'react-native-htmlview';
+
 import Icon2 from 'react-native-vector-icons/Ionicons';
 import NaviHeader from '../components/NaviHeader';
 import SharePage from '../components/SharePage';
 
 import {fetchProject, createComment, createLike, deleteLike} from '../actions/projects';
+
+const windowWidth = Dimensions.get('window').width;
 
 let dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
@@ -76,6 +80,22 @@ class ProjectView extends Component {
       dispatch(createLike(userStore.currentUser, this.props.project.id))
     }
   }
+
+  renderNode(node, index) {
+    if (node.name == 'iframe') {
+      return (
+        <View key={index} style={{width: 200, height: 200}}>
+          <Text>{node.attribs.src}</Text>
+        </View>
+      );
+    }
+
+    if (node.name == 'img') {
+      return (
+          <Image key={index} source={{uri: node.attribs.src}} resizeMode='contain' style={{width: (windowWidth-40), height: 200}}/>
+      );
+    }
+  }
   
   render() {
     const {projectStore} = this.props;
@@ -90,12 +110,14 @@ class ProjectView extends Component {
         </View>
         );
     }
+    let the_content = project.content.replace(/data-src/g, "src");
+
+    debugger;
     return (
       <View  style={styles.container}>
         <NaviHeader {...this.props} style={styles.header} title={'阅读'}/>
         <Image source={{uri: project.asset}} style={{flex: 1}}>
          
-              
                 <ListView
                   removeClippedSubviews={false}
                   style={styles.body}
@@ -107,16 +129,15 @@ class ProjectView extends Component {
                           <Heading1 style={{alignSelf: 'flex-start', paddingHorizontal: 10, paddingTop: 20,}}>{project.title}</Heading1>
                           <Text style={{fontSize: 10, alignSelf: 'flex-start', paddingHorizontal: 10, paddingTop: 5}}>{'作者：' + (project.author || {name: '佚名'}).name + "   " + project.created_at.split('T')[0].replace('-', '.').replace('-', '.')}</Text>
                           {
-                            <Paragraph style={styles.paragraph}>
-                                                      {project.content}
-                                                    </Paragraph>
+                            // <Paragraph style={styles.paragraph}>
+                            //                           {project.content}
+                            //                         </Paragraph>
                           }
                           {
-                          // <WebView
-                          //           style={styles.paragraph}
-                          //           source={{html: project.content}}
-                          //           scalesPageToFit={true}
-                          //         />
+                          <HTMLView renderNode={(node, index) => this.renderNode(node, index)}
+                                  value={the_content}
+                                  style={styles.paragraph}
+                                />
                           }
                         </View>
                         );
@@ -128,7 +149,7 @@ class ProjectView extends Component {
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                           <Image 
                             style={{width: 30, height: 30, borderRadius: 15}}
-                            source={{uri: project.author.avatar}}/>
+                            source={{uri: (project.author.avatar || 'http://p.3761.com/pic/72301406681690.jpg')}}/>
                           <View style={{ marginLeft: 10}}>
                             <Text style={{fontSize: 12}}>{'飞行的猪'}</Text>
                             <Text style={{fontSize: 10, color: 'grey'}}>{'50 min ago'}</Text>

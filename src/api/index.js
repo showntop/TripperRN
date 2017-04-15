@@ -8,10 +8,11 @@ import ProjectApi           from './Project';
 import TopicApi             from './Topic';
 import PostApi              from './Post';
 import UserApi              from './User';
+import FeedApi              from './Feed';
 
 const ssoUrl  = `http://192.168.1.127:7000/api/v1`;
-// const busUrl = `http://192.168.1.103:7007/api/v1`;
-const busUrl = `https://tripper-1990.herokuapp.com/api/v1`;
+const busUrl = `http://192.168.1.107:7007/api/v1`;
+// const busUrl = `https://tripper-1990.herokuapp.com/api/v1`;
 
 function Api({ apiPrefix } = {}) {
     if (!apiPrefix) {
@@ -24,6 +25,7 @@ function Api({ apiPrefix } = {}) {
         apiClient         : api,
         category          :new CategoryApi({baseUrl: busUrl, apiClient: api }),
         album             :new AlbumApi({baseUrl: busUrl, apiClient: api }),
+        feed              :new FeedApi({baseUrl: busUrl, apiClient: api}),
         project           :new ProjectApi({baseUrl: busUrl, apiClient: api}),
         topic             :new TopicApi({baseUrl: busUrl, apiClient: api}),
         post              :new PostApi({baseUrl: busUrl, apiClient: api}),

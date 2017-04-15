@@ -112,22 +112,20 @@ class ProjectView extends Component {
     }
     let the_content = project.content.replace(/data-src/g, "src");
 
-    debugger;
     return (
       <View  style={styles.container}>
         <NaviHeader {...this.props} style={styles.header} title={'阅读'}/>
-        <Image source={{uri: project.asset}} style={{flex: 1}}>
-         
+        <Image source={{uri: project.asset}} style={{flex: 1}} resizeMode='cover'>
                 <ListView
                   removeClippedSubviews={false}
-                  style={styles.body}
+                  style={[styles.body]}
                   dataSource={dataSource.cloneWithRows(project.comments || [])}
                   renderHeader= {()=>{
 
                       return(
-                        <View style={{backgroundColor: 'white', marginTop: 200, alignItems: 'center',}}>
+                        <View style={{backgroundColor: 'white', marginTop: 470, alignItems: 'center',}}>
                           <Heading1 style={{alignSelf: 'flex-start', paddingHorizontal: 10, paddingTop: 20,}}>{project.title}</Heading1>
-                          <Text style={{fontSize: 10, alignSelf: 'flex-start', paddingHorizontal: 10, paddingTop: 5}}>{'作者：' + (project.author || {name: '佚名'}).name + "   " + project.created_at.split('T')[0].replace('-', '.').replace('-', '.')}</Text>
+                          <Text style={{color: 'grey',fontSize: 10, alignSelf: 'flex-start', paddingHorizontal: 10, paddingTop: 5}}>{'作者：' + (project.author || {name: '佚名'}).nickname + "   " + project.created_at.split('T')[0].replace('-', '.').replace('-', '.')}</Text>
                           {
                             // <Paragraph style={styles.paragraph}>
                             //                           {project.content}
@@ -165,7 +163,7 @@ class ProjectView extends Component {
         <View style={styles.footer}>
             <View style={{flex: 1, borderBottomWidth: 1, borderColor:'#DDD8CE', marginBottom: 2}}>
               <TextInput
-                  style={{height: 40,paddingLeft: 10,flex: 1,fontSize: 14}}
+                  style={{height: 40,paddingLeft: 10,flex: 1,fontSize: 12}}
                   placeholder='点评一下'
                   underlineColorAndroid= "transparent"
                   value={this.state.comment.content}

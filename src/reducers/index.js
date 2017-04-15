@@ -2,7 +2,7 @@
 
 import { combineReducers } from 'redux';
 
-import charm   from './charm';
+import feed   from './feed';
 import album   from './album';
 import editor  from './editor';
 import project from './project';
@@ -24,7 +24,7 @@ const rootReducer = combineReducers({
   userStore: user,
   // spot,
   // location,
-  charmStore: charm,
+  feedStore: feed,
   albumStore: album,
   editorStore: editor,
   projectStore: project,

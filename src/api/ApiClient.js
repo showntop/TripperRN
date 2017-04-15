@@ -5,14 +5,14 @@ export default class ApiClient {
         this.prefix = '';
     }
 
-    request({ url, method, params = {}, body }) {
+    request({ url, method, query = {}, body }) {
         if (this.authToken) {
             /* eslint-disable */
-            params.token = this.authToken;
+            query.token = this.authToken;
             /* eslint-enable */
         }
 
-        const urlWithQuery = `${url}${this.prefix}?${queryString.stringify(params)}`;
+        const urlWithQuery = `${url}${this.prefix}?${queryString.stringify(query)}`;
 
         const init = {
             method,
@@ -45,12 +45,11 @@ export default class ApiClient {
         });
     }
 
-    get(requestUrl, payload = {}, params = {}) {
+    get(requestUrl, query = {}) {
         return this.request({
             url: requestUrl,
             method: 'get',
-            body: payload,
-            params
+            query: query,
         });
     }
 

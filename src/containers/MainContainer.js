@@ -25,9 +25,9 @@ class MainContainer extends Component {
 }
 
 function mapStateToProps (state) {
-  const {userStore, charmStore, channelStore, topicStore} = state;
+  const {userStore, feedStore, channelStore, topicStore} = state;
   return {
-    userStore, charmStore, channelStore, topicStore
+    userStore, feedStore, channelStore, topicStore
   }
 }
 

@@ -5,8 +5,13 @@ import {
   StyleSheet,
   RefreshControl,
   ActivityIndicator,
-  View
+  View,
+  Dimensions
 } from 'react-native';
+
+import Spinner from 'react-native-spinkit';
+
+const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   hasNoMoreView: {
@@ -74,7 +79,9 @@ class GiftedListView extends React.Component {
     }
     if (this.props.hasMore) {
       return (
-        <ActivityIndicator color={commonStyle.LIGHT_BLUE_COLOR}/>
+        <View style={{backgroundColor: 'white', width: windowWidth, height: 60, justifyContent: 'center', alignItems: 'center',}}>
+          <Spinner isVisible={true} size={50} type='Bounce' color='#9AC0CD'/> 
+        </View>
       );
     } else if (this.props.renderHasNoMoreView) {
       return this.props.renderHasNoMoreView();//使用自定义的
